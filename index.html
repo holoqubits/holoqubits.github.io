@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>HoloQUBITS — Research Synergies</title>
+<title>HoloQUBITS — Research Lines</title>
 <style>:root {
   color-scheme: light dark;
   background-color: transparent !important;
@@ -820,370 +820,348 @@ svg {
 </style>
 </head>
 <body>
-<div id="holoqubits-synergy-clear">
-  <div class="viz-controls" aria-label="Choose a research question"></div>
+<div id="holoqubits-research-lines">
+  <div class="map-head text-small text-muted" aria-hidden="true">
+    <span>Research line</span>
+    <span>Participating members</span>
+    <span>Expected outcome</span>
+  </div>
 
-  <section class="card synergy-question" aria-live="polite">
-    <div class="text-small text-muted">Shared research question</div>
-    <h2 class="question-title"></h2>
-    <p class="question-text"></p>
-  </section>
+  <div class="route-map" aria-label="HoloQUBITS research lines"></div>
 
-  <div class="section-label">People bringing complementary expertise</div>
-  <div class="member-grid" role="group" aria-label="Contributing researchers"></div>
-
-  <section class="card member-detail" aria-live="polite">
-    <div class="member-heading"></div>
-    <div class="member-role text-small text-muted"></div>
-    <div class="detail-block">
-      <span class="detail-label">Brings</span>
-      <span class="member-brings"></span>
-    </div>
-    <div class="detail-block">
-      <span class="detail-label">Connection to the group</span>
-      <span class="member-connects"></span>
-    </div>
-  </section>
-
-  <section class="card outcome" aria-live="polite">
-    <div class="text-small text-muted">Possible combined outcome</div>
-    <div class="outcome-text"></div>
-  </section>
+  <div class="card member-summary" aria-live="polite">
+    <span class="summary-name">Complete team</span>
+    <span class="summary-text">Five shared research lines connect complementary expertise to concrete scientific outcomes.</span>
+  </div>
 </div>
 
 <style>
-  #holoqubits-synergy-clear {
+  #holoqubits-research-lines {
     width: 100%;
     color: var(--foreground);
   }
 
-  #holoqubits-synergy-clear .viz-controls {
-    margin-bottom: 16px;
+  #holoqubits-research-lines .map-head,
+  #holoqubits-research-lines .route {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr) 230px;
+    gap: 20px;
   }
 
-  #holoqubits-synergy-clear .synergy-question {
-    min-height: 132px;
+  #holoqubits-research-lines .map-head {
+    padding: 0 4px 10px;
   }
 
-  #holoqubits-synergy-clear .question-title {
-    margin: 8px 0 10px;
+  #holoqubits-research-lines .route {
+    --route-color: var(--viz-series-1);
+    align-items: center;
+    padding: 20px 4px;
+    border-top: 1px solid var(--border);
+    transition: opacity 180ms ease;
   }
 
-  #holoqubits-synergy-clear .question-text {
-    max-width: 72ch;
-    margin: 0;
+  #holoqubits-research-lines .route.route-2 {
+    --route-color: var(--viz-series-2);
+  }
+
+  #holoqubits-research-lines .route.route-3 {
+    --route-color: var(--viz-series-3);
+  }
+
+  #holoqubits-research-lines .route.route-4 {
+    --route-color: var(--viz-series-4);
+  }
+
+  #holoqubits-research-lines .route.route-5 {
+    --route-color: var(--viz-series-5);
+  }
+
+  #holoqubits-research-lines .route-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+  }
+
+  #holoqubits-research-lines .route-swatch {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 5px;
+    background: var(--route-color);
+  }
+
+  #holoqubits-research-lines .station-line {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    min-width: 0;
+    min-height: 42px;
+  }
+
+  #holoqubits-research-lines .station-line::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 5px;
+    background: var(--route-color);
+    transform: translateY(-50%);
+  }
+
+  #holoqubits-research-lines .station-slot {
+    position: relative;
+    z-index: 1;
+    transition: opacity 180ms ease;
+  }
+
+  #holoqubits-research-lines .route-outcome {
+    padding-left: 12px;
+    border-left: 5px solid var(--route-color);
+    font-weight: 500;
+  }
+
+  #holoqubits-research-lines .route.is-muted,
+  #holoqubits-research-lines .station-slot.is-muted {
+    opacity: 0.22;
+  }
+
+  #holoqubits-research-lines .route.is-muted .station-slot {
+    opacity: 1;
+  }
+
+  #holoqubits-research-lines .member-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  #holoqubits-research-lines .summary-name {
+    flex: 0 0 auto;
+    font-weight: 500;
+  }
+
+  #holoqubits-research-lines .summary-text {
     color: var(--card-foreground);
   }
 
-  #holoqubits-synergy-clear .section-label {
-    margin: 22px 0 10px;
-    font-weight: 500;
-  }
-
-  #holoqubits-synergy-clear .member-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-    gap: 10px;
-  }
-
-  #holoqubits-synergy-clear .member-detail {
-    margin-top: 12px;
-    min-height: 154px;
-  }
-
-  #holoqubits-synergy-clear .member-heading,
-  #holoqubits-synergy-clear .outcome-text {
-    font-weight: 500;
-  }
-
-  #holoqubits-synergy-clear .member-role {
-    margin-top: 3px;
-  }
-
-  #holoqubits-synergy-clear .detail-block {
-    display: grid;
-    grid-template-columns: minmax(130px, 0.28fr) 1fr;
-    gap: 14px;
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-  }
-
-  #holoqubits-synergy-clear .detail-label {
-    color: var(--muted-foreground);
-  }
-
-  #holoqubits-synergy-clear .outcome {
-    margin-top: 12px;
-    border-color: var(--viz-series-1);
-  }
-
-  #holoqubits-synergy-clear .outcome-text {
-    max-width: 72ch;
-    margin-top: 7px;
-  }
-
-  @media (max-width: 540px) {
-    #holoqubits-synergy-clear .member-grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 900px) {
+    #holoqubits-research-lines .map-head {
+      display: none;
     }
 
-    #holoqubits-synergy-clear .detail-block {
+    #holoqubits-research-lines .route {
       grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 20px 0;
+    }
+
+    #holoqubits-research-lines .station-line {
+      flex-direction: column;
+      align-items: stretch;
+      padding-left: 22px;
+    }
+
+    #holoqubits-research-lines .station-line::before {
+      top: 0;
+      right: auto;
+      bottom: 0;
+      left: 7px;
+      width: 5px;
+      height: auto;
+      transform: none;
+    }
+
+    #holoqubits-research-lines .route-outcome {
+      margin-left: 2px;
+    }
+
+    #holoqubits-research-lines .member-summary {
+      align-items: flex-start;
+      flex-direction: column;
       gap: 5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #holoqubits-research-lines .route,
+    #holoqubits-research-lines .station-slot {
+      transition: none;
     }
   }
 </style>
 
 <script>
   (() => {
-    const root = document.getElementById("holoqubits-synergy-clear");
-    const controls = root.querySelector(".viz-controls");
-    const memberGrid = root.querySelector(".member-grid");
-    const questionTitle = root.querySelector(".question-title");
-    const questionText = root.querySelector(".question-text");
-    const memberHeading = root.querySelector(".member-heading");
-    const memberRole = root.querySelector(".member-role");
-    const memberBrings = root.querySelector(".member-brings");
-    const memberConnects = root.querySelector(".member-connects");
-    const outcomeText = root.querySelector(".outcome-text");
+    const root = document.getElementById("holoqubits-research-lines");
+    const routeMap = root.querySelector(".route-map");
+    const summaryName = root.querySelector(".summary-name");
+    const summaryText = root.querySelector(".summary-text");
 
-    const topics = [
+    const members = {
+      om: { full: "Olivera Mišković", short: "Mišković" },
+      am: { full: "Ayan Mukhopadhyay", short: "Mukhopadhyay" },
+      ga: { full: "Georgios Anastasiou", short: "Anastasiou" },
+      cc: { full: "Cristóbal Corral", short: "Corral" },
+      ds: { full: "Dominique Spehner", short: "Spehner" },
+      ro: { full: "Rodrigo Olea", short: "Olea" },
+      ia: { full: "Ignacio J. Araya", short: "Araya" },
+      rg: { full: "Radouane Gannouji", short: "Gannouji" }
+    };
+
+    const routes = [
       {
         id: "geometry",
         label: "Geometry & symmetries",
-        question: "Which finite observables can organize holography beyond the standard AdS setting?",
-        outcome: "A common geometric language connecting conserved charges, entanglement and reconstruction.",
-        members: [
-          {
-            name: "Olivera Mišković",
-            role: "PUCV · Director",
-            brings: "Geometric renormalization, black holes and holography.",
-            connects: "Her geometric framework gives the group a common starting point for comparing charges, boundary data and quantum observables."
-          },
-          {
-            name: "Georgios Anastasiou",
-            role: "UAI · Principal Investigator",
-            brings: "Conformal renormalization, entanglement and higher-curvature gravity.",
-            connects: "He links the renormalized gravitational description to entanglement observables and extensions beyond Einstein gravity."
-          },
-          {
-            name: "Rodrigo Olea",
-            role: "PUCV · Principal Investigator",
-            brings: "Conformal geometry, gravitational charges and black-hole thermodynamics.",
-            connects: "He turns geometric structures into finite conserved quantities that can be compared across the program."
-          },
-          {
-            name: "Ignacio J. Araya",
-            role: "UNAB · Principal Investigator",
-            brings: "Holography, conformal methods and quantum-information measures.",
-            connects: "He connects the geometric observables to information-theoretic quantities used in holography."
-          },
-          {
-            name: "Cristóbal Corral",
-            role: "UAI · Principal Investigator",
-            brings: "Gauge theories, topology and supergravity solutions.",
-            connects: "He broadens the geometric construction to gauge and topological sectors that are not visible in a purely metric analysis."
-          }
-        ]
+        members: ["om", "ga", "ro", "ia", "cc"],
+        outcome: "Finite observables beyond AdS"
       },
       {
         id: "extremal",
         label: "Extremal black holes",
-        question: "How do extremal black holes form, remain stable and encode quantum information?",
-        outcome: "A unified account of extremality linking nonlinear formation, stability, thermodynamics and holographic observables.",
-        members: [
-          {
-            name: "Radouane Gannouji",
-            role: "PUCV · Principal Investigator",
-            brings: "Extremal black holes, stability and numerical relativity.",
-            connects: "He tests dynamically whether extremal configurations form and remain stable, providing the nonlinear side of the problem."
-          },
-          {
-            name: "Olivera Mišković",
-            role: "PUCV · Director",
-            brings: "Black-hole geometry, holography and quantum field theory.",
-            connects: "She links the dynamical solutions to finite gravitational and holographic observables."
-          },
-          {
-            name: "Rodrigo Olea",
-            role: "PUCV · Principal Investigator",
-            brings: "Gravitational charges and black-hole thermodynamics.",
-            connects: "He supplies the conserved quantities and thermodynamic structure needed to characterize the extremal limit."
-          },
-          {
-            name: "Ayan Mukhopadhyay",
-            role: "PUCV · Alternate Director",
-            brings: "Nonequilibrium holography and strongly coupled dynamics.",
-            connects: "He translates black-hole formation into the far-from-equilibrium evolution of the dual quantum system."
-          },
-          {
-            name: "Ignacio J. Araya",
-            role: "UNAB · Principal Investigator",
-            brings: "Holographic and quantum-information observables.",
-            connects: "He identifies which information measures can distinguish extremal states and their evolution."
-          }
-        ]
+        members: ["rg", "om", "ro", "am", "ia"],
+        outcome: "Extremality: formation → information"
       },
       {
         id: "transport",
         label: "Anomalous transport",
-        question: "How do anomalies and geometry control transport far from equilibrium?",
-        outcome: "Predictions for anomalous currents and transport that combine holographic dynamics with gauge and topological structure.",
-        members: [
-          {
-            name: "Ayan Mukhopadhyay",
-            role: "PUCV · Alternate Director",
-            brings: "Far-from-equilibrium holography and strongly coupled matter.",
-            connects: "He provides the dynamical setting in which anomalous currents evolve away from equilibrium."
-          },
-          {
-            name: "Cristóbal Corral",
-            role: "UAI · Principal Investigator",
-            brings: "Gauge theory, topology and supergravity.",
-            connects: "He identifies the gauge and topological structures responsible for anomalous contributions."
-          },
-          {
-            name: "Olivera Mišković",
-            role: "PUCV · Director",
-            brings: "Gravity, holography and quantum field theory.",
-            connects: "She provides the gravitational construction that converts anomaly data into finite boundary observables."
-          }
-        ]
+        members: ["cc", "om", "am"],
+        outcome: "Anomalous currents out of equilibrium"
       },
       {
         id: "dynamics",
         label: "Quantum dynamics",
-        question: "How does quantum information evolve, thermalize or remain protected in strongly coupled systems?",
-        outcome: "A bridge between gravitational evolution and operational measures of decoherence, correlations and information flow.",
-        members: [
-          {
-            name: "Ayan Mukhopadhyay",
-            role: "PUCV · Alternate Director",
-            brings: "Thermalization, nonequilibrium holography and strongly coupled dynamics.",
-            connects: "He describes the many-body evolution that the gravitational models are meant to encode."
-          },
-          {
-            name: "Dominique Spehner",
-            role: "UdeC · Principal Investigator",
-            brings: "Quantum correlations, metrology and open quantum systems.",
-            connects: "He supplies operational quantum-information measures for testing decoherence and information recovery."
-          },
-          {
-            name: "Radouane Gannouji",
-            role: "PUCV · Principal Investigator",
-            brings: "Dynamical black holes, stability and numerical evolution.",
-            connects: "He produces time-dependent gravitational systems in which information flow and late-time behavior can be tested."
-          },
-          {
-            name: "Ignacio J. Araya",
-            role: "UNAB · Principal Investigator",
-            brings: "Holographic quantum-information measures.",
-            connects: "He links the evolving geometry to entanglement and other information-sensitive observables."
-          }
-        ]
+        members: ["rg", "am", "ds", "ia"],
+        outcome: "Information flow and thermalization"
       },
       {
         id: "complexity",
         label: "Complexity & QEC",
-        question: "Can geometric complexity reveal how holographic information is encoded and protected?",
-        outcome: "Concrete information-geometric diagnostics of holographic encoding, complexity growth and quantum error correction.",
-        members: [
-          {
-            name: "Dominique Spehner",
-            role: "UdeC · Principal Investigator",
-            brings: "Quantum-information geometry, correlations and open systems.",
-            connects: "He gives the group precise information-geometric tools for comparing states and quantifying distinguishability."
-          },
-          {
-            name: "Ayan Mukhopadhyay",
-            role: "PUCV · Alternate Director",
-            brings: "Nonequilibrium holography and information dynamics.",
-            connects: "He relates complexity growth and encoding to the dynamics of strongly coupled quantum states."
-          },
-          {
-            name: "Georgios Anastasiou",
-            role: "UAI · Principal Investigator",
-            brings: "Entanglement and renormalized gravitational observables.",
-            connects: "He anchors information measures in finite geometric quantities on the gravitational side."
-          },
-          {
-            name: "Ignacio J. Araya",
-            role: "UNAB · Principal Investigator",
-            brings: "Holographic information measures and conformal methods.",
-            connects: "He connects information geometry to holographic reconstruction and quantum error-correcting interpretations."
-          },
-          {
-            name: "Olivera Mišković",
-            role: "PUCV · Director",
-            brings: "Holographic geometry and quantum field theory.",
-            connects: "She provides the gravitational framework in which the information-theoretic quantities can be defined consistently."
-          }
-        ]
+        members: ["ga", "om", "am", "ds", "ia"],
+        outcome: "Diagnostics of encoding and QEC"
       }
     ];
 
-    let activeTopic = topics[0];
-    let activeMember = 0;
+    let pinnedMember = null;
+    let previewMember = null;
 
-    function renderMember() {
-      const member = activeTopic.members[activeMember];
-      memberHeading.textContent = member.name;
-      memberRole.textContent = member.role;
-      memberBrings.textContent = member.brings;
-      memberConnects.textContent = member.connects;
+    function routeLabelsFor(memberId) {
+      return routes
+        .filter((route) => route.members.includes(memberId))
+        .map((route) => route.label);
+    }
 
-      Array.from(memberGrid.querySelectorAll("button")).forEach((button, index) => {
-        const selected = index === activeMember;
+    function formatList(items) {
+      if (items.length < 2) return items[0] || "";
+      if (items.length === 2) return items.join(" and ");
+      return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+    }
+
+    function activeMember() {
+      return previewMember || pinnedMember;
+    }
+
+    function renderHighlight() {
+      const memberId = activeMember();
+      const routeElements = Array.from(routeMap.querySelectorAll(".route"));
+      const stationSlots = Array.from(routeMap.querySelectorAll(".station-slot"));
+
+      routeElements.forEach((routeElement) => {
+        const route = routes.find((item) => item.id === routeElement.dataset.route);
+        routeElement.classList.toggle("is-muted", Boolean(memberId) && !route.members.includes(memberId));
+      });
+
+      stationSlots.forEach((slot) => {
+        const selected = slot.dataset.member === memberId;
+        slot.classList.toggle("is-muted", Boolean(memberId) && !selected);
+        const button = slot.querySelector("button");
         button.classList.toggle("btn-primary", selected);
         button.setAttribute("aria-pressed", String(selected));
       });
+
+      if (!memberId) {
+        summaryName.textContent = "Complete team";
+        summaryText.textContent = "Five shared research lines connect complementary expertise to concrete scientific outcomes.";
+        return;
+      }
+
+      const labels = routeLabelsFor(memberId);
+      summaryName.textContent = members[memberId].full;
+      summaryText.textContent = "Links " + labels.length + " research lines: " + formatList(labels) + ".";
     }
 
-    function renderTopic() {
-      questionTitle.textContent = activeTopic.label;
-      questionText.textContent = activeTopic.question;
-      outcomeText.textContent = activeTopic.outcome;
-      memberGrid.replaceChildren();
+    routes.forEach((route, routeIndex) => {
+      const section = document.createElement("section");
+      section.className = "route route-" + (routeIndex + 1);
+      section.dataset.route = route.id;
 
-      activeTopic.members.forEach((member, index) => {
+      const name = document.createElement("div");
+      name.className = "route-name";
+      name.id = "route-" + route.id;
+
+      const swatch = document.createElement("span");
+      swatch.className = "route-swatch";
+      swatch.setAttribute("aria-hidden", "true");
+
+      const nameText = document.createElement("span");
+      nameText.textContent = route.label;
+      name.append(swatch, nameText);
+
+      const line = document.createElement("div");
+      line.className = "station-line";
+      line.setAttribute("aria-labelledby", name.id);
+
+      route.members.forEach((memberId) => {
+        const slot = document.createElement("span");
+        slot.className = "station-slot";
+        slot.dataset.member = memberId;
+
         const button = document.createElement("button");
         button.type = "button";
         button.className = "btn";
-        button.textContent = member.name;
+        button.textContent = members[memberId].short;
+        button.setAttribute("aria-label", members[memberId].full + " on " + route.label);
         button.setAttribute("aria-pressed", "false");
-        button.addEventListener("click", () => {
-          activeMember = index;
-          renderMember();
+
+        button.addEventListener("pointerenter", () => {
+          previewMember = memberId;
+          renderHighlight();
         });
-        memberGrid.appendChild(button);
+        button.addEventListener("pointerleave", () => {
+          previewMember = null;
+          renderHighlight();
+        });
+        button.addEventListener("focus", () => {
+          previewMember = memberId;
+          renderHighlight();
+        });
+        button.addEventListener("blur", () => {
+          previewMember = null;
+          renderHighlight();
+        });
+        button.addEventListener("click", () => {
+          pinnedMember = pinnedMember === memberId ? null : memberId;
+          previewMember = null;
+          renderHighlight();
+        });
+
+        slot.appendChild(button);
+        line.appendChild(slot);
       });
 
-      Array.from(controls.querySelectorAll("button")).forEach((button) => {
-        const selected = button.dataset.topic === activeTopic.id;
-        button.classList.toggle("btn-primary", selected);
-        button.setAttribute("aria-pressed", String(selected));
-      });
+      const outcome = document.createElement("div");
+      outcome.className = "route-outcome";
+      outcome.textContent = route.outcome;
 
-      activeMember = 0;
-      renderMember();
-    }
-
-    topics.forEach((topic) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "btn";
-      button.dataset.topic = topic.id;
-      button.textContent = topic.label;
-      button.setAttribute("aria-pressed", "false");
-      button.addEventListener("click", () => {
-        activeTopic = topic;
-        renderTopic();
-      });
-      controls.appendChild(button);
+      section.append(name, line, outcome);
+      routeMap.appendChild(section);
     });
 
-    renderTopic();
+    renderHighlight();
   })();
 </script>
 
