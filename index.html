@@ -820,7 +820,7 @@ svg {
 </style>
 </head>
 <body>
-<div id="holoqubits-synergy-flow">
+<div id="holoqubits-synergy-profiles">
   <div class="flow-head text-small text-muted" aria-hidden="true">
     <span>Team expertise →</span>
     <span>Shared scientific problems →</span>
@@ -836,25 +836,32 @@ svg {
     <div class="node-layer"></div>
   </div>
 
-  <div class="card flow-summary" aria-live="polite">
-    <span class="summary-name">How to read it</span>
-    <span class="summary-text">Read from left to right: expertise converges on shared problems, which produce collective outcomes.</span>
+  <div class="card profile-panel is-empty" aria-live="polite">
+    <div class="profile-media">
+      <img class="profile-photo" alt="" hidden>
+      <div class="profile-initials" aria-hidden="true">HQ</div>
+    </div>
+    <div class="profile-copy">
+      <div class="profile-name">How to read it</div>
+      <div class="profile-role text-small text-muted"></div>
+      <div class="profile-text">Read from left to right: expertise converges on shared problems, which produce collective outcomes.</div>
+    </div>
   </div>
 </div>
 
 <style>
-  #holoqubits-synergy-flow {
+  #holoqubits-synergy-profiles {
     width: 100%;
     color: var(--foreground);
   }
 
-  #holoqubits-synergy-flow .flow-head {
+  #holoqubits-synergy-profiles .flow-head {
     display: grid;
     grid-template-columns: 30% 34% 36%;
     padding: 0 4px 10px;
   }
 
-  #holoqubits-synergy-flow .flow-stage {
+  #holoqubits-synergy-profiles .flow-stage {
     position: relative;
     width: 100%;
     min-height: 640px;
@@ -862,8 +869,8 @@ svg {
     border-bottom: 1px solid var(--border);
   }
 
-  #holoqubits-synergy-flow .flow-svg,
-  #holoqubits-synergy-flow .node-layer {
+  #holoqubits-synergy-profiles .flow-svg,
+  #holoqubits-synergy-profiles .node-layer {
     position: absolute;
     inset: 0;
     display: block;
@@ -871,15 +878,15 @@ svg {
     height: 100%;
   }
 
-  #holoqubits-synergy-flow .flow-svg {
+  #holoqubits-synergy-profiles .flow-svg {
     overflow: hidden;
   }
 
-  #holoqubits-synergy-flow .node-layer {
+  #holoqubits-synergy-profiles .node-layer {
     pointer-events: none;
   }
 
-  #holoqubits-synergy-flow .flow-edge {
+  #holoqubits-synergy-profiles .flow-edge {
     fill: none;
     stroke-width: 3;
     opacity: 0.27;
@@ -887,129 +894,183 @@ svg {
     transition: opacity 180ms ease, stroke-width 180ms ease;
   }
 
-  #holoqubits-synergy-flow .flow-edge.outcome-edge {
+  #holoqubits-synergy-profiles .flow-edge.outcome-edge {
     stroke-width: 7;
     opacity: 0.5;
   }
 
-  #holoqubits-synergy-flow .flow-edge[data-topic="geometry"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="geometry"] {
     stroke: var(--viz-series-1);
   }
 
-  #holoqubits-synergy-flow .flow-edge[data-topic="extremal"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="extremal"] {
     stroke: var(--viz-series-2);
   }
 
-  #holoqubits-synergy-flow .flow-edge[data-topic="transport"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="transport"] {
     stroke: var(--viz-series-3);
   }
 
-  #holoqubits-synergy-flow .flow-edge[data-topic="dynamics"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="dynamics"] {
     stroke: var(--viz-series-4);
   }
 
-  #holoqubits-synergy-flow .flow-edge[data-topic="complexity"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="complexity"] {
     stroke: var(--viz-series-5);
   }
 
-  #holoqubits-synergy-flow .flow-edge.is-muted {
+  #holoqubits-synergy-profiles .flow-edge.is-muted {
     opacity: 0.035;
   }
 
-  #holoqubits-synergy-flow .flow-edge.is-active {
+  #holoqubits-synergy-profiles .flow-edge.is-active {
     stroke-width: 5;
     opacity: 0.95;
   }
 
-  #holoqubits-synergy-flow .flow-edge.outcome-edge.is-active {
+  #holoqubits-synergy-profiles .flow-edge.outcome-edge.is-active {
     stroke-width: 9;
   }
 
-  #holoqubits-synergy-flow .node-slot {
+  #holoqubits-synergy-profiles .node-slot {
     position: absolute;
     z-index: 1;
+    box-sizing: border-box;
     pointer-events: auto;
     transition: opacity 180ms ease;
   }
 
-  #holoqubits-synergy-flow .node-slot.is-muted {
+  #holoqubits-synergy-profiles .node-slot.is-muted {
     opacity: 0.18;
   }
 
-  #holoqubits-synergy-flow .member-expertise {
+  #holoqubits-synergy-profiles .member-expertise {
     display: block;
     margin-top: 4px;
     color: var(--muted-foreground);
   }
 
-  #holoqubits-synergy-flow .topic-slot,
-  #holoqubits-synergy-flow .outcome-slot {
+  #holoqubits-synergy-profiles .topic-slot,
+  #holoqubits-synergy-profiles .outcome-slot {
     --topic-color: var(--viz-series-1);
     padding-left: 7px;
     border-left: 5px solid var(--topic-color);
   }
 
-  #holoqubits-synergy-flow .topic-slot[data-topic="extremal"],
-  #holoqubits-synergy-flow .outcome-slot[data-topic="extremal"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="extremal"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="extremal"] {
     --topic-color: var(--viz-series-2);
   }
 
-  #holoqubits-synergy-flow .topic-slot[data-topic="transport"],
-  #holoqubits-synergy-flow .outcome-slot[data-topic="transport"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="transport"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="transport"] {
     --topic-color: var(--viz-series-3);
   }
 
-  #holoqubits-synergy-flow .topic-slot[data-topic="dynamics"],
-  #holoqubits-synergy-flow .outcome-slot[data-topic="dynamics"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="dynamics"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="dynamics"] {
     --topic-color: var(--viz-series-4);
   }
 
-  #holoqubits-synergy-flow .topic-slot[data-topic="complexity"],
-  #holoqubits-synergy-flow .outcome-slot[data-topic="complexity"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="complexity"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="complexity"] {
     --topic-color: var(--viz-series-5);
   }
 
-  #holoqubits-synergy-flow .outcome-slot {
+  #holoqubits-synergy-profiles .outcome-slot {
     display: flex;
     align-items: center;
     font-weight: 500;
   }
 
-  #holoqubits-synergy-flow .flow-summary {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
+  #holoqubits-synergy-profiles .profile-panel {
+    display: grid;
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
     margin-top: 14px;
   }
 
-  #holoqubits-synergy-flow .summary-name {
-    flex: 0 0 auto;
+  #holoqubits-synergy-profiles .profile-panel.is-empty {
+    grid-template-columns: 1fr;
+  }
+
+  #holoqubits-synergy-profiles .profile-panel.is-empty .profile-media {
+    display: none;
+  }
+
+  #holoqubits-synergy-profiles .profile-media {
+    width: 78px;
+    height: 88px;
+    overflow: hidden;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
+  }
+
+  #holoqubits-synergy-profiles .profile-photo,
+  #holoqubits-synergy-profiles .profile-initials {
+    width: 100%;
+    height: 100%;
+  }
+
+  #holoqubits-synergy-profiles .profile-photo {
+    display: block;
+    object-fit: cover;
+  }
+
+  #holoqubits-synergy-profiles .profile-photo[hidden],
+  #holoqubits-synergy-profiles .profile-initials[hidden] {
+    display: none;
+  }
+
+  #holoqubits-synergy-profiles .profile-initials {
+    display: grid;
+    place-items: center;
     font-weight: 500;
   }
 
-  #holoqubits-synergy-flow .summary-text {
+  #holoqubits-synergy-profiles .profile-name {
+    font-weight: 500;
+  }
+
+  #holoqubits-synergy-profiles .profile-role {
+    margin-top: 3px;
+  }
+
+  #holoqubits-synergy-profiles .profile-text {
+    margin-top: 7px;
     color: var(--card-foreground);
   }
 
   @media (max-width: 780px) {
-    #holoqubits-synergy-flow .flow-head {
+    #holoqubits-synergy-profiles .flow-head {
       grid-template-columns: 31% 35% 34%;
     }
 
-    #holoqubits-synergy-flow .member-expertise {
+    #holoqubits-synergy-profiles .member-expertise {
       display: none;
     }
 
-    #holoqubits-synergy-flow .flow-summary {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 5px;
+    #holoqubits-synergy-profiles .flow-edge {
+      stroke-width: 1.5;
+    }
+
+    #holoqubits-synergy-profiles .flow-edge.outcome-edge {
+      stroke-width: 3.5;
+    }
+
+    #holoqubits-synergy-profiles .flow-edge.is-active {
+      stroke-width: 2.5;
+    }
+
+    #holoqubits-synergy-profiles .flow-edge.outcome-edge.is-active {
+      stroke-width: 5;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    #holoqubits-synergy-flow .flow-edge,
-    #holoqubits-synergy-flow .node-slot {
+    #holoqubits-synergy-profiles .flow-edge,
+    #holoqubits-synergy-profiles .node-slot {
       transition: none;
     }
   }
@@ -1017,24 +1078,92 @@ svg {
 
 <script>
   (() => {
-    const root = document.getElementById("holoqubits-synergy-flow");
+    const root = document.getElementById("holoqubits-synergy-profiles");
     const stage = root.querySelector(".flow-stage");
     const svg = root.querySelector(".flow-svg");
     const edgeLayer = root.querySelector(".edge-layer");
     const nodeLayer = root.querySelector(".node-layer");
-    const summaryName = root.querySelector(".summary-name");
-    const summaryText = root.querySelector(".summary-text");
+    const profilePanel = root.querySelector(".profile-panel");
+    const profilePhoto = root.querySelector(".profile-photo");
+    const profileInitials = root.querySelector(".profile-initials");
+    const profileName = root.querySelector(".profile-name");
+    const profileRole = root.querySelector(".profile-role");
+    const profileText = root.querySelector(".profile-text");
     const ns = "http://www.w3.org/2000/svg";
 
     const members = [
-      { id: "om", full: "Olivera Mišković", mobile: "Olivera", expertise: "Geometric gravity · holography" },
-      { id: "am", full: "Ayan Mukhopadhyay", mobile: "Ayan", expertise: "Nonequilibrium holography" },
-      { id: "ga", full: "Georgios Anastasiou", mobile: "Georgios", expertise: "Conformal renormalization" },
-      { id: "cc", full: "Cristóbal Corral", mobile: "Cristóbal", expertise: "Gauge theory · topology" },
-      { id: "ds", full: "Dominique Spehner", mobile: "Dominique", expertise: "Quantum-information geometry" },
-      { id: "ro", full: "Rodrigo Olea", mobile: "Rodrigo", expertise: "Charges · thermodynamics" },
-      { id: "ia", full: "Ignacio J. Araya", mobile: "Ignacio", expertise: "Holographic information" },
-      { id: "rg", full: "Radouane Gannouji", mobile: "Radouane", expertise: "Extremality · numerical gravity" }
+      {
+        id: "om",
+        full: "Olivera Mišković",
+        mobile: "Olivera",
+        role: "Director · PUCV",
+        expertise: "Geometric gravity · holography",
+        bio: "Works on geometric renormalization, black holes, holography and quantum field theory.",
+        photo: ""
+      },
+      {
+        id: "am",
+        full: "Ayan Mukhopadhyay",
+        mobile: "Ayan",
+        role: "Alternate Director · PUCV",
+        expertise: "Nonequilibrium holography",
+        bio: "Works on nonequilibrium holography, strongly coupled matter and quantum information.",
+        photo: ""
+      },
+      {
+        id: "ga",
+        full: "Georgios Anastasiou",
+        mobile: "Georgios",
+        role: "Principal Investigator · UAI",
+        expertise: "Conformal renormalization",
+        bio: "Works on conformal renormalization, entanglement and higher-curvature gravity.",
+        photo: ""
+      },
+      {
+        id: "cc",
+        full: "Cristóbal Corral",
+        mobile: "Cristóbal",
+        role: "Principal Investigator · UAI",
+        expertise: "Gauge theory · topology",
+        bio: "Works on gravity, gauge theory, topology and supergravity solutions.",
+        photo: ""
+      },
+      {
+        id: "ds",
+        full: "Dominique Spehner",
+        mobile: "Dominique",
+        role: "Principal Investigator · UdeC",
+        expertise: "Quantum-information geometry",
+        bio: "Works on quantum-information geometry, correlations, metrology and open quantum systems.",
+        photo: ""
+      },
+      {
+        id: "ro",
+        full: "Rodrigo Olea",
+        mobile: "Rodrigo",
+        role: "Principal Investigator · PUCV",
+        expertise: "Charges · thermodynamics",
+        bio: "Works on conformal geometry, gravitational charges and black-hole thermodynamics.",
+        photo: ""
+      },
+      {
+        id: "ia",
+        full: "Ignacio J. Araya",
+        mobile: "Ignacio",
+        role: "Principal Investigator · UNAB",
+        expertise: "Holographic information",
+        bio: "Works on holography, conformal methods and quantum-information measures.",
+        photo: ""
+      },
+      {
+        id: "rg",
+        full: "Radouane Gannouji",
+        mobile: "Radouane",
+        role: "Principal Investigator · PUCV",
+        expertise: "Extremality · numerical gravity",
+        bio: "Works on extremal black holes, stability, numerical relativity and information dynamics.",
+        photo: ""
+      }
     ];
 
     const topics = [
@@ -1222,6 +1351,7 @@ svg {
 
       const memberBoxes = new Map();
       const topicBoxes = new Map();
+      const outcomeBoxes = new Map();
       members.forEach((member, index) => {
         memberBoxes.set(member.id, {
           x: memberX,
@@ -1232,16 +1362,36 @@ svg {
       });
 
       topics.forEach((topic, index) => {
-        topicBoxes.set(topic.id, {
+        const topicBox = {
           x: topicX,
           y: topicTop + index * topicStep,
           w: topicW,
           h: topicH
+        };
+        topicBoxes.set(topic.id, topicBox);
+        outcomeBoxes.set(topic.id, {
+          x: outcomeX,
+          y: topicBox.y - 2,
+          w: outcomeW,
+          h: outcomeH
         });
+      });
+
+      members.forEach((member) => makeMemberNode(member, memberBoxes.get(member.id), narrow));
+      topics.forEach((topic) => {
+        makeTopicNode(topic, topicBoxes.get(topic.id), narrow);
+        makeOutcomeNode(topic, outcomeBoxes.get(topic.id), narrow);
+      });
+
+      nodeRecords.forEach((record) => {
+        const box = record.type === "member" ? memberBoxes.get(record.id) : record.type === "topic" ? topicBoxes.get(record.id) : outcomeBoxes.get(record.id);
+        box.w = record.element.offsetWidth || box.w;
+        box.h = record.element.offsetHeight || box.h;
       });
 
       topics.forEach((topic) => {
         const topicBox = topicBoxes.get(topic.id);
+        const outcomeBox = outcomeBoxes.get(topic.id);
         const memberCount = topic.members.length;
         topic.members.forEach((memberId, index) => {
           const memberBox = memberBoxes.get(memberId);
@@ -1252,25 +1402,7 @@ svg {
           createPath(memberId, topic.id, "member-edge", curve(memberBox.x + memberBox.w, y1, topicBox.x, y2));
         });
 
-        const outcomeBox = {
-          x: outcomeX,
-          y: topicBox.y - 2,
-          w: outcomeW,
-          h: outcomeH
-        };
         createPath(null, topic.id, "outcome-edge", curve(topicBox.x + topicBox.w, topicBox.y + topicBox.h / 2, outcomeBox.x, outcomeBox.y + outcomeBox.h / 2));
-      });
-
-      members.forEach((member) => makeMemberNode(member, memberBoxes.get(member.id), narrow));
-      topics.forEach((topic) => {
-        const topicBox = topicBoxes.get(topic.id);
-        makeTopicNode(topic, topicBox, narrow);
-        makeOutcomeNode(topic, {
-          x: outcomeX,
-          y: topicBox.y - 2,
-          w: outcomeW,
-          h: outcomeH
-        }, narrow);
       });
 
       renderHighlight();
@@ -1307,22 +1439,51 @@ svg {
       });
 
       if (!target) {
-        summaryName.textContent = "How to read it";
-        summaryText.textContent = "Read from left to right: expertise converges on shared problems, which produce collective outcomes.";
+        profilePanel.classList.add("is-empty");
+        profilePhoto.hidden = true;
+        profilePhoto.removeAttribute("src");
+        profilePhoto.alt = "";
+        profileInitials.hidden = false;
+        profileInitials.textContent = "HQ";
+        profileName.textContent = "How to read it";
+        profileRole.textContent = "";
+        profileText.textContent = "Read from left to right: expertise converges on shared problems, which produce collective outcomes.";
         return;
       }
 
       if (target.type === "member") {
         const member = members.find((item) => item.id === target.id);
         const labels = topics.filter((topic) => topic.members.includes(target.id)).map((topic) => topic.label);
-        summaryName.textContent = member.full;
-        summaryText.textContent = member.expertise + ". Connects to " + labels.length + " shared problems: " + labels.join(", ") + ".";
+        const initials = member.full.split(/\s+/).map((part) => part.charAt(0)).join("").slice(0, 2).toUpperCase();
+        profilePanel.classList.remove("is-empty");
+        profileName.textContent = member.full;
+        profileRole.textContent = member.role;
+        profileText.textContent = member.bio + " Connects to " + labels.length + " shared problems: " + labels.join(", ") + ".";
+        profileInitials.textContent = initials;
+        profileInitials.hidden = Boolean(member.photo);
+        profilePhoto.hidden = !member.photo;
+        profilePhoto.alt = member.photo ? "Portrait of " + member.full : "";
+        if (member.photo) {
+          profilePhoto.src = member.photo;
+          profilePhoto.onerror = () => {
+            profilePhoto.hidden = true;
+            profileInitials.hidden = false;
+          };
+        } else {
+          profilePhoto.removeAttribute("src");
+        }
         return;
       }
 
       const topic = topics.find((item) => item.id === target.id);
-      summaryName.textContent = topic.label;
-      summaryText.textContent = "Combines " + topic.members.length + " researchers and leads to: " + topic.outcome + ".";
+      profilePanel.classList.add("is-empty");
+      profilePhoto.hidden = true;
+      profilePhoto.removeAttribute("src");
+      profilePhoto.alt = "";
+      profileInitials.hidden = false;
+      profileName.textContent = topic.label;
+      profileRole.textContent = "Shared scientific problem · " + topic.members.length + " researchers";
+      profileText.textContent = "Leads to: " + topic.outcome + ".";
     }
 
     const observer = new ResizeObserver(() => {
