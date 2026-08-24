@@ -844,7 +844,7 @@ svg {
     <div class="profile-copy">
       <div class="profile-name">How to read it</div>
       <div class="profile-role text-small text-muted"></div>
-      <div class="profile-text">Read from left to right: expertise converges on shared problems, which produce collective outcomes.</div>
+      <div class="profile-text">Read from left to right: team members converge on shared problems, which produce collective outcomes. Pass the mouse over a researcher or shared problem to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.</div>
     </div>
   </div>
 </div>
@@ -944,12 +944,6 @@ svg {
     opacity: 0.18;
   }
 
-  #holoqubits-synergy-profiles .member-expertise {
-    display: block;
-    margin-top: 4px;
-    color: var(--muted-foreground);
-  }
-
   #holoqubits-synergy-profiles .topic-slot,
   #holoqubits-synergy-profiles .outcome-slot {
     --topic-color: var(--viz-series-1);
@@ -1047,10 +1041,6 @@ svg {
       grid-template-columns: 31% 35% 34%;
     }
 
-    #holoqubits-synergy-profiles .member-expertise {
-      display: none;
-    }
-
     #holoqubits-synergy-profiles .flow-edge {
       stroke-width: 1.5;
     }
@@ -1093,38 +1083,18 @@ svg {
 
     const members = [
       {
-        id: "om",
-        full: "Olivera Mišković",
-        mobile: "Olivera",
-        role: "Director · PUCV",
-        expertise: "Geometric gravity · holography",
-        bio: "Works on geometric renormalization, black holes, holography and quantum field theory.",
-        photo: "images/olivera-miskovic.jpg"
-      },
-      {
         id: "am",
         full: "Ayan Mukhopadhyay",
         mobile: "Ayan",
         role: "Alternate Director · PUCV",
-        expertise: "Nonequilibrium holography",
         bio: "Works on nonequilibrium holography, strongly coupled matter and quantum information.",
         photo: "images/ayan-mukhopadhyay.jpg"
-      },
-      {
-        id: "ga",
-        full: "Georgios Anastasiou",
-        mobile: "Georgios",
-        role: "Principal Investigator · UAI",
-        expertise: "Conformal renormalization",
-        bio: "Works on conformal renormalization, entanglement and higher-curvature gravity.",
-        photo: "images/georgios-anastasiou.jpg"
       },
       {
         id: "cc",
         full: "Cristóbal Corral",
         mobile: "Cristóbal",
         role: "Principal Investigator · UAI",
-        expertise: "Gauge theory · topology",
         bio: "Works on gravity, gauge theory, topology and supergravity solutions.",
         photo: "images/cristobal-corral.jpg"
       },
@@ -1133,45 +1103,81 @@ svg {
         full: "Dominique Spehner",
         mobile: "Dominique",
         role: "Principal Investigator · UdeC",
-        expertise: "Quantum-information geometry",
         bio: "Works on quantum-information geometry, correlations, metrology and open quantum systems.",
         photo: "images/dominique-spehner.jpg"
       },
       {
-        id: "ro",
-        full: "Rodrigo Olea",
-        mobile: "Rodrigo",
-        role: "Principal Investigator · PUCV",
-        expertise: "Charges · thermodynamics",
-        bio: "Works on conformal geometry, gravitational charges and black-hole thermodynamics.",
-        photo: "images/rodrigo-olea.jpg"
+        id: "ga",
+        full: "Georgios Anastasiou",
+        mobile: "Georgios",
+        role: "Principal Investigator · UAI",
+        bio: "Works on conformal renormalization, entanglement and higher-curvature gravity.",
+        photo: "images/georgios-anastasiou.jpg"
       },
       {
         id: "ia",
         full: "Ignacio J. Araya",
         mobile: "Ignacio",
         role: "Principal Investigator · UNAB",
-        expertise: "Holographic information",
         bio: "Works on holography, conformal methods and quantum-information measures.",
         photo: "images/ignacio-araya.jpg"
+      },
+      {
+        id: "om",
+        full: "Olivera Mišković",
+        mobile: "Olivera",
+        role: "Director · PUCV",
+        bio: "Works on geometric renormalization, black holes, holography and quantum field theory.",
+        photo: "images/olivera-miskovic.jpg"
       },
       {
         id: "rg",
         full: "Radouane Gannouji",
         mobile: "Radouane",
         role: "Principal Investigator · PUCV",
-        expertise: "Extremality · numerical gravity",
         bio: "Works on extremal black holes, stability, numerical relativity and information dynamics.",
         photo: "images/radouane-gannouji.jpg"
+      },
+      {
+        id: "ro",
+        full: "Rodrigo Olea",
+        mobile: "Rodrigo",
+        role: "Principal Investigator · PUCV",
+        bio: "Works on conformal geometry, gravitational charges and black-hole thermodynamics.",
+        photo: "images/rodrigo-olea.jpg"
       }
     ];
 
     const topics = [
       {
+        id: "transport",
+        label: "Anomalous transport",
+        mobile: "Transport",
+        members: ["am", "cc", "om"],
+        outcome: "Nonequilibrium current predictions",
+        mobileOutcome: "Current predictions"
+      },
+      {
+        id: "complexity",
+        label: "Complexity and QEC",
+        mobile: "Complexity",
+        members: ["am", "ds", "ga", "ia", "om"],
+        outcome: "Encoding and QEC diagnostics",
+        mobileOutcome: "Encoding and QEC"
+      },
+      {
+        id: "dynamics",
+        label: "Quantum dynamics",
+        mobile: "Dynamics",
+        members: ["am", "ds", "ia", "rg"],
+        outcome: "Information flow and thermalization",
+        mobileOutcome: "Information flow"
+      },
+      {
         id: "geometry",
         label: "Geometry beyond AdS",
         mobile: "Geometry",
-        members: ["om", "ga", "ro", "ia", "cc"],
+        members: ["cc", "ga", "ia", "om", "ro"],
         outcome: "Finite observables and reconstruction",
         mobileOutcome: "Finite observables"
       },
@@ -1179,33 +1185,9 @@ svg {
         id: "extremal",
         label: "Extremality and information",
         mobile: "Extremal BH",
-        members: ["rg", "om", "ro", "am", "ia"],
+        members: ["am", "ia", "om", "rg", "ro"],
         outcome: "Formation-to-information diagnostics",
         mobileOutcome: "Extremality diagnostics"
-      },
-      {
-        id: "transport",
-        label: "Anomalous transport",
-        mobile: "Transport",
-        members: ["cc", "om", "am"],
-        outcome: "Nonequilibrium current predictions",
-        mobileOutcome: "Current predictions"
-      },
-      {
-        id: "dynamics",
-        label: "Quantum dynamics",
-        mobile: "Dynamics",
-        members: ["rg", "am", "ds", "ia"],
-        outcome: "Information flow and thermalization",
-        mobileOutcome: "Information flow"
-      },
-      {
-        id: "complexity",
-        label: "Complexity and QEC",
-        mobile: "Complexity",
-        members: ["ga", "om", "am", "ds", "ia"],
-        outcome: "Encoding and QEC diagnostics",
-        mobileOutcome: "Encoding and QEC"
       }
     ];
 
@@ -1276,12 +1258,8 @@ svg {
       button.setAttribute("aria-label", member.full);
       button.setAttribute("aria-pressed", "false");
 
-      const expertise = document.createElement("span");
-      expertise.className = "member-expertise text-small";
-      expertise.textContent = member.expertise;
-
       addInteraction(button, { type: "member", id: member.id });
-      slot.append(button, expertise);
+      slot.appendChild(button);
       nodeLayer.appendChild(slot);
       nodeRecords.push({ element: slot, button, type: "member", id: member.id });
     }
@@ -1392,8 +1370,9 @@ svg {
       topics.forEach((topic) => {
         const topicBox = topicBoxes.get(topic.id);
         const outcomeBox = outcomeBoxes.get(topic.id);
-        const memberCount = topic.members.length;
-        topic.members.forEach((memberId, index) => {
+        const orderedMembers = topic.members.slice().sort((a, b) => members.findIndex((member) => member.id === a) - members.findIndex((member) => member.id === b));
+        const memberCount = orderedMembers.length;
+        orderedMembers.forEach((memberId, index) => {
           const memberBox = memberBoxes.get(memberId);
           const memberTopics = topics.filter((item) => item.members.includes(memberId));
           const memberTopicIndex = memberTopics.findIndex((item) => item.id === topic.id);
@@ -1447,7 +1426,7 @@ svg {
         profileInitials.textContent = "HQ";
         profileName.textContent = "How to read it";
         profileRole.textContent = "";
-        profileText.textContent = "Read from left to right: expertise converges on shared problems, which produce collective outcomes.";
+        profileText.textContent = "Read from left to right: team members converge on shared problems, which produce collective outcomes. Pass the mouse over a researcher or shared problem to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.";
         return;
       }
 
@@ -1496,240 +1475,5 @@ svg {
   })();
 </script>
 
-<script id="codex-visualization-tooltip">/* oxlint-disable typescript/no-unsafe-argument, typescript/no-unsafe-call, typescript/no-unsafe-return */
-// Runs inside the visualization sandbox, not the host webview.
-(() => {
-  if (window.FloatingUIDOM == null) {
-    return;
-  }
-  const { autoUpdate, computePosition, flip, offset, shift, size } =
-    window.FloatingUIDOM;
-  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
-  const tooltipId = `codex-visualization-tooltip-${
-    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
-  }`;
-  const tooltipGap = 5;
-  const hoverDelay = 700;
-  const skipDelay = 300;
-  let activeTrigger = null;
-  let pendingTrigger = null;
-  let tooltip = null;
-  let openTimeout = null;
-  let autoUpdateCleanup = null;
-  let positionRequest = 0;
-  let skipDelayUntil = 0;
-
-  const getTrigger = (target) =>
-    target?.nodeType === Node.ELEMENT_NODE
-      ? target.closest("[data-tooltip]")
-      : null;
-  const containsTarget = (trigger, target) =>
-    target?.nodeType != null && trigger.contains(target);
-  const getContent = (trigger) =>
-    trigger.getAttribute("data-tooltip")?.trim() ?? "";
-  const getPlacement = (trigger) => {
-    const placement = trigger.getAttribute("data-tooltip-placement");
-    return tooltipPlacements.has(placement) ? placement : "top";
-  };
-  const getTooltip = () => {
-    if (tooltip == null) {
-      tooltip = document.createElement("div");
-      tooltip.id = tooltipId;
-      tooltip.className = "tooltip";
-      tooltip.setAttribute("role", "tooltip");
-    }
-    return tooltip;
-  };
-  const setDescribedBy = (trigger, described) => {
-    const ids = new Set(
-      (trigger.getAttribute("aria-describedby") ?? "")
-        .split(/\s+/)
-        .filter(Boolean),
-    );
-    if (described) {
-      ids.add(tooltipId);
-    } else {
-      ids.delete(tooltipId);
-    }
-    if (ids.size === 0) {
-      trigger.removeAttribute("aria-describedby");
-    } else {
-      trigger.setAttribute("aria-describedby", [...ids].join(" "));
-    }
-  };
-  const clearOpenTimeout = () => {
-    if (openTimeout != null) {
-      window.clearTimeout(openTimeout);
-      openTimeout = null;
-    }
-    pendingTrigger = null;
-  };
-  const closeTooltip = (activateSkipDelay = true) => {
-    clearOpenTimeout();
-    positionRequest += 1;
-    autoUpdateCleanup?.();
-    autoUpdateCleanup = null;
-    if (activeTrigger == null) {
-      return;
-    }
-    setDescribedBy(activeTrigger, false);
-    activeTrigger = null;
-    tooltip?.remove();
-    if (activateSkipDelay) {
-      skipDelayUntil = Date.now() + skipDelay;
-    }
-  };
-  const updatePosition = (trigger, floating) => {
-    const request = ++positionRequest;
-    void computePosition(trigger, floating, {
-      middleware: [
-        offset(tooltipGap),
-        flip({ padding: tooltipGap }),
-        shift({ padding: tooltipGap }),
-        size({
-          padding: tooltipGap,
-          apply({ availableHeight, availableWidth, elements }) {
-            elements.floating.style.setProperty(
-              "--tooltip-available-width",
-              `${Math.max(0, availableWidth)}px`,
-            );
-            elements.floating.style.setProperty(
-              "--tooltip-available-height",
-              `${Math.max(0, availableHeight)}px`,
-            );
-          },
-        }),
-      ],
-      placement: getPlacement(trigger),
-      strategy: "fixed",
-    })
-      .then(({ x, y }) => {
-        if (activeTrigger !== trigger || request !== positionRequest) {
-          return;
-        }
-        const scale = window.devicePixelRatio || 1;
-        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
-        floating.style.visibility = "visible";
-      })
-      .catch(() => {
-        if (activeTrigger === trigger && request === positionRequest) {
-          closeTooltip(false);
-        }
-      });
-  };
-  const openTooltip = (trigger) => {
-    const content = getContent(trigger);
-    if (!trigger.isConnected || content.length === 0) {
-      return;
-    }
-    clearOpenTimeout();
-    if (activeTrigger === trigger) {
-      return;
-    }
-    closeTooltip();
-    const floating = getTooltip();
-    floating.textContent = content;
-    floating.style.visibility = "hidden";
-    floating.style.transform = "translate(0, 0)";
-    document.body.appendChild(floating);
-    activeTrigger = trigger;
-    setDescribedBy(trigger, true);
-    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
-      updatePosition(trigger, floating);
-    });
-  };
-  const requestOpen = (trigger, immediate = false) => {
-    if (
-      getContent(trigger).length === 0 ||
-      activeTrigger === trigger ||
-      pendingTrigger === trigger
-    ) {
-      return;
-    }
-    clearOpenTimeout();
-    pendingTrigger = trigger;
-    const delay =
-      immediate || activeTrigger != null || Date.now() < skipDelayUntil
-        ? 0
-        : hoverDelay;
-    if (delay === 0) {
-      openTooltip(trigger);
-      return;
-    }
-    openTimeout = window.setTimeout(() => {
-      openTimeout = null;
-      pendingTrigger = null;
-      openTooltip(trigger);
-    }, delay);
-  };
-  const handlePointerOpen = (event) => {
-    if (event.pointerType === "touch") {
-      return;
-    }
-    const trigger = getTrigger(event.target);
-    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
-      return;
-    }
-    requestOpen(trigger);
-  };
-  const handleLeave = (event) => {
-    const trigger = getTrigger(event.target);
-    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
-      return;
-    }
-    if (activeTrigger === trigger || pendingTrigger === trigger) {
-      closeTooltip();
-    }
-  };
-  const handleFocusIn = (event) => {
-    const trigger = getTrigger(event.target);
-    if (trigger?.matches(":focus-visible")) {
-      requestOpen(trigger, true);
-    }
-  };
-  const handleKeyDown = (event) => {
-    if (event.key === "Escape") {
-      closeTooltip();
-    }
-  };
-  const handleContextMenu = (event) => {
-    const trigger = getTrigger(event.target);
-    if (activeTrigger === trigger || pendingTrigger === trigger) {
-      closeTooltip();
-    }
-  };
-  const destroy = () => {
-    closeTooltip(false);
-    document.removeEventListener("pointerover", handlePointerOpen);
-    document.removeEventListener("pointerout", handleLeave);
-    document.removeEventListener("focusin", handleFocusIn);
-    document.removeEventListener("focusout", handleLeave);
-    document.removeEventListener("keydown", handleKeyDown);
-    document.removeEventListener("contextmenu", handleContextMenu);
-    tooltip = null;
-  };
-
-  document.addEventListener("pointerover", handlePointerOpen);
-  document.addEventListener("pointerout", handleLeave);
-  document.addEventListener("focusin", handleFocusIn);
-  document.addEventListener("focusout", handleLeave);
-  document.addEventListener("keydown", handleKeyDown);
-  document.addEventListener("contextmenu", handleContextMenu);
-  window.addEventListener("pagehide", destroy, { once: true });
-})();
-</script>
-<script id="codex-visualization-lucide-initialization">(() => {
-  const initialize = () => {
-    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
-  };
-  if (globalThis.lucide != null) {
-    initialize();
-    return;
-  }
-  document
-    .getElementById("codex-visualization-lucide")
-    ?.addEventListener("load", initialize, { once: true });
-})();
-</script>
 </body>
 </html>
