@@ -990,8 +990,8 @@ svg {
   }
 
   #holoqubits-synergy-profiles .topic-slot .btn {
-    min-height: 64px;
-    padding: 7px 10px;
+    min-height: 56px;
+    padding: 5px 8px;
     line-height: 1.25;
     text-align: left;
     white-space: normal;
@@ -1083,6 +1083,12 @@ svg {
     color: var(--card-foreground);
   }
 
+  #holoqubits-synergy-profiles .profile-links {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted-foreground);
+  }
+
   @media (max-width: 780px) {
     #holoqubits-synergy-profiles .flow-head {
       grid-template-columns: 31% 35% 34%;
@@ -1105,8 +1111,8 @@ svg {
     }
 
     #holoqubits-synergy-profiles .topic-slot .btn {
-      min-height: 52px;
-      padding: 5px 7px;
+      min-height: 46px;
+      padding: 4px 6px;
     }
   }
 
@@ -1151,22 +1157,6 @@ svg {
         photo: "images/ayan-mukhopadhyay.jpg"
       },
       {
-        id: "cc",
-        full: "Cristóbal Corral",
-        mobile: "Cristóbal",
-        role: "Principal Investigator · UAI",
-        bio: "Works on gravity, gauge theory, topology and supergravity solutions.",
-        photo: "images/cristobal-corral.jpg"
-      },
-      {
-        id: "ds",
-        full: "Dominique Spehner",
-        mobile: "Dominique",
-        role: "Principal Investigator · UdeC",
-        bio: "Works on quantum-information geometry, correlations, metrology and open quantum systems.",
-        photo: "images/dominique-spehner.jpg"
-      },
-      {
         id: "ga",
         full: "Georgios Anastasiou",
         mobile: "Georgios",
@@ -1183,6 +1173,14 @@ svg {
         photo: "images/ignacio-araya.jpg"
       },
       {
+        id: "cc",
+        full: "Cristóbal Corral",
+        mobile: "Cristóbal",
+        role: "Principal Investigator · UAI",
+        bio: "Works on gravity, gauge theory, topology and supergravity solutions.",
+        photo: "images/cristobal-corral.jpg"
+      },
+      {
         id: "rg",
         full: "Radouane Gannouji",
         mobile: "Radouane",
@@ -1197,6 +1195,14 @@ svg {
         role: "Principal Investigator · PUCV",
         bio: "Works on conformal geometry, gravitational charges and black-hole thermodynamics.",
         photo: "images/rodrigo-olea.jpg"
+      },
+      {
+        id: "ds",
+        full: "Dominique Spehner",
+        mobile: "Dominique",
+        role: "Principal Investigator · UdeC",
+        bio: "Works on quantum-information geometry, correlations, metrology and open quantum systems.",
+        photo: "images/dominique-spehner.jpg"
       }
     ];
 
@@ -1362,20 +1368,20 @@ svg {
     function renderMap() {
       const width = Math.max(300, Math.floor(stage.clientWidth));
       const narrow = width < 781;
-      const height = narrow ? 940 : 720;
+      const height = narrow ? 820 : 620;
       const memberW = narrow ? Math.min(150, width * 0.28) : Math.min(230, width * 0.22);
       const topicW = narrow ? Math.min(180, width * 0.32) : Math.min(360, width * 0.31);
       const outcomeW = narrow ? Math.min(170, width * 0.3) : Math.min(310, width * 0.27);
       const memberX = 0;
       const topicX = Math.round((width - topicW) * 0.5);
       const outcomeX = width - outcomeW;
-      const memberTop = narrow ? 62 : 48;
-      const memberStep = narrow ? 102 : 76;
-      const topicTop = narrow ? 70 : 38;
-      const topicStep = narrow ? 176 : 134;
+      const memberTop = narrow ? 48 : 32;
+      const memberStep = narrow ? 88 : 70;
+      const topicTop = narrow ? 52 : 24;
+      const topicStep = narrow ? 148 : 116;
       const memberH = narrow ? 40 : 54;
-      const topicH = narrow ? 52 : 64;
-      const outcomeH = narrow ? 58 : 64;
+      const topicH = narrow ? 48 : 56;
+      const outcomeH = narrow ? 52 : 58;
 
       stage.style.height = height + "px";
       svg.setAttribute("viewBox", "0 0 " + width + " " + height);
@@ -1494,7 +1500,12 @@ svg {
         profilePanel.classList.remove("is-empty");
         profileName.textContent = member.full;
         profileRole.textContent = member.role;
-        profileText.textContent = member.bio + " Connects to " + labels.length + " shared problems: " + labels.join(", ") + ".";
+        const bioLine = document.createElement("span");
+        const linksLine = document.createElement("span");
+        bioLine.textContent = member.bio;
+        linksLine.className = "profile-links";
+        linksLine.textContent = "Connects to " + labels.length + " shared problems: " + labels.join(", ") + ".";
+        profileText.replaceChildren(bioLine, linksLine);
         profileInitials.textContent = initials;
         profileInitials.hidden = Boolean(member.photo);
         profilePhoto.hidden = !member.photo;
