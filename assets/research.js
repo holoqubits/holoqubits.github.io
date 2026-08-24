@@ -4,8 +4,8 @@ const topics = {
     title: "Geometry, Symmetries and Quantum Information Measures",
     question: "How can infrared-safe observables in gravity be related precisely to correlations and quantum-information measures in the dual theory?",
     overview: [
-      "A precise holographic dictionary must relate infrared-safe observables in gravity to correlation functions and quantum-information measures in the dual quantum theory. Members of HoloQUBITS have developed geometrical renormalization methods that remove infrared divergences while preserving asymptotic symmetries.",
-      "These methods reveal a bridge between conformal geometry and quantum information: universal contributions to entanglement entropy can be extracted from the Willmore energy of extremal bulk surfaces. The project will extend this bridge beyond the standard anti-de Sitter setting."
+      "Calculations in gravity often produce infinities because spacetime extends to very large distances. We develop geometric methods to remove these infinities while preserving the symmetries and physical information of the theory. Remarkably, these methods reveal that some properties of quantum entanglement can be obtained directly from the geometry of particular surfaces.",
+      "Our goal is to extend this connection to more realistic settings, including flat and expanding universes. This requires understanding how gravitational radiation—and the permanent “memory” it leaves behind—is reflected in the corresponding quantum description. Ultimately, we aim to establish a precise dictionary connecting geometry, gravitational symmetries and measurable properties of quantum information."
     ],
     objectives: ["Develop the holographic dictionary for asymptotically flat gravity on null boundaries", "Incorporate gravitational memory into Ward identities associated with asymptotic symmetries", "Define quantum-information measures for de Sitter and more general cosmological spacetimes"],
     methods: ["Geometrical and holographic renormalization", "Conformal geometry and extremal surfaces", "Asymptotic-symmetry analysis and holographic entanglement"],
