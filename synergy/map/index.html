@@ -850,6 +850,44 @@ svg {
 </div>
 
 <style>
+  :root {
+    color-scheme: light;
+    background: #ffffff !important;
+    --background: #ffffff;
+    --foreground: #18202b;
+    --card: rgb(9 38 87 / 4.5%);
+    --card-foreground: #18202b;
+    --popover: #ffffff;
+    --popover-foreground: #18202b;
+    --primary: #078a94;
+    --primary-foreground: #ffffff;
+    --secondary: #ffffff;
+    --secondary-foreground: #092657;
+    --muted: rgb(9 38 87 / 7%);
+    --muted-foreground: #5e6875;
+    --accent: #edf7f7;
+    --accent-foreground: #056b73;
+    --border: #d7e0e4;
+    --input: #cbd7dc;
+    --ring: #078a94;
+    --font-sans: Arial, Helvetica, sans-serif;
+    --viz-series-1: #0b789e;
+    --viz-series-2: #078a94;
+    --viz-series-3: #4e7f73;
+    --viz-series-4: #325f87;
+    --viz-series-5: #6577a4;
+  }
+
+  html,
+  html > body {
+    background: #ffffff !important;
+    overflow: hidden;
+  }
+
+  :root:not([data-app-block-surface]) > body {
+    padding: 0;
+  }
+
   #holoqubits-synergy-profiles {
     width: 100%;
     color: var(--foreground);
@@ -1472,6 +1510,17 @@ svg {
     observer.observe(stage);
     window.addEventListener("pagehide", () => observer.disconnect(), { once: true });
     renderMap();
+
+    function reportDocumentHeight() {
+      const height = Math.ceil(document.documentElement.scrollHeight);
+      window.parent.postMessage({ type: "holoqubits-synergy-height", height }, "*");
+    }
+
+    const heightObserver = new ResizeObserver(() => requestAnimationFrame(reportDocumentHeight));
+    heightObserver.observe(document.body);
+    window.addEventListener("load", reportDocumentHeight, { once: true });
+    window.addEventListener("pagehide", () => heightObserver.disconnect(), { once: true });
+    requestAnimationFrame(reportDocumentHeight);
   })();
 </script>
 
