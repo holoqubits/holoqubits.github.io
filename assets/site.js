@@ -29,3 +29,13 @@ document.querySelector("#site-footer").innerHTML = `
     <div><p>Holographic Quantum Universe</p><p>Black Holes, Information Theory and Spacetime</p></div>
     <p class="institutions">PUCV · UAI · UNAB · UdeC</p>
   </footer>`;
+
+const synergyFrame = document.querySelector(".synergy-frame");
+if (synergyFrame) {
+  window.addEventListener("message", (event) => {
+    if (event.source !== synergyFrame.contentWindow) return;
+    if (event.data?.type !== "holoqubits-synergy-height") return;
+    const height = Number(event.data.height);
+    if (Number.isFinite(height)) synergyFrame.style.height = `${Math.max(720, Math.ceil(height))}px`;
+  });
+}
