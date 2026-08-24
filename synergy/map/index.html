@@ -989,6 +989,14 @@ svg {
     border-left: 5px solid var(--topic-color);
   }
 
+  #holoqubits-synergy-profiles .topic-slot .btn {
+    min-height: 64px;
+    padding: 7px 10px;
+    line-height: 1.25;
+    text-align: left;
+    white-space: normal;
+  }
+
   #holoqubits-synergy-profiles .topic-slot[data-topic="extremal"],
   #holoqubits-synergy-profiles .outcome-slot[data-topic="extremal"] {
     --topic-color: var(--viz-series-2);
@@ -1012,6 +1020,7 @@ svg {
   #holoqubits-synergy-profiles .outcome-slot {
     display: flex;
     align-items: center;
+    line-height: 1.35;
     font-weight: 500;
   }
 
@@ -1093,6 +1102,11 @@ svg {
 
     #holoqubits-synergy-profiles .flow-edge.outcome-edge.is-active {
       stroke-width: 5;
+    }
+
+    #holoqubits-synergy-profiles .topic-slot .btn {
+      min-height: 52px;
+      padding: 5px 7px;
     }
   }
 
@@ -1188,44 +1202,49 @@ svg {
 
     const topics = [
       {
-        id: "transport",
-        label: "Anomalous transport",
-        mobile: "Transport",
-        members: ["om", "am", "cc"],
-        outcome: "Nonequilibrium current predictions",
-        mobileOutcome: "Current predictions"
-      },
-      {
-        id: "complexity",
-        label: "Complexity and QEC",
-        mobile: "Complexity",
-        members: ["om", "am", "ds", "ga", "ia"],
-        outcome: "Encoding and QEC diagnostics",
-        mobileOutcome: "Encoding and QEC"
-      },
-      {
         id: "geometry",
-        label: "Geometry beyond AdS",
-        mobile: "Geometry",
-        members: ["om", "cc", "ga", "ia", "ro"],
-        outcome: "Finite observables and reconstruction",
+        label: "Geometry, Symmetries and Quantum Information Measures",
+        mobile: "Geometry & QI",
+        members: ["om", "ga", "ia", "ro"],
+        description: "Geometrical renormalization connects finite gravitational observables to entanglement and quantum-information measures in flat, de Sitter and cosmological spacetimes.",
+        outcome: "Finite observables beyond AdS and spacetime reconstruction",
         mobileOutcome: "Finite observables"
       },
       {
-        id: "dynamics",
-        label: "Quantum dynamics",
-        mobile: "Dynamics",
-        members: ["am", "ds", "ia", "rg"],
-        outcome: "Information flow and thermalization",
-        mobileOutcome: "Information flow"
+        id: "extremal",
+        label: "Extremal Black Hole Formation",
+        mobile: "Extremal BH",
+        members: ["om", "am", "cc", "rg", "ro"],
+        description: "Numerical evolution, stability analysis, charged solutions and dual descriptions connect extremal formation to quantum information loss.",
+        outcome: "Holographic reconstruction of formation and information loss",
+        mobileOutcome: "Formation & information"
       },
       {
-        id: "extremal",
-        label: "Extremality and information",
-        mobile: "Extremal BH",
-        members: ["om", "am", "ia", "rg", "ro"],
-        outcome: "Formation-to-information diagnostics",
-        mobileOutcome: "Extremality diagnostics"
+        id: "transport",
+        label: "Strongly Correlated Quantum Matter and Anomalous Transport",
+        mobile: "Matter & transport",
+        members: ["om", "am", "cc", "rg"],
+        description: "Holography, effective QFT, torsionful supergravity and numerical methods connect quantum anomalies to transport and topological response.",
+        outcome: "Anomalous spin-transport and topological-response predictions",
+        mobileOutcome: "Spin transport"
+      },
+      {
+        id: "dynamics",
+        label: "Quantum Dynamics and Information",
+        mobile: "Dynamics & info",
+        members: ["am", "ds", "rg"],
+        description: "Real-time holography, quantum-information methods and numerical relativity extend thermalization beyond equilibrium and probe open-system dynamics.",
+        outcome: "ETH beyond equilibrium and strategies for decoherence control",
+        mobileOutcome: "Thermalization"
+      },
+      {
+        id: "complexity",
+        label: "QIT of Complexity and Error Correction",
+        mobile: "Complexity & QEC",
+        members: ["am", "ds", "ga", "ia"],
+        description: "Bures geometry, explicit circuits, holographic complexity and operator algebras connect quantum operations to bulk-spacetime reconstruction.",
+        outcome: "Explicit circuits, new QEC designs and bulk reconstruction",
+        mobileOutcome: "Circuits & QEC"
       }
     ];
 
@@ -1343,20 +1362,20 @@ svg {
     function renderMap() {
       const width = Math.max(300, Math.floor(stage.clientWidth));
       const narrow = width < 781;
-      const height = narrow ? 820 : 640;
-      const memberW = narrow ? Math.min(150, width * 0.28) : Math.min(205, width * 0.23);
-      const topicW = narrow ? Math.min(180, width * 0.3) : Math.min(210, width * 0.24);
-      const outcomeW = narrow ? Math.min(170, width * 0.3) : Math.min(230, width * 0.27);
+      const height = narrow ? 940 : 720;
+      const memberW = narrow ? Math.min(150, width * 0.28) : Math.min(230, width * 0.22);
+      const topicW = narrow ? Math.min(180, width * 0.32) : Math.min(360, width * 0.31);
+      const outcomeW = narrow ? Math.min(170, width * 0.3) : Math.min(310, width * 0.27);
       const memberX = 0;
       const topicX = Math.round((width - topicW) * 0.5);
       const outcomeX = width - outcomeW;
-      const memberTop = narrow ? 54 : 42;
-      const memberStep = narrow ? 94 : 72;
-      const topicTop = narrow ? 72 : 52;
-      const topicStep = narrow ? 151 : 116;
+      const memberTop = narrow ? 62 : 48;
+      const memberStep = narrow ? 102 : 76;
+      const topicTop = narrow ? 70 : 38;
+      const topicStep = narrow ? 176 : 134;
       const memberH = narrow ? 40 : 54;
-      const topicH = 42;
-      const outcomeH = narrow ? 50 : 46;
+      const topicH = narrow ? 52 : 64;
+      const outcomeH = narrow ? 58 : 64;
 
       stage.style.height = height + "px";
       svg.setAttribute("viewBox", "0 0 " + width + " " + height);
@@ -1500,7 +1519,7 @@ svg {
       profileInitials.hidden = false;
       profileName.textContent = topic.label;
       profileRole.textContent = "Shared scientific problem · " + topic.members.length + " researchers";
-      profileText.textContent = "Leads to: " + topic.outcome + ".";
+      profileText.textContent = topic.description + " Expected outcome: " + topic.outcome + ".";
     }
 
     const observer = new ResizeObserver(() => {
