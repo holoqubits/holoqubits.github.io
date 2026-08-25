@@ -902,7 +902,7 @@ svg {
   #holoqubits-synergy-profiles .flow-stage {
     position: relative;
     width: 100%;
-    min-height: 640px;
+    min-height: 0;
     border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
   }
@@ -1384,7 +1384,7 @@ svg {
       const outcomeH = narrow ? 52 : 88;
 
       stage.style.height = height + "px";
-      svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+      svg.setAttribute("viewBox", "0 0 " + width + " " + stage.clientHeight);
       edgeLayer.replaceChildren();
       nodeLayer.replaceChildren();
       nodeRecords = [];
