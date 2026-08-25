@@ -1,1558 +1,206 @@
 <!doctype html>
-<html lang="en" data-visualize-standalone>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="referrer" content="no-referrer">
-<title>HoloQUBITS — Dynamic Research Synergy</title>
-<style>:root {
-  color-scheme: light dark;
-  background-color: transparent !important;
-
-  /* Agent-facing contract; keep in sync with SKILL.md. */
-  --background: var(
-    --main-surface-primary,
-    light-dark(rgb(255 255 255), rgb(24 24 24))
-  );
-  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
-  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
-  --card-foreground: var(--foreground);
-  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
-  --popover-foreground: var(--foreground);
-  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
-  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
-  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
-  --secondary-foreground: var(--foreground);
-  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
-  --muted-foreground: light-dark(
-    rgb(26 28 31 / 49.4%),
-    rgb(255 255 255 / 49.8%)
-  );
-  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
-  --accent-foreground: var(--primary);
-  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
-  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
-  --input: light-dark(
-    rgb(26 28 31 / 11.8%),
-    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
-  );
-  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
-  --font-size-base: 14px;
-  --red: light-dark(rgb(186 38 35), rgb(250 66 62));
-  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
-
-  /* Internal implementation variables; not part of the agent contract. */
-  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
-  --font-mono:
-    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
-    monospace;
-  --font-size-normal: max(11px, var(--font-size-base));
-  --font-size-tooltip: calc(var(--font-size-base) - 1px);
-  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
-  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
-  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
-  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
-  --font-weight-normal: 430;
-  --font-weight-medium: 500;
-  --line-height-normal: calc(var(--font-size-normal) * 1.5);
-  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
-  --line-height-small: calc(var(--font-size-small) + 4px);
-  --radius: 10px;
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-2xl: calc(var(--radius) * 1.6);
-  --radius-full: 9999px;
-  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
-  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
-
-  /* Legacy aliases; not part of the current agent contract. */
-  --viz-bg: transparent;
-  --viz-panel: var(--card);
-  --viz-border: var(--border);
-  --viz-text: var(--foreground);
-  --viz-muted: var(--muted-foreground);
-  --viz-accent: var(--primary);
-  --viz-accent-text: var(--primary-foreground);
-  --viz-accent-bg: var(--accent);
-  --viz-font-size: var(--font-size-base);
-  --viz-warning: var(--destructive);
-  --color-background-primary: var(--background);
-  --color-text-primary: var(--foreground);
-  --color-border-secondary: var(--border);
-}
-
-:root[data-visualize-standalone] {
-  background-color: var(--background) !important;
-}
-
-/* Generic mobile code-block hosts provide light/dark mode but no series palette.
-   AppBlock hosts set all six variables themselves. */
-:root:not([data-app-block-surface]) {
-  --viz-series-1: var(--primary);
-  --viz-series-2: light-dark(#f3883b, #f59a56);
-  --viz-series-3: light-dark(#5dc977, #74d58b);
-  --viz-series-4: light-dark(#eb77b1, #f08fc0);
-  --viz-series-5: light-dark(#9b79ec, #aa91ef);
-  --viz-series-6: light-dark(#3ab9b1, #5acbc2);
-}
-
-:root[data-theme="light"] {
-  color-scheme: light;
-}
-
-:root[data-theme="dark"] {
-  color-scheme: dark;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html > body {
-  margin: 0;
-  padding: 5px;
-  color: var(--foreground);
-  background: transparent !important;
-  font-family: var(--font-sans);
-  font-size: var(--font-size-normal);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--line-height-normal);
-}
-
-:root:not([data-app-block-surface]) > body {
-  padding: 12px;
-}
-
-a {
-  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
-  cursor: pointer;
-  font-weight: var(--font-weight-medium);
-  text-decoration: none;
-  text-underline-offset: 2px;
-}
-
-a:is(:hover, :focus-visible) {
-  text-decoration-line: underline;
-  text-decoration-style: dashed;
-  text-decoration-thickness: 0.5px;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-block: 0;
-}
-
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-h3,
-h4,
-h5,
-h6 {
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.3;
-}
-
-b,
-strong,
-th {
-  font-weight: var(--font-weight-medium);
-}
-
-code:not(pre code) {
-  display: inline;
-  padding: 1px 6px;
-  border-radius: var(--radius-sm);
-  background: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 0.92em;
-  overflow-wrap: anywhere;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  word-break: break-word;
-}
-
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  color: var(--foreground);
-  font: inherit;
-  text-align: start;
-}
-
-.table :is(th, td) {
-  padding-block: 10px;
-  padding-inline: 0 24px;
-  overflow-wrap: anywhere;
-  border-bottom: 1px solid var(--border);
-  text-align: start;
-  vertical-align: top;
-}
-
-.table-responsive > .table :is(th, td) {
-  overflow-wrap: break-word;
-}
-
-.table :is(th, td):last-child {
-  padding-inline-end: 0;
-}
-
-.table :is(caption, thead th) {
-  font-weight: 600;
-}
-
-.table thead th {
-  padding-block: 8px;
-  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
-}
-
-.table tbody tr:last-child :is(th, td) {
-  border-bottom: 0;
-}
-
-.table.table-sm :is(th, td) {
-  padding-block: 6px;
-}
-
-.table.table-sm :is(th, td):not(:last-child) {
-  padding-inline-end: 16px;
-}
-
-.table :is(.text-end, [align="right"]) {
-  text-align: end;
-  font-variant-numeric: tabular-nums;
-}
-
-.table :is(.text-center, [align="center"]) {
-  text-align: center;
-}
-
-.table .text-nowrap {
-  white-space: nowrap;
-}
-
-#widget {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  padding: 0;
-  background: transparent !important;
-}
-
-.card {
-  min-width: 0;
-  padding: 12px;
-  overflow: hidden;
-  overflow-wrap: break-word;
-  border-radius: var(--radius-2xl);
-  color: var(--card-foreground);
-  background: var(--card);
-}
-
-#widget > :not(.card) {
-  width: 100% !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.tooltip {
-  position: fixed;
-  z-index: 50;
-  top: 0;
-  left: 0;
-  width: max-content;
-  max-width: min(
-    20rem,
-    var(--tooltip-available-width, calc(100vw - 10px)),
-    calc(100vw - 10px)
-  );
-  max-height: min(
-    var(--tooltip-available-height, calc(100vh - 10px)),
-    calc(100vh - 10px)
-  );
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  color: var(--popover-foreground);
-  background: var(--popover);
-  box-shadow: none;
-  font-size: var(--font-size-tooltip);
-  line-height: var(--line-height-tooltip);
-  overflow-wrap: break-word;
-  white-space: normal;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* The bundled tooltip runtime owns [data-tooltip]. AppBlock's CSS-only
-   pseudo-tooltip can widen dense grids even while hidden. */
-main [data-tooltip]::after {
-  content: none;
-}
-
-.viz-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
-  gap: 10px;
-}
-
-.viz-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.viz-stat-value {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.25;
-}
-
-.viz-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-.viz-badge {
-  padding: 3px 8px;
-  border-radius: var(--radius-full);
-  color: var(--accent-foreground);
-  background: var(--accent);
-  font-weight: var(--font-weight-medium);
-}
-
-small,
-.text-small,
-.viz-badge {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
-}
-
-.text-muted {
-  color: var(--muted-foreground);
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.viz-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.viz-controls > .form-label {
-  display: grid;
-  min-width: min(100%, 260px);
-  flex: 1 1 280px;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: baseline;
-  gap: 2px 12px;
-  margin-bottom: 0;
-}
-
-.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
-  grid-column: 1 / -1;
-}
-
-.btn,
-.form-check-input,
-.form-control,
-.form-range,
-.form-select {
-  font: inherit;
-}
-
-.btn {
-  appearance: button;
-  display: inline-flex;
-  inline-size: fit-content;
-  max-inline-size: 100%;
-  min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  margin: 0;
-  padding: 0 8px;
-  -webkit-app-region: no-drag;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  color: var(--secondary-foreground);
-  background: var(--secondary);
-  cursor: var(--cursor-interaction, pointer);
-  text-align: center;
-  text-decoration: none;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-font-smoothing: antialiased;
-}
-
-.btn:is(.btn-block, .viz-tile) {
-  inline-size: 100%;
-}
-
-.btn.viz-tile {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  white-space: normal;
-}
-
-a.btn {
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn:not(:disabled):hover {
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.btn-primary {
-  border-color: transparent;
-  color: var(--interactive-label-primary-default, var(--primary-foreground));
-  background: var(--interactive-bg-primary-default, var(--foreground));
-  background-clip: padding-box;
-}
-
-.btn-primary .text-muted {
-  color: color-mix(
-    in srgb,
-    var(--interactive-label-primary-default, var(--primary-foreground)) 50%,
-    transparent
-  );
-}
-
-.btn-primary:not(:disabled):hover {
-  background: color-mix(in srgb, var(--foreground) 80%, transparent);
-  background-clip: padding-box;
-}
-
-.btn-ghost {
-  border-color: transparent;
-  color: var(--muted-foreground);
-  background: transparent;
-}
-
-.btn-ghost:not(:disabled):hover {
-  color: var(--foreground);
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.btn:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-[data-lucide] {
-  stroke-width: 1.6;
-}
-
-.form-label {
-  display: block;
-  margin-bottom: 6px;
-  color: var(--foreground);
-}
-
-.form-control {
-  display: block;
-  width: 100%;
-  min-height: 28px;
-  padding: 0 8px;
-  outline: none;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  color: var(--foreground);
-  background: var(--secondary);
-}
-
-.form-control::placeholder {
-  color: var(--muted-foreground);
-}
-
-.form-control[type="file"] {
-  padding: 0;
-  overflow: hidden;
-  cursor: var(--cursor-interaction, pointer);
-}
-
-.form-control[type="file"]::file-selector-button {
-  min-height: 26px;
-  margin-right: 8px;
-  padding: 0 8px;
-  border: 0;
-  border-right: 1px solid var(--input);
-  color: var(--secondary-foreground);
-  background: var(--secondary);
-  cursor: inherit;
-  font: inherit;
-}
-
-.form-control[type="file"]:not(:disabled):hover::file-selector-button {
-  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.form-control-color[type="color"] {
-  width: 40px;
-  height: 28px;
-  padding: 3px;
-  cursor: var(--cursor-interaction, pointer);
-}
-
-.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-.form-control-color[type="color"]::-webkit-color-swatch {
-  border: 0;
-  border-radius: calc(var(--radius-lg) - 4px);
-}
-
-textarea.form-control {
-  height: auto;
-  min-height: 72px;
-  padding: 8px 10px;
-  resize: vertical;
-}
-
-.form-control:focus-visible {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-control:disabled,
-.form-select:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.form-select {
-  appearance: none;
-  display: block;
-  width: 100%;
-  min-height: 28px;
-  margin: 0;
-  padding: 0 32px 0 8px;
-  outline: none;
-  border: 1px solid var(--input);
-  border-radius: var(--radius-lg);
-  color: var(--foreground);
-  background-color: var(--secondary);
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
-    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
-  background-position:
-    calc(100% - 14px) 50%,
-    calc(100% - 10px) 50%;
-  background-repeat: no-repeat;
-  background-size: 4px 4px;
-  cursor: var(--cursor-interaction, default);
-}
-
-.form-select:not(:disabled):hover {
-  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
-}
-
-.form-select:focus-visible {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-check {
-  display: flex;
-  min-height: 20px;
-  align-items: center;
-  gap: 6px;
-}
-
-.form-check-input {
-  appearance: none;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 auto;
-  margin: 0;
-  border: 1px solid var(--input);
-  color: var(--primary-foreground);
-  background-color: transparent;
-  cursor: var(--cursor-interaction, default);
-  transition:
-    background-color 150ms,
-    border-color 150ms,
-    box-shadow 150ms;
-}
-
-.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
-  border-color: var(--input);
-  border-radius: var(--radius-sm);
-  background-color: var(--secondary);
-  box-shadow: var(--shadow-sm);
-}
-
-.form-check:not(.form-switch)
-  .form-check-input:not(:disabled):not(:checked):hover {
-  background-color: var(--card);
-}
-
-.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
-  border-color: var(--primary);
-  background-color: var(--primary);
-}
-
-.form-check:not(.form-switch)
-  .form-check-input[type="checkbox"]:checked::before {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: var(--primary-foreground);
-  content: "";
-  mask: var(--checkmark-image) center / 12px 12px no-repeat;
-}
-
-.form-check-input[type="radio"] {
-  width: 14px;
-  height: 14px;
-  border-radius: var(--radius-full);
-}
-
-.form-check-input[type="radio"]:checked {
-  border: 2px solid var(--primary);
-  background:
-    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
-    var(--primary);
-}
-
-.form-check:not(.form-switch) .form-check-input:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-.form-check:not(.form-switch) .form-check-input:disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
-  cursor: not-allowed;
-}
-
-.form-switch .form-check-input:disabled,
-.form-switch .form-check-input:disabled + .form-check-label {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.form-check-label {
-  color: var(--foreground);
-  cursor: var(--cursor-interaction, default);
-}
-
-.form-switch .form-check-input {
-  position: relative;
-  width: 32px;
-  height: 20px;
-  border: 0;
-  border-radius: var(--radius-full);
-  background: var(--muted);
-  box-shadow: none;
-  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.form-switch .form-check-input::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 16px;
-  height: 16px;
-  box-sizing: border-box;
-  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-  box-shadow: var(--shadow-sm);
-  content: "";
-  transform: translate(2px, -50%);
-  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.form-switch .form-check-input:checked {
-  background: var(--primary);
-}
-
-.form-switch .form-check-input:checked::before {
-  transform: translate(14px, -50%);
-}
-
-.form-switch .form-check-input:focus-visible {
-  box-shadow: 0 0 0 2px var(--ring);
-}
-
-.form-range {
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 28px;
-  flex: 1;
-  margin: 0;
-  padding: 0;
-  outline: none;
-  border: 0;
-  accent-color: var(--primary);
-  background: linear-gradient(
-      color-mix(in srgb, var(--foreground) 7%, transparent),
-      color-mix(in srgb, var(--foreground) 7%, transparent)
-    )
-    center / 100% 2px no-repeat;
-}
-
-.form-range::-webkit-slider-runnable-track {
-  height: 28px;
-  background: transparent;
-}
-
-.form-range::-webkit-slider-thumb {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  margin-top: 4px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-}
-
-.form-range:focus-visible::-webkit-slider-thumb {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-range::-moz-range-track {
-  height: 28px;
-  background: transparent;
-}
-
-.form-range::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-full);
-  background: light-dark(var(--primary-foreground), var(--foreground));
-}
-
-.form-range:focus-visible::-moz-range-thumb {
-  border-color: var(--ring);
-  box-shadow: inset 0 0 0 1px var(--ring);
-}
-
-.form-range:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.btn:not(.btn-primary, .viz-tile):is(
-    [aria-pressed="true"],
-    [aria-selected="true"],
-    .is-selected
-  ) {
-  border-color: var(--primary);
-  color: var(--primary-foreground);
-  background: var(--primary);
-}
-
-.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
-  border-color: var(--primary);
-  box-shadow: inset 0 0 0 1px var(--primary);
-}
-
-.btn:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-svg {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-#widget > svg {
-  width: 100%;
-}
-
-.text-warning,
-.text-destructive {
-  color: var(--destructive);
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HoloQUBITS | Millennium Nucleus</title>
+  <meta name="description" content="Holographic Quantum Universe: Black Holes, Information Theory and Spacetime.">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .reconstruction-section{max-width:1040px;margin:0 auto;padding:62px 36px 74px;border-bottom:1px solid var(--line)}
+    .reconstruction-section>h2{max-width:760px;margin:0;color:var(--deep);font-family:Georgia,"Times New Roman",serif;font-size:38px;font-weight:400;letter-spacing:-.025em;line-height:1.08}
+    .reconstruction-stage{position:relative;width:100%;max-width:680px;margin:18px auto 0}
+    .reconstruction-stage svg{display:block;width:100%;height:auto;overflow:visible}
+    .reconstruction-reference{color:var(--line)}
+    .reconstruction-reference circle{fill:none;stroke:currentColor;stroke-width:1.2;vector-effect:non-scaling-stroke}
+    .reconstruction-reference circle:nth-child(2){stroke-dasharray:3 7}
+    .reconstruction-reference path{fill:none;stroke:currentColor;stroke-width:1.4;vector-effect:non-scaling-stroke}
+    .reconstruction-ray{color:var(--series);opacity:.24;transition:opacity 180ms ease}
+    .reconstruction-ray path{fill:none;stroke:currentColor;stroke-width:1.2;vector-effect:non-scaling-stroke}
+    .reconstruction-ray.is-selected{opacity:.9}
+    .reconstruction-ray.is-selected path{stroke-width:2.2}
+    .ray-geometry,.feature-geometry{--series:#078a94}.ray-blackholes,.feature-blackholes{--series:#145b7a}.ray-matter,.feature-matter{--series:#4b7d75}.ray-dynamics,.feature-dynamics{--series:#657589}.ray-qit,.feature-qit{--series:#426c96}
+    .reconstruction-object-field{fill:#f3f7f8}
+    .reconstruction-feature{color:var(--series);fill:none;stroke:currentColor;stroke-width:1.35;opacity:.56;transition:opacity 180ms ease}
+    .reconstruction-feature circle{fill:currentColor;stroke:none}
+    .reconstruction-feature.is-selected{opacity:1;stroke-width:2.3}
+    .reconstruction-feature.is-muted{opacity:.1}
+    .reconstruction-core{color:var(--deep)}
+    .reconstruction-core circle:first-child{fill:currentColor}.reconstruction-core circle:last-child{fill:none;stroke:currentColor;stroke-width:1.2;opacity:.35}
+    .reconstruction-probe{position:absolute;padding:8px 12px;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:999px;font:inherit;font-size:13px;cursor:pointer;transform:translate(-50%,-50%);white-space:nowrap;transition:color 150ms ease,border-color 150ms ease,background-color 150ms ease}
+    .reconstruction-probe:hover,.reconstruction-probe:focus-visible,.reconstruction-probe[aria-pressed="true"]{color:var(--teal-dark);background:#f3f7f8;border-color:var(--teal)}
+    .probe-geometry{left:50%;top:7%}.probe-blackholes{left:86%;top:25%}.probe-matter{left:86%;top:75%}.probe-dynamics{left:14%;top:75%}.probe-qit{left:14%;top:25%}
+    .reconstruction-detail{padding:22px 0 0;border-top:1px solid var(--navy)}
+    .reconstruction-detail-heading{display:flex;align-items:baseline;gap:18px}.reconstruction-detail-heading strong{color:var(--navy);font-family:Georgia,"Times New Roman",serif;font-size:19px;font-weight:400}.reconstruction-detail-heading span{color:var(--muted);font-size:14px}
+    .reconstruction-detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:20px}.reconstruction-detail-grid p{margin:0}.reconstruction-detail-grid strong{display:block;margin-bottom:7px;color:var(--teal-dark);font-size:11px;letter-spacing:.08em;text-transform:uppercase}.reconstruction-detail-grid span{display:block;color:var(--muted);font-size:13px;line-height:1.55}
+    @media(max-width:900px){.reconstruction-section{padding:56px 26px 66px}}
+    @media(max-width:620px){.reconstruction-section{padding:50px 18px 58px}.reconstruction-section>h2{font-size:34px}.reconstruction-stage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;max-width:none}.reconstruction-stage svg{grid-column:1/-1}.reconstruction-probe{position:static;width:100%;transform:none;white-space:normal}.reconstruction-detail{margin-top:24px}.reconstruction-detail-heading{display:block}.reconstruction-detail-heading span{display:block;margin-top:8px;line-height:1.5}.reconstruction-detail-grid{grid-template-columns:1fr;gap:18px}}
+  </style>
 </head>
-<body>
-<div id="holoqubits-synergy-profiles">
-  <div class="flow-head text-small text-muted" aria-hidden="true">
-    <span>Team expertise →</span>
-    <span>Research areas →</span>
-    <span>Research scope</span>
-  </div>
-
-  <div class="flow-stage">
-    <svg class="flow-svg" role="img" aria-labelledby="flow-title flow-desc">
-      <title id="flow-title">HoloQUBITS research synergy flow</title>
-      <desc id="flow-desc">Researchers and their expertise connect to five research areas. The right column summarizes the scope of each area.</desc>
-      <g class="edge-layer"></g>
-    </svg>
-    <div class="node-layer"></div>
-  </div>
-
-  <div class="card profile-panel is-empty" aria-live="polite">
-    <div class="profile-media">
-      <img class="profile-photo" alt="" hidden>
-      <div class="profile-initials" aria-hidden="true">HQ</div>
-    </div>
-    <div class="profile-copy">
-      <div class="profile-name">How to read it</div>
-      <div class="profile-role text-small text-muted"></div>
-      <div class="profile-text">Read from left to right: each researcher connects to the areas in which they contribute, and the right column summarizes the scope of each area. Pass the mouse over a researcher or research area to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.</div>
-    </div>
-  </div>
-</div>
-
-<style>
-  :root {
-    color-scheme: light;
-    background: #ffffff !important;
-    --background: #ffffff;
-    --foreground: #18202b;
-    --card: rgb(9 38 87 / 4.5%);
-    --card-foreground: #18202b;
-    --popover: #ffffff;
-    --popover-foreground: #18202b;
-    --primary: #078a94;
-    --primary-foreground: #ffffff;
-    --secondary: #ffffff;
-    --secondary-foreground: #092657;
-    --muted: rgb(9 38 87 / 7%);
-    --muted-foreground: #5e6875;
-    --accent: #edf7f7;
-    --accent-foreground: #056b73;
-    --border: #d7e0e4;
-    --input: #cbd7dc;
-    --ring: #078a94;
-    --font-sans: Arial, Helvetica, sans-serif;
-    --viz-series-1: #0b789e;
-    --viz-series-2: #078a94;
-    --viz-series-3: #4e7f73;
-    --viz-series-4: #325f87;
-    --viz-series-5: #6577a4;
-  }
-
-  html,
-  html > body {
-    background: #ffffff !important;
-    overflow: hidden;
-  }
-
-  :root:not([data-app-block-surface]) > body {
-    padding: 0;
-  }
-
-  #holoqubits-synergy-profiles {
-    width: 100%;
-    color: var(--foreground);
-  }
-
-  #holoqubits-synergy-profiles .flow-head {
-    display: grid;
-    grid-template-columns: 30% 34% 36%;
-    padding: 0 4px 10px;
-  }
-
-  #holoqubits-synergy-profiles .flow-stage {
-    position: relative;
-    width: 100%;
-    min-height: 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  #holoqubits-synergy-profiles .flow-svg,
-  #holoqubits-synergy-profiles .node-layer {
-    position: absolute;
-    inset: 0;
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  #holoqubits-synergy-profiles .flow-svg {
-    overflow: hidden;
-  }
-
-  #holoqubits-synergy-profiles .node-layer {
-    pointer-events: none;
-  }
-
-  #holoqubits-synergy-profiles .flow-edge {
-    fill: none;
-    stroke-width: 3;
-    opacity: 0.27;
-    vector-effect: non-scaling-stroke;
-    transition: opacity 180ms ease, stroke-width 180ms ease;
-  }
-
-  #holoqubits-synergy-profiles .flow-edge.outcome-edge {
-    stroke-width: 7;
-    opacity: 0.5;
-  }
-
-  #holoqubits-synergy-profiles .flow-edge[data-topic="holography"] {
-    stroke: var(--viz-series-1);
-  }
-
-  #holoqubits-synergy-profiles .flow-edge[data-topic="geometry"] {
-    stroke: var(--viz-series-2);
-  }
-
-  #holoqubits-synergy-profiles .flow-edge[data-topic="black-holes"] {
-    stroke: var(--viz-series-3);
-  }
-
-  #holoqubits-synergy-profiles .flow-edge[data-topic="qft"] {
-    stroke: var(--viz-series-4);
-  }
-
-  #holoqubits-synergy-profiles .flow-edge[data-topic="qit"] {
-    stroke: var(--viz-series-5);
-  }
-
-  #holoqubits-synergy-profiles .flow-edge.is-muted {
-    opacity: 0.035;
-  }
-
-  #holoqubits-synergy-profiles .flow-edge.is-active {
-    stroke-width: 5;
-    opacity: 0.95;
-  }
-
-  #holoqubits-synergy-profiles .flow-edge.outcome-edge.is-active {
-    stroke-width: 9;
-  }
-
-  #holoqubits-synergy-profiles .node-slot {
-    position: absolute;
-    z-index: 1;
-    box-sizing: border-box;
-    pointer-events: auto;
-    transition: opacity 180ms ease;
-  }
-
-  #holoqubits-synergy-profiles .node-slot.is-muted {
-    opacity: 0.18;
-  }
-
-  #holoqubits-synergy-profiles .topic-slot,
-  #holoqubits-synergy-profiles .outcome-slot {
-    --topic-color: var(--viz-series-1);
-    padding-left: 7px;
-    border-left: 5px solid var(--topic-color);
-  }
-
-  #holoqubits-synergy-profiles .topic-slot .btn {
-    min-height: 56px;
-    padding: 5px 8px;
-    line-height: 1.25;
-    text-align: left;
-    white-space: normal;
-  }
-
-  #holoqubits-synergy-profiles .topic-slot[data-topic="geometry"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="geometry"] {
-    --topic-color: var(--viz-series-2);
-  }
-
-  #holoqubits-synergy-profiles .topic-slot[data-topic="black-holes"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="black-holes"] {
-    --topic-color: var(--viz-series-3);
-  }
-
-  #holoqubits-synergy-profiles .topic-slot[data-topic="qft"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="qft"] {
-    --topic-color: var(--viz-series-4);
-  }
-
-  #holoqubits-synergy-profiles .topic-slot[data-topic="qit"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="qit"] {
-    --topic-color: var(--viz-series-5);
-  }
-
-  #holoqubits-synergy-profiles .outcome-slot {
-    display: flex;
-    align-items: center;
-    line-height: 1.35;
-    font-weight: 500;
-  }
-
-  #holoqubits-synergy-profiles .profile-panel {
-    display: grid;
-    grid-template-columns: 78px minmax(0, 1fr);
-    gap: 16px;
-    align-items: center;
-    margin-top: 14px;
-  }
-
-  #holoqubits-synergy-profiles .profile-panel.is-empty {
-    grid-template-columns: 1fr;
-  }
-
-  #holoqubits-synergy-profiles .profile-panel.is-empty .profile-media {
-    display: none;
-  }
-
-  #holoqubits-synergy-profiles .profile-media {
-    width: 78px;
-    height: 88px;
-    overflow: hidden;
-    border-radius: 6px;
-    background: color-mix(in srgb, var(--viz-series-1) 18%, var(--card));
-  }
-
-  #holoqubits-synergy-profiles .profile-photo,
-  #holoqubits-synergy-profiles .profile-initials {
-    width: 100%;
-    height: 100%;
-  }
-
-  #holoqubits-synergy-profiles .profile-photo {
-    display: block;
-    object-fit: cover;
-  }
-
-  #holoqubits-synergy-profiles .profile-photo[hidden],
-  #holoqubits-synergy-profiles .profile-initials[hidden] {
-    display: none;
-  }
-
-  #holoqubits-synergy-profiles .profile-initials {
-    display: grid;
-    place-items: center;
-    font-weight: 500;
-  }
-
-  #holoqubits-synergy-profiles .profile-name {
-    font-weight: 500;
-  }
-
-  #holoqubits-synergy-profiles .profile-role {
-    margin-top: 3px;
-  }
-
-  #holoqubits-synergy-profiles .profile-text {
-    margin-top: 7px;
-    color: var(--card-foreground);
-  }
-
-  #holoqubits-synergy-profiles .profile-links {
-    display: block;
-    margin-top: 6px;
-    color: var(--muted-foreground);
-  }
-
-  @media (max-width: 780px) {
-    #holoqubits-synergy-profiles .flow-head {
-      grid-template-columns: 31% 35% 34%;
-    }
-
-    #holoqubits-synergy-profiles .flow-edge {
-      stroke-width: 1.5;
-    }
-
-    #holoqubits-synergy-profiles .flow-edge.outcome-edge {
-      stroke-width: 3.5;
-    }
-
-    #holoqubits-synergy-profiles .flow-edge.is-active {
-      stroke-width: 2.5;
-    }
-
-    #holoqubits-synergy-profiles .flow-edge.outcome-edge.is-active {
-      stroke-width: 5;
-    }
-
-    #holoqubits-synergy-profiles .topic-slot .btn {
-      min-height: 46px;
-      padding: 4px 6px;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    #holoqubits-synergy-profiles .flow-edge,
-    #holoqubits-synergy-profiles .node-slot {
-      transition: none;
-    }
-  }
-</style>
-
-<script>
-  (() => {
-    const root = document.getElementById("holoqubits-synergy-profiles");
-    const stage = root.querySelector(".flow-stage");
-    const svg = root.querySelector(".flow-svg");
-    const edgeLayer = root.querySelector(".edge-layer");
-    const nodeLayer = root.querySelector(".node-layer");
-    const profilePanel = root.querySelector(".profile-panel");
-    const profilePhoto = root.querySelector(".profile-photo");
-    const profileInitials = root.querySelector(".profile-initials");
-    const profileName = root.querySelector(".profile-name");
-    const profileRole = root.querySelector(".profile-role");
-    const profileText = root.querySelector(".profile-text");
-    const ns = "http://www.w3.org/2000/svg";
-
-    const members = [
-      {
-        id: "om",
-        full: "Olivera Mišković",
-        mobile: "Olivera",
-        role: "Director · PUCV",
-        bio: "Works on geometric renormalization, black holes, holography and quantum field theory.",
-        photo: "images/olivera-miskovic.jpg"
-      },
-      {
-        id: "am",
-        full: "Ayan Mukhopadhyay",
-        mobile: "Ayan",
-        role: "Alternate Director · PUCV",
-        bio: "Works on nonequilibrium holography, strongly coupled matter and quantum information.",
-        photo: "images/ayan-mukhopadhyay.jpg"
-      },
-      {
-        id: "ga",
-        full: "Georgios Anastasiou",
-        mobile: "Georgios",
-        role: "Principal Investigator · UAI",
-        bio: "Works on conformal renormalization, entanglement and higher-curvature gravity.",
-        photo: "images/georgios-anastasiou.jpg"
-      },
-      {
-        id: "ia",
-        full: "Ignacio J. Araya",
-        mobile: "Ignacio",
-        role: "Principal Investigator · UNAB",
-        bio: "Works on holography, conformal methods and quantum-information measures.",
-        photo: "images/ignacio-araya.jpg"
-      },
-      {
-        id: "cc",
-        full: "Cristóbal Corral",
-        mobile: "Cristóbal",
-        role: "Principal Investigator · UAI",
-        bio: "Works on gravity, gauge theory, topology and supergravity solutions.",
-        photo: "images/cristobal-corral.jpg"
-      },
-      {
-        id: "rg",
-        full: "Radouane Gannouji",
-        mobile: "Radouane",
-        role: "Principal Investigator · PUCV",
-        bio: "Works on extremal black holes, stability, numerical relativity and information dynamics.",
-        photo: "images/radouane-gannouji.jpg"
-      },
-      {
-        id: "ro",
-        full: "Rodrigo Olea",
-        mobile: "Rodrigo",
-        role: "Principal Investigator · PUCV",
-        bio: "Works on conformal geometry, gravitational charges and black-hole thermodynamics.",
-        photo: "images/rodrigo-olea.jpg"
-      },
-      {
-        id: "ds",
-        full: "Dominique Spehner",
-        mobile: "Dominique",
-        role: "Principal Investigator · UdeC",
-        bio: "Works on quantum-information geometry, correlations, metrology and open quantum systems.",
-        photo: "images/dominique-spehner.jpg"
-      }
-    ];
-
-    const topics = [
-      {
-        id: "holography",
-        label: "Holography",
-        mobile: "Holography",
-        members: ["om", "am", "ga", "ia", "cc", "ro"],
-        description: "This area brings together holography in AdS, flat and cosmological spacetimes; black holes, entropy and information; quantum matter and anomalous transport; and real-time dynamics and thermalization.",
-        outcome: "AdS, flat & cosmological spacetimes · Black holes, entropy & information · Quantum matter & anomalous transport · Real-time dynamics & thermalization",
-        mobileOutcome: "Spacetime, matter & dynamics"
-      },
-      {
-        id: "geometry",
-        label: "Geometry and Topology in Physics",
-        mobile: "Geometry & topology",
-        members: ["om", "am", "ga", "ia", "cc", "rg", "ro", "ds"],
-        description: "This area brings together holographic renormalization, conformal geometry, entanglement measures and asymptotic symmetries.",
-        outcome: "Holographic renormalization · Conformal geometry · Entanglement measures & asymptotic symmetries",
-        mobileOutcome: "Renormalization & geometry"
-      },
-      {
-        id: "black-holes",
-        label: "Black Hole Physics",
-        mobile: "Black holes",
-        members: ["om", "am", "ga", "ia", "cc", "rg", "ro"],
-        description: "This area brings together extremal black holes, numerical relativity, real-time holography and spacetime singularities.",
-        outcome: "Extremal black holes · Numerical relativity · Real-time holography & singularities",
-        mobileOutcome: "Extremality, dynamics & singularities"
-      },
-      {
-        id: "qft",
-        label: "Quantum Field Theory",
-        mobile: "QFT",
-        members: ["om", "am", "ga", "ia", "cc", "rg", "ro"],
-        description: "This area brings together holography in AdS, flat and cosmological settings; strongly correlated quantum matter; anomalies, transport and topological response; and far-from-equilibrium dynamics.",
-        outcome: "Holography across spacetime settings · Strongly correlated quantum matter · Anomalies, transport & topological response · Far-from-equilibrium dynamics",
-        mobileOutcome: "Matter, anomalies & dynamics"
-      },
-      {
-        id: "qit",
-        label: "Quantum Information Theory",
-        mobile: "QIT",
-        members: ["am", "ga", "ia", "rg", "ro", "ds"],
-        description: "This area brings together complexity and modular flow, quantum error correction, quantum chaos and emergent spacetime, and thermalization and scrambling.",
-        outcome: "Complexity & modular flow · Quantum error correction · Quantum chaos & emergent spacetime · Thermalization & scrambling",
-        mobileOutcome: "Complexity, QEC & scrambling"
-      }
-    ];
-
-    let pinned = null;
-    let preview = null;
-    let resizeFrame = null;
-    let nodeRecords = [];
-    let edgeRecords = [];
-
-    function activeTarget() {
-      return preview || pinned;
-    }
-
-    function createPath(memberId, topicId, className, d) {
-      const path = document.createElementNS(ns, "path");
-      path.setAttribute("class", "flow-edge " + className);
-      path.setAttribute("data-topic", topicId);
-      if (memberId) path.setAttribute("data-member", memberId);
-      path.setAttribute("d", d);
-      edgeLayer.appendChild(path);
-      edgeRecords.push({ element: path, member: memberId, topic: topicId });
-    }
-
-    function curve(x1, y1, x2, y2) {
-      const bend = Math.max(18, (x2 - x1) * 0.48);
-      return "M " + x1 + " " + y1 + " C " + (x1 + bend) + " " + y1 + ", " + (x2 - bend) + " " + y2 + ", " + x2 + " " + y2;
-    }
-
-    function addInteraction(element, target) {
-      element.addEventListener("pointerenter", () => {
-        preview = target;
-        renderHighlight();
-      });
-      element.addEventListener("pointerleave", () => {
-        preview = null;
-        renderHighlight();
-      });
-      element.addEventListener("focus", () => {
-        preview = target;
-        renderHighlight();
-      });
-      element.addEventListener("blur", () => {
-        preview = null;
-        renderHighlight();
-      });
-      element.addEventListener("click", () => {
-        const same = pinned && pinned.type === target.type && pinned.id === target.id;
-        pinned = same ? null : target;
-        preview = null;
-        renderHighlight();
-      });
-    }
-
-    function makeMemberNode(member, box, narrow) {
-      const slot = document.createElement("div");
-      slot.className = "node-slot member-slot";
-      slot.dataset.member = member.id;
-      Object.assign(slot.style, {
-        left: box.x + "px",
-        top: box.y + "px",
-        width: box.w + "px"
-      });
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "btn btn-block";
-      button.textContent = narrow ? member.mobile : member.full;
-      button.setAttribute("aria-label", member.full);
-      button.setAttribute("aria-pressed", "false");
-
-      addInteraction(button, { type: "member", id: member.id });
-      slot.appendChild(button);
-      nodeLayer.appendChild(slot);
-      nodeRecords.push({ element: slot, button, type: "member", id: member.id });
-    }
-
-    function makeTopicNode(topic, box, narrow) {
-      const slot = document.createElement("div");
-      slot.className = "node-slot topic-slot";
-      slot.dataset.topic = topic.id;
-      Object.assign(slot.style, {
-        left: box.x + "px",
-        top: box.y + "px",
-        width: box.w + "px"
-      });
-
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "btn btn-block";
-      button.textContent = narrow ? topic.mobile : topic.label;
-      button.setAttribute("aria-label", topic.label);
-      button.setAttribute("aria-pressed", "false");
-      addInteraction(button, { type: "topic", id: topic.id });
-
-      slot.appendChild(button);
-      nodeLayer.appendChild(slot);
-      nodeRecords.push({ element: slot, button, type: "topic", id: topic.id });
-    }
-
-    function makeOutcomeNode(topic, box, narrow) {
-      const slot = document.createElement("div");
-      slot.className = "node-slot outcome-slot";
-      slot.dataset.topic = topic.id;
-      slot.textContent = narrow ? topic.mobileOutcome : topic.outcome;
-      Object.assign(slot.style, {
-        left: box.x + "px",
-        top: box.y + "px",
-        width: box.w + "px",
-        minHeight: box.h + "px"
-      });
-      nodeLayer.appendChild(slot);
-      nodeRecords.push({ element: slot, button: null, type: "outcome", id: topic.id });
-    }
-
-    function renderMap() {
-      const width = Math.max(300, Math.floor(stage.clientWidth));
-      const narrow = width < 781;
-      const height = narrow ? 820 : 620;
-      const memberW = narrow ? Math.min(150, width * 0.28) : Math.min(230, width * 0.22);
-      const topicW = narrow ? Math.min(180, width * 0.32) : Math.min(360, width * 0.31);
-      const outcomeW = narrow ? Math.min(170, width * 0.3) : Math.min(310, width * 0.27);
-      const memberX = 0;
-      const topicX = Math.round((width - topicW) * 0.5);
-      const outcomeX = width - outcomeW;
-      const memberTop = narrow ? 48 : 32;
-      const memberStep = narrow ? 88 : 70;
-      const topicTop = narrow ? 52 : 24;
-      const topicStep = narrow ? 148 : 116;
-      const memberH = narrow ? 40 : 54;
-      const topicH = narrow ? 48 : 56;
-      const outcomeH = narrow ? 52 : 88;
-
-      stage.style.height = height + "px";
-      svg.setAttribute("viewBox", "0 0 " + width + " " + stage.clientHeight);
-      edgeLayer.replaceChildren();
-      nodeLayer.replaceChildren();
-      nodeRecords = [];
-      edgeRecords = [];
-
-      const memberBoxes = new Map();
-      const topicBoxes = new Map();
-      const outcomeBoxes = new Map();
-      members.forEach((member, index) => {
-        memberBoxes.set(member.id, {
-          x: memberX,
-          y: memberTop + index * memberStep,
-          w: memberW,
-          h: memberH
+<body data-root=".">
+  <div id="site-header"></div>
+  <main>
+    <section class="home-intro">
+      <p class="kicker">Millennium Nucleus</p>
+      <h1>HoloQUBITS</h1>
+      <p class="name-explanation">The name brings together <strong>Holo</strong> + <strong>QU</strong> + <strong>B</strong> + <strong>IT</strong> + <strong>S</strong>: <em>Holographic Quantum Universe — Black Holes, Information Theory and Spacetime.</em></p>
+      <div class="home-copy">
+        <p>The holographic principle is the common framework of the project: a gravitational theory in a spacetime can be equivalently described by quantum degrees of freedom on its boundary. HoloQUBITS uses this correspondence not only to ask how spacetime and gravity emerge, but also as a mathematical and conceptual tool for studying black holes and strongly interacting quantum matter.</p>
+        <p>The program connects holographic quantum matter, quantum information and the geometry of holographic duality. It brings together questions involving symmetry breaking and anomalous transport, far-from-equilibrium dynamics, entanglement and complexity, and conformal methods that produce finite gravitational observables.</p>
+        <p>HoloQUBITS is also a collaborative and formative project. Seven physicists and one mathematician, together with students and postdoctoral researchers, combine analytical, geometrical and numerical methods. The Nucleus will train new researchers, strengthen national and international collaborations, disseminate frontier results and bring holography and quantum information to broader audiences.</p>
+      </div>
+    </section>
+
+    <section class="reconstruction-section" aria-labelledby="reconstruction-title">
+      <p class="kicker">One problem, five complementary probes</p>
+      <h2 id="reconstruction-title">Reconstructing a common physical picture</h2>
+
+      <div class="reconstruction-stage">
+        <svg viewBox="0 0 720 500" role="img" aria-labelledby="reconstruction-svg-title reconstruction-svg-desc">
+          <title id="reconstruction-svg-title">Tomographic reconstruction of the holographic quantum universe</title>
+          <desc id="reconstruction-svg-desc">Five complementary research perspectives probe one central object and constrain different features of the common reconstruction.</desc>
+          <defs><clipPath id="reconstruction-disc"><circle cx="360" cy="250" r="116"></circle></clipPath></defs>
+
+          <g class="reconstruction-reference" aria-hidden="true">
+            <circle cx="360" cy="250" r="116"></circle><circle cx="360" cy="250" r="136"></circle>
+            <path d="M360 104 L360 118 M506 250 L492 250 M360 396 L360 382 M214 250 L228 250"></path>
+          </g>
+          <g class="reconstruction-ray ray-geometry" data-id="geometry"><path d="M360 48 L322 142 M360 48 L398 142"></path></g>
+          <g class="reconstruction-ray ray-blackholes" data-id="blackholes"><path d="M618 126 L447 166 M618 126 L476 216"></path></g>
+          <g class="reconstruction-ray ray-matter" data-id="matter"><path d="M618 374 L476 284 M618 374 L447 334"></path></g>
+          <g class="reconstruction-ray ray-dynamics" data-id="dynamics"><path d="M102 374 L244 284 M102 374 L273 334"></path></g>
+          <g class="reconstruction-ray ray-qit" data-id="qit"><path d="M102 126 L244 216 M102 126 L273 166"></path></g>
+
+          <g clip-path="url(#reconstruction-disc)">
+            <circle class="reconstruction-object-field" cx="360" cy="250" r="116"></circle>
+            <g class="reconstruction-feature feature-geometry" data-id="geometry">
+              <ellipse cx="360" cy="250" rx="108" ry="42"></ellipse><ellipse cx="360" cy="250" rx="108" ry="76"></ellipse>
+              <path d="M360 134 C302 174 295 326 360 366"></path><path d="M360 134 C418 174 425 326 360 366"></path>
+              <path d="M307 147 C337 187 339 313 307 353"></path><path d="M413 147 C383 187 381 313 413 353"></path>
+            </g>
+            <g class="reconstruction-feature feature-matter" data-id="matter">
+              <path d="M246 252 C269 218 292 286 315 252 C338 218 361 286 384 252 C407 218 430 286 453 252 C476 218 499 286 522 252"></path>
+              <path d="M260 275 C290 254 312 296 342 275 C372 254 394 296 424 275 C454 254 476 296 506 275"></path>
+            </g>
+            <g class="reconstruction-feature feature-qit" data-id="qit">
+              <path d="M292 210 L360 178 L428 210 L414 292 L360 326 L306 292 Z"></path>
+              <path d="M292 210 L414 292 M428 210 L306 292 M360 178 L360 326"></path>
+              <circle cx="292" cy="210" r="4"></circle><circle cx="360" cy="178" r="4"></circle><circle cx="428" cy="210" r="4"></circle>
+              <circle cx="414" cy="292" r="4"></circle><circle cx="360" cy="326" r="4"></circle><circle cx="306" cy="292" r="4"></circle>
+            </g>
+            <g class="reconstruction-feature feature-blackholes" data-id="blackholes">
+              <ellipse cx="360" cy="250" rx="43" ry="15"></ellipse><ellipse cx="360" cy="250" rx="24" ry="8"></ellipse>
+              <path d="M317 250 C329 272 333 306 344 334 C349 348 354 357 360 362 C366 357 371 348 376 334 C387 306 391 272 403 250"></path>
+            </g>
+            <g class="reconstruction-feature feature-dynamics" data-id="dynamics">
+              <path d="M274 178 C322 126 416 132 452 188"></path><path d="M446 313 C398 372 302 369 267 310"></path>
+              <circle cx="274" cy="178" r="5"></circle><circle cx="452" cy="188" r="5"></circle><circle cx="446" cy="313" r="5"></circle><circle cx="267" cy="310" r="5"></circle>
+            </g>
+          </g>
+          <g class="reconstruction-core" aria-hidden="true"><circle cx="360" cy="250" r="8"></circle><circle cx="360" cy="250" r="15"></circle></g>
+        </svg>
+
+        <button type="button" class="reconstruction-probe probe-geometry" data-id="geometry" aria-pressed="false">Geometry &amp; measures</button>
+        <button type="button" class="reconstruction-probe probe-blackholes" data-id="blackholes" aria-pressed="false">Extremal black holes</button>
+        <button type="button" class="reconstruction-probe probe-matter" data-id="matter" aria-pressed="false">Quantum matter</button>
+        <button type="button" class="reconstruction-probe probe-dynamics" data-id="dynamics" aria-pressed="false">Quantum dynamics</button>
+        <button type="button" class="reconstruction-probe probe-qit" data-id="qit" aria-pressed="false">Complexity &amp; QEC</button>
+      </div>
+
+      <div class="reconstruction-detail" aria-live="polite">
+        <div class="reconstruction-detail-heading"><strong id="reconstruction-selected">Combined reconstruction</strong><span id="reconstruction-role">Five complementary probes constrain one physical picture.</span></div>
+        <div class="reconstruction-detail-grid">
+          <p><strong>What becomes visible</strong><span id="reconstruction-result">A common description of spacetime, black holes, quantum matter and information.</span></p>
+          <p><strong>Common language</strong><span id="reconstruction-methods">Holography makes the five perspectives mutually comparable.</span></p>
+          <p><strong>Why the Nucleus is needed</strong><span id="reconstruction-need">The required expertise is distributed across the team; the project is designed to make these methods work together.</span></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="assets/site.js"></script>
+  <script>
+    (() => {
+      const root = document.querySelector(".reconstruction-section");
+      if (!root) return;
+      const combined = {
+        title: "Combined reconstruction",
+        role: "Five complementary probes constrain one physical picture.",
+        result: "A common description of spacetime, black holes, quantum matter and information.",
+        methods: "Holography makes the five perspectives mutually comparable.",
+        need: "The required expertise is distributed across the team; the project is designed to make these methods work together."
+      };
+      const data = {
+        geometry: {
+          title: "Geometry, symmetries and information measures",
+          role: "Determines which gravitational quantities have precise quantum meaning.",
+          result: "Finite observables, asymptotic symmetries, entropy and correlations.",
+          methods: "Holographic renormalization · conformal geometry · null boundaries",
+          need: "Conformal geometry + holographic renormalization + quantum-information tools"
+        },
+        blackholes: {
+          title: "Extremal black-hole formation",
+          role: "Probes the reconstruction under genuinely dynamical and extreme conditions.",
+          result: "Formation, extremality, instability, horizons and information loss.",
+          methods: "Numerical relativity · perturbations · real-time holography",
+          need: "Black-hole physics + numerical and analytic gravity + quantum-information diagnostics"
+        },
+        matter: {
+          title: "Strongly correlated matter and anomalous transport",
+          role: "Tests whether the dictionary captures collective quantum phenomena.",
+          result: "Anomalies, spin transport, topological response and far-from-equilibrium matter.",
+          methods: "Effective QFT · supergravity · holographic transport",
+          need: "Holography + quantum matter + symmetry and geometric methods"
+        },
+        dynamics: {
+          title: "Quantum dynamics and information",
+          role: "Constrains how thermal behaviour and an arrow of time emerge from unitary evolution.",
+          result: "Thermalization, ETH, scrambling, quenches and semiclassical breakdown.",
+          methods: "Holographic QIT · numerical evolution · entanglement diagnostics",
+          need: "Real-time holography + numerical relativity + quantum-information diagnostics"
+        },
+        qit: {
+          title: "Complexity and quantum error correction",
+          role: "Tests how the central spacetime can be encoded, reconstructed and protected.",
+          result: "Complexity, modular flow, circuits and bulk reconstruction.",
+          methods: "Bures geodesics · QEC · quantum circuits",
+          need: "Quantum-state geometry + quantum circuits + quantum error correction"
+        }
+      };
+      const probes = Array.from(root.querySelectorAll(".reconstruction-probe"));
+      const features = Array.from(root.querySelectorAll(".reconstruction-feature"));
+      const rays = Array.from(root.querySelectorAll(".reconstruction-ray"));
+      const selected = root.querySelector("#reconstruction-selected");
+      const role = root.querySelector("#reconstruction-role");
+      const result = root.querySelector("#reconstruction-result");
+      const methods = root.querySelector("#reconstruction-methods");
+      const need = root.querySelector("#reconstruction-need");
+      let hovered = null;
+      let pinned = null;
+
+      function render() {
+        const active = hovered || pinned;
+        const item = active ? data[active] : combined;
+        probes.forEach((probe) => probe.setAttribute("aria-pressed", String(probe.dataset.id === pinned)));
+        features.forEach((feature) => {
+          feature.classList.toggle("is-selected", feature.dataset.id === active);
+          feature.classList.toggle("is-muted", Boolean(active) && feature.dataset.id !== active);
         });
-      });
-
-      topics.forEach((topic, index) => {
-        const topicBox = {
-          x: topicX,
-          y: topicTop + index * topicStep,
-          w: topicW,
-          h: topicH
-        };
-        topicBoxes.set(topic.id, topicBox);
-        outcomeBoxes.set(topic.id, {
-          x: outcomeX,
-          y: topicBox.y - 2,
-          w: outcomeW,
-          h: outcomeH
-        });
-      });
-
-      members.forEach((member) => makeMemberNode(member, memberBoxes.get(member.id), narrow));
-      topics.forEach((topic) => {
-        makeTopicNode(topic, topicBoxes.get(topic.id), narrow);
-        makeOutcomeNode(topic, outcomeBoxes.get(topic.id), narrow);
-      });
-
-      nodeRecords.forEach((record) => {
-        const box = record.type === "member" ? memberBoxes.get(record.id) : record.type === "topic" ? topicBoxes.get(record.id) : outcomeBoxes.get(record.id);
-        box.w = record.element.offsetWidth || box.w;
-        box.h = record.element.offsetHeight || box.h;
-      });
-
-      topics.forEach((topic) => {
-        const topicBox = topicBoxes.get(topic.id);
-        const outcomeBox = outcomeBoxes.get(topic.id);
-        const orderedMembers = topic.members.slice().sort((a, b) => members.findIndex((member) => member.id === a) - members.findIndex((member) => member.id === b));
-        const memberCount = orderedMembers.length;
-        orderedMembers.forEach((memberId, index) => {
-          const memberBox = memberBoxes.get(memberId);
-          const memberTopics = topics.filter((item) => item.members.includes(memberId));
-          const memberTopicIndex = memberTopics.findIndex((item) => item.id === topic.id);
-          const y1 = memberBox.y + memberBox.h / 2 + (memberTopicIndex - (memberTopics.length - 1) / 2) * 4;
-          const y2 = topicBox.y + topicBox.h / 2 + (index - (memberCount - 1) / 2) * 5;
-          createPath(memberId, topic.id, "member-edge", curve(memberBox.x + memberBox.w, y1, topicBox.x, y2));
-        });
-
-        createPath(null, topic.id, "outcome-edge", curve(topicBox.x + topicBox.w, topicBox.y + topicBox.h / 2, outcomeBox.x, outcomeBox.y + outcomeBox.h / 2));
-      });
-
-      renderHighlight();
-    }
-
-    function renderHighlight() {
-      const target = activeTarget();
-      edgeRecords.forEach((record) => {
-        let active = false;
-        if (target?.type === "member") active = record.member === target.id;
-        if (target?.type === "topic") active = record.topic === target.id;
-        record.element.classList.toggle("is-active", active);
-        record.element.classList.toggle("is-muted", Boolean(target) && !active);
-      });
-
-      nodeRecords.forEach((record) => {
-        let related = true;
-        let selected = false;
-        if (target?.type === "member") {
-          const relatedTopics = topics.filter((topic) => topic.members.includes(target.id)).map((topic) => topic.id);
-          related = record.type === "member" ? record.id === target.id : relatedTopics.includes(record.id);
-          selected = record.type === "member" && record.id === target.id;
-        }
-        if (target?.type === "topic") {
-          const topic = topics.find((item) => item.id === target.id);
-          related = record.type === "member" ? topic.members.includes(record.id) : record.id === target.id;
-          selected = record.type === "topic" && record.id === target.id;
-        }
-        record.element.classList.toggle("is-muted", Boolean(target) && !related);
-        if (record.button) {
-          record.button.classList.toggle("btn-primary", selected);
-          record.button.setAttribute("aria-pressed", String(selected));
-        }
-      });
-
-      if (!target) {
-        profilePanel.classList.add("is-empty");
-        profilePhoto.hidden = true;
-        profilePhoto.removeAttribute("src");
-        profilePhoto.alt = "";
-        profileInitials.hidden = false;
-        profileInitials.textContent = "HQ";
-        profileName.textContent = "How to read it";
-        profileRole.textContent = "";
-        profileText.textContent = "Read from left to right: each researcher connects to the areas in which they contribute, and the right column summarizes the scope of each area. Pass the mouse over a researcher or research area to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.";
-        return;
+        rays.forEach((ray) => ray.classList.toggle("is-selected", ray.dataset.id === active));
+        selected.textContent = item.title;
+        role.textContent = item.role;
+        result.textContent = item.result;
+        methods.textContent = item.methods;
+        need.textContent = item.need;
       }
 
-      if (target.type === "member") {
-        const member = members.find((item) => item.id === target.id);
-        const labels = topics.filter((topic) => topic.members.includes(target.id)).map((topic) => topic.label);
-        const initials = member.full.split(/\s+/).map((part) => part.charAt(0)).join("").slice(0, 2).toUpperCase();
-        profilePanel.classList.remove("is-empty");
-        profileName.textContent = member.full;
-        profileRole.textContent = member.role;
-        const bioLine = document.createElement("span");
-        const linksLine = document.createElement("span");
-        bioLine.textContent = member.bio;
-        linksLine.className = "profile-links";
-        linksLine.textContent = "Connects to " + labels.length + " research areas: " + labels.join(", ") + ".";
-        profileText.replaceChildren(bioLine, linksLine);
-        profileInitials.textContent = initials;
-        profileInitials.hidden = Boolean(member.photo);
-        profilePhoto.hidden = !member.photo;
-        profilePhoto.alt = member.photo ? "Portrait of " + member.full : "";
-        if (member.photo) {
-          profilePhoto.src = member.photo;
-          profilePhoto.onerror = () => {
-            profilePhoto.hidden = true;
-            profileInitials.hidden = false;
-          };
-        } else {
-          profilePhoto.removeAttribute("src");
-        }
-        return;
-      }
-
-      const topic = topics.find((item) => item.id === target.id);
-      profilePanel.classList.add("is-empty");
-      profilePhoto.hidden = true;
-      profilePhoto.removeAttribute("src");
-      profilePhoto.alt = "";
-      profileInitials.hidden = false;
-      profileName.textContent = topic.label;
-      profileRole.textContent = "Research area · " + topic.members.length + " researchers";
-      profileText.textContent = topic.description;
-    }
-
-    const observer = new ResizeObserver(() => {
-      if (resizeFrame) cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(renderMap);
-    });
-    observer.observe(stage);
-    window.addEventListener("pagehide", () => observer.disconnect(), { once: true });
-    renderMap();
-
-    function reportDocumentHeight() {
-      const height = Math.ceil(document.documentElement.scrollHeight);
-      window.parent.postMessage({ type: "holoqubits-synergy-height", height }, "*");
-    }
-
-    const heightObserver = new ResizeObserver(() => requestAnimationFrame(reportDocumentHeight));
-    heightObserver.observe(document.body);
-    window.addEventListener("load", reportDocumentHeight, { once: true });
-    window.addEventListener("pagehide", () => heightObserver.disconnect(), { once: true });
-    requestAnimationFrame(reportDocumentHeight);
-  })();
-</script>
-
+      probes.forEach((probe) => {
+        probe.addEventListener("pointerenter", () => { hovered = probe.dataset.id; render(); });
+        probe.addEventListener("pointerleave", () => { hovered = null; render(); });
+        probe.addEventListener("click", () => { pinned = pinned === probe.dataset.id ? null : probe.dataset.id; render(); });
+      });
+      render();
+    })();
+  </script>
 </body>
 </html>
