@@ -823,14 +823,14 @@ svg {
 <div id="holoqubits-synergy-profiles">
   <div class="flow-head text-small text-muted" aria-hidden="true">
     <span>Team expertise →</span>
-    <span>Shared scientific problems →</span>
-    <span>Expected outcomes</span>
+    <span>Research areas →</span>
+    <span>Research scope</span>
   </div>
 
   <div class="flow-stage">
     <svg class="flow-svg" role="img" aria-labelledby="flow-title flow-desc">
       <title id="flow-title">HoloQUBITS research synergy flow</title>
-      <desc id="flow-desc">Researchers and their expertise connect to five shared scientific problems, which lead to five expected outcomes.</desc>
+      <desc id="flow-desc">Researchers and their expertise connect to five research areas. The right column summarizes the scope of each area.</desc>
       <g class="edge-layer"></g>
     </svg>
     <div class="node-layer"></div>
@@ -844,7 +844,7 @@ svg {
     <div class="profile-copy">
       <div class="profile-name">How to read it</div>
       <div class="profile-role text-small text-muted"></div>
-      <div class="profile-text">Read from left to right: team members converge on shared problems, which produce collective outcomes. Pass the mouse over a researcher or shared problem to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.</div>
+      <div class="profile-text">Read from left to right: each researcher connects to the areas in which they contribute, and the right column summarizes the scope of each area. Pass the mouse over a researcher or research area to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.</div>
     </div>
   </div>
 </div>
@@ -937,23 +937,23 @@ svg {
     opacity: 0.5;
   }
 
-  #holoqubits-synergy-profiles .flow-edge[data-topic="geometry"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="holography"] {
     stroke: var(--viz-series-1);
   }
 
-  #holoqubits-synergy-profiles .flow-edge[data-topic="extremal"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="geometry"] {
     stroke: var(--viz-series-2);
   }
 
-  #holoqubits-synergy-profiles .flow-edge[data-topic="transport"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="black-holes"] {
     stroke: var(--viz-series-3);
   }
 
-  #holoqubits-synergy-profiles .flow-edge[data-topic="dynamics"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="qft"] {
     stroke: var(--viz-series-4);
   }
 
-  #holoqubits-synergy-profiles .flow-edge[data-topic="complexity"] {
+  #holoqubits-synergy-profiles .flow-edge[data-topic="qit"] {
     stroke: var(--viz-series-5);
   }
 
@@ -997,23 +997,23 @@ svg {
     white-space: normal;
   }
 
-  #holoqubits-synergy-profiles .topic-slot[data-topic="extremal"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="extremal"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="geometry"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="geometry"] {
     --topic-color: var(--viz-series-2);
   }
 
-  #holoqubits-synergy-profiles .topic-slot[data-topic="transport"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="transport"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="black-holes"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="black-holes"] {
     --topic-color: var(--viz-series-3);
   }
 
-  #holoqubits-synergy-profiles .topic-slot[data-topic="dynamics"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="dynamics"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="qft"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="qft"] {
     --topic-color: var(--viz-series-4);
   }
 
-  #holoqubits-synergy-profiles .topic-slot[data-topic="complexity"],
-  #holoqubits-synergy-profiles .outcome-slot[data-topic="complexity"] {
+  #holoqubits-synergy-profiles .topic-slot[data-topic="qit"],
+  #holoqubits-synergy-profiles .outcome-slot[data-topic="qit"] {
     --topic-color: var(--viz-series-5);
   }
 
@@ -1208,49 +1208,49 @@ svg {
 
     const topics = [
       {
+        id: "holography",
+        label: "Holography",
+        mobile: "Holography",
+        members: ["om", "am", "ga", "ia", "cc", "ro"],
+        description: "This area brings together holography in AdS, flat and cosmological spacetimes; black holes, entropy and information; quantum matter and anomalous transport; and real-time dynamics and thermalization.",
+        outcome: "AdS, flat & cosmological spacetimes · Black holes, entropy & information · Quantum matter & anomalous transport · Real-time dynamics & thermalization",
+        mobileOutcome: "Spacetime, matter & dynamics"
+      },
+      {
         id: "geometry",
-        label: "Geometry, Symmetries and Quantum Information Measures",
-        mobile: "Geometry & QI",
-        members: ["om", "ga", "ia", "ro"],
-        description: "Geometrical renormalization connects finite gravitational observables to entanglement and quantum-information measures in flat, de Sitter and cosmological spacetimes.",
-        outcome: "Finite observables beyond AdS and spacetime reconstruction",
-        mobileOutcome: "Finite observables"
+        label: "Geometry and Topology in Physics",
+        mobile: "Geometry & topology",
+        members: ["om", "am", "ga", "ia", "cc", "rg", "ro", "ds"],
+        description: "This area brings together holographic renormalization, conformal geometry, entanglement measures and asymptotic symmetries.",
+        outcome: "Holographic renormalization · Conformal geometry · Entanglement measures & asymptotic symmetries",
+        mobileOutcome: "Renormalization & geometry"
       },
       {
-        id: "extremal",
-        label: "Extremal Black Hole Formation",
-        mobile: "Extremal BH",
-        members: ["om", "am", "cc", "rg", "ro"],
-        description: "Numerical evolution, stability analysis, charged solutions and dual descriptions connect extremal formation to quantum information loss.",
-        outcome: "Holographic reconstruction of formation and information loss",
-        mobileOutcome: "Formation & information"
+        id: "black-holes",
+        label: "Black Hole Physics",
+        mobile: "Black holes",
+        members: ["om", "am", "ga", "ia", "cc", "rg", "ro"],
+        description: "This area brings together extremal black holes, numerical relativity, real-time holography and spacetime singularities.",
+        outcome: "Extremal black holes · Numerical relativity · Real-time holography & singularities",
+        mobileOutcome: "Extremality, dynamics & singularities"
       },
       {
-        id: "transport",
-        label: "Strongly Correlated Quantum Matter and Anomalous Transport",
-        mobile: "Matter & transport",
-        members: ["om", "am", "cc", "rg"],
-        description: "Holography, effective QFT, torsionful supergravity and numerical methods connect quantum anomalies to transport and topological response.",
-        outcome: "Anomalous spin-transport and topological-response predictions",
-        mobileOutcome: "Spin transport"
+        id: "qft",
+        label: "Quantum Field Theory",
+        mobile: "QFT",
+        members: ["om", "am", "ga", "ia", "cc", "rg", "ro"],
+        description: "This area brings together holography in AdS, flat and cosmological settings; strongly correlated quantum matter; anomalies, transport and topological response; and far-from-equilibrium dynamics.",
+        outcome: "Holography across spacetime settings · Strongly correlated quantum matter · Anomalies, transport & topological response · Far-from-equilibrium dynamics",
+        mobileOutcome: "Matter, anomalies & dynamics"
       },
       {
-        id: "dynamics",
-        label: "Quantum Dynamics and Information",
-        mobile: "Dynamics & info",
-        members: ["am", "ds", "rg"],
-        description: "Real-time holography, quantum-information methods and numerical relativity extend thermalization beyond equilibrium and probe open-system dynamics.",
-        outcome: "ETH beyond equilibrium and strategies for decoherence control",
-        mobileOutcome: "Thermalization"
-      },
-      {
-        id: "complexity",
-        label: "QIT of Complexity and Error Correction",
-        mobile: "Complexity & QEC",
-        members: ["am", "ds", "ga", "ia"],
-        description: "Bures geometry, explicit circuits, holographic complexity and operator algebras connect quantum operations to bulk-spacetime reconstruction.",
-        outcome: "Explicit circuits, new QEC designs and bulk reconstruction",
-        mobileOutcome: "Circuits & QEC"
+        id: "qit",
+        label: "Quantum Information Theory",
+        mobile: "QIT",
+        members: ["am", "ga", "ia", "rg", "ro", "ds"],
+        description: "This area brings together complexity and modular flow, quantum error correction, quantum chaos and emergent spacetime, and thermalization and scrambling.",
+        outcome: "Complexity & modular flow · Quantum error correction · Quantum chaos & emergent spacetime · Thermalization & scrambling",
+        mobileOutcome: "Complexity, QEC & scrambling"
       }
     ];
 
@@ -1381,7 +1381,7 @@ svg {
       const topicStep = narrow ? 148 : 116;
       const memberH = narrow ? 40 : 54;
       const topicH = narrow ? 48 : 56;
-      const outcomeH = narrow ? 52 : 58;
+      const outcomeH = narrow ? 52 : 88;
 
       stage.style.height = height + "px";
       svg.setAttribute("viewBox", "0 0 " + width + " " + height);
@@ -1489,7 +1489,7 @@ svg {
         profileInitials.textContent = "HQ";
         profileName.textContent = "How to read it";
         profileRole.textContent = "";
-        profileText.textContent = "Read from left to right: team members converge on shared problems, which produce collective outcomes. Pass the mouse over a researcher or shared problem to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.";
+        profileText.textContent = "Read from left to right: each researcher connects to the areas in which they contribute, and the right column summarizes the scope of each area. Pass the mouse over a researcher or research area to isolate its pathways and update this panel. On a phone, tap once to select and tap the same item again to reset.";
         return;
       }
 
@@ -1504,7 +1504,7 @@ svg {
         const linksLine = document.createElement("span");
         bioLine.textContent = member.bio;
         linksLine.className = "profile-links";
-        linksLine.textContent = "Connects to " + labels.length + " shared problems: " + labels.join(", ") + ".";
+        linksLine.textContent = "Connects to " + labels.length + " research areas: " + labels.join(", ") + ".";
         profileText.replaceChildren(bioLine, linksLine);
         profileInitials.textContent = initials;
         profileInitials.hidden = Boolean(member.photo);
@@ -1529,8 +1529,8 @@ svg {
       profilePhoto.alt = "";
       profileInitials.hidden = false;
       profileName.textContent = topic.label;
-      profileRole.textContent = "Shared scientific problem · " + topic.members.length + " researchers";
-      profileText.textContent = topic.description + " Expected outcome: " + topic.outcome + ".";
+      profileRole.textContent = "Research area · " + topic.members.length + " researchers";
+      profileText.textContent = topic.description;
     }
 
     const observer = new ResizeObserver(() => {
