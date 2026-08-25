@@ -1,1 +1,231 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../assets/style.css"></head><body data-root="../.." data-topic="complexity-error-correction"><div id="site-header"></div><main id="topic-page"></main><div id="site-footer"></div><script src="../../assets/site.js"></script><script src="../../assets/research.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>QIT of Complexity and Error Correction | HoloQUBITS</title>
+  <link rel="stylesheet" href="../../assets/style.css">
+  <style>
+    .qit-story{max-width:1168px;margin:auto;padding:72px 0 92px}
+    .qit-hero h1{max-width:980px;margin:0;color:var(--deep);font:400 clamp(43px,5.4vw,66px)/1.03 Georgia,serif;letter-spacing:-.035em}
+    .qit-hero>p:last-child{max-width:930px;margin:28px 0 0;color:var(--teal-dark);font:22px/1.5 Georgia,serif}
+    .reconstruction-lab{width:calc(100% + 96px);margin:56px 0 0 -48px;padding:42px 48px 48px;color:rgba(255,255,255,.7);background:var(--deep)}
+    .lab-heading{display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:end}
+    .lab-heading h2{max-width:600px;margin:0;color:#fff;font:400 clamp(35px,4.1vw,51px)/1.04 Georgia,serif;letter-spacing:-.03em}
+    .lab-heading>p{margin:0;font-size:14px;line-height:1.7}
+    .lab-eyebrow{margin:0 0 11px;color:#6fd1d3;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+    .state-control{margin-top:31px;padding:15px 0 18px;border-block:1px solid rgba(255,255,255,.2)}
+    .state-control label{display:grid;grid-template-columns:auto 1fr auto;gap:17px;align-items:center;color:rgba(255,255,255,.48);font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+    .state-control input{width:100%;accent-color:#6fd1d3}
+    .state-control output{min-width:118px;color:#fff;font:400 15px Georgia,serif;letter-spacing:0;text-align:right;text-transform:none}
+    .three-views{display:grid;grid-template-columns:1fr 1.08fr 1.12fr;margin-top:34px;border-block:1px solid rgba(255,255,255,.2)}
+    .view{min-width:0;padding:27px 27px 30px 0;border-right:1px solid rgba(255,255,255,.16)}
+    .view+.view{padding-left:27px}.view:last-child{padding-right:0;border-right:0}
+    .view-heading{min-height:70px}
+    .view-heading span{color:#6fd1d3;font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+    .view-heading h3{margin:8px 0 0;color:#fff;font:400 22px/1.3 Georgia,serif}
+    .geometry-svg{display:block;width:100%;height:auto;margin-top:9px}
+    .state-circle{fill:none;stroke:rgba(255,255,255,.2);stroke-width:1.2}
+    .state-axis{stroke:rgba(255,255,255,.11);stroke-width:1}
+    .geodesic{fill:none;stroke:#6fd1d3;stroke-width:4;stroke-linecap:round}
+    .reference-point{fill:#fff}.target-point{fill:#f0a36a;stroke:#fff;stroke-width:2}
+    .state-label{fill:rgba(255,255,255,.55);font:10px Arial,sans-serif}.target-label{fill:#f0a36a;font:12px Georgia,serif}
+    .geometry-readout{display:grid;grid-template-columns:1fr 1fr;margin-top:6px;border-top:1px solid rgba(255,255,255,.13)}
+    .geometry-readout div{padding:13px 8px 0 0}.geometry-readout div+div{padding-left:9px;border-left:1px solid rgba(255,255,255,.13)}
+    .geometry-readout span{display:block;color:rgba(255,255,255,.35);font-size:8px;text-transform:uppercase}.geometry-readout strong{display:block;margin-top:6px;color:#fff;font:17px Georgia,serif}
+    .view-note{margin:15px 0 0;color:rgba(255,255,255,.42);font-size:10px;line-height:1.55}
+    .circuit-switch{display:grid;grid-template-columns:1fr 1fr;margin:17px 0 0;border:1px solid rgba(255,255,255,.18)}
+    .circuit-switch button{padding:10px;color:rgba(255,255,255,.55);background:transparent;border:0;font:10px Arial,sans-serif;cursor:pointer}
+    .circuit-switch button+button{border-left:1px solid rgba(255,255,255,.18)}
+    .circuit-switch button:hover,.circuit-switch button:focus-visible,.circuit-switch button.is-active{color:var(--deep);background:#6fd1d3;outline:0}
+    .circuit-wire{position:relative;min-height:113px;margin-top:24px;padding-top:34px;border-top:1px solid rgba(255,255,255,.3)}
+    .circuit-wire::before,.circuit-wire::after{position:absolute;top:-8px;width:15px;height:15px;display:grid;place-items:center;background:var(--deep);border:1px solid rgba(255,255,255,.55);border-radius:50%;color:#fff;font:9px Georgia,serif}
+    .circuit-wire::before{content:'0';left:0}.circuit-wire::after{content:'ψ';right:0;border-color:#f0a36a;color:#f0a36a}
+    .gate-row{display:flex;justify-content:center;gap:6px;min-height:39px}
+    .gate{min-width:44px;padding:10px 6px;color:#fff;background:rgba(111,209,211,.13);border:1px solid #6fd1d3;font:11px Georgia,serif;text-align:center}
+    .circuit-cost{display:flex;justify-content:space-between;gap:15px;margin-top:15px;padding-top:13px;border-top:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.42);font-size:9px;text-transform:uppercase}
+    .circuit-cost strong{color:#fff;font:400 16px Georgia,serif;text-transform:none}
+    .codewords{margin-top:16px;padding:15px 0;border-block:1px solid rgba(255,255,255,.14);color:#fff;font:17px/1.65 Georgia,serif;text-align:center}
+    .codewords b{color:#6fd1d3;font-weight:400}.codewords .flipped{color:#f0a36a;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+    .error-buttons{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;border:1px solid rgba(255,255,255,.18)}
+    .error-buttons button{padding:9px 4px;color:rgba(255,255,255,.54);background:transparent;border:0;border-right:1px solid rgba(255,255,255,.15);font:10px Arial,sans-serif;cursor:pointer}.error-buttons button:last-child{border-right:0}
+    .error-buttons button:hover,.error-buttons button:focus-visible,.error-buttons button.is-active{color:var(--deep);background:#f0a36a;outline:0}
+    .syndrome{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border-top:1px solid rgba(255,255,255,.13)}
+    .syndrome div{padding:12px 7px 0 0}.syndrome div+div{padding-left:8px;border-left:1px solid rgba(255,255,255,.13)}
+    .syndrome span{display:block;color:rgba(255,255,255,.36);font-size:8px;text-transform:uppercase}.syndrome strong{display:block;margin-top:6px;color:#fff;font:18px Georgia,serif}
+    .correct-button{width:100%;margin-top:15px;padding:11px;color:#fff;background:transparent;border:1px solid #6fd1d3;font:11px Arial,sans-serif;cursor:pointer}.correct-button:hover,.correct-button:focus-visible{color:var(--deep);background:#6fd1d3;outline:0}.correct-button:disabled{opacity:.35;cursor:default;background:transparent;color:#fff}
+    .recovered{margin:12px 0 0;color:rgba(255,255,255,.48);font-size:10px;line-height:1.5}.recovered strong{color:#6fd1d3;font-weight:400}
+    .distinction{padding:80px 0 70px}
+    .distinction-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
+    .distinction-heading h2,.modular-heading h2{max-width:840px;margin:0;color:var(--deep);font:400 clamp(34px,4vw,49px)/1.08 Georgia,serif;letter-spacing:-.025em}
+    .distinction-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:43px;border-block:1px solid var(--line);border-top-color:var(--navy)}
+    .distinction-grid article{min-height:215px;padding:28px 30px 30px 0;border-right:1px solid var(--line)}.distinction-grid article+article{padding-left:30px}.distinction-grid article:last-child{border-right:0}
+    .distinction-grid span{color:var(--teal-dark);font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.distinction-grid strong{display:block;margin-top:41px;color:var(--deep);font:400 22px/1.35 Georgia,serif}.distinction-grid p{margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.68}
+    .modular-section{padding:70px 0 76px;border-top:1px solid var(--line)}
+    .modular-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
+    .modular-heading>div>p{max-width:760px;margin:19px 0 0;color:var(--muted);font-size:14px;line-height:1.7}
+    .modular-lab{display:grid;grid-template-columns:.95fr 1.05fr;gap:55px;align-items:center;margin-top:42px;padding:38px 42px;color:rgba(255,255,255,.68);background:var(--deep)}
+    .operator-plane{position:relative;aspect-ratio:1;max-width:340px;margin:auto;border:1px solid rgba(255,255,255,.13);border-radius:50%}
+    .operator-plane::before,.operator-plane::after{content:'';position:absolute;background:rgba(255,255,255,.13)}.operator-plane::before{left:50%;top:8%;bottom:8%;width:1px}.operator-plane::after{top:50%;left:8%;right:8%;height:1px}
+    .axis-label{position:absolute;color:rgba(255,255,255,.35);font:11px Georgia,serif}.axis-x{right:8%;top:52%}.axis-y{left:52%;top:7%}
+    .operator-arrow{position:absolute;z-index:1;left:50%;top:50%;width:36%;height:2px;background:#6fd1d3;transform-origin:left center;transform:rotate(var(--phase,0deg));transition:transform .18s}.operator-arrow::after{content:'';position:absolute;right:-1px;top:-5px;border-left:10px solid #6fd1d3;border-block:6px solid transparent}
+    .operator-origin{position:absolute;z-index:2;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#fff;border-radius:50%}
+    .modular-reading{border-top:1px solid rgba(255,255,255,.22)}
+    .modular-reading h3{margin:0;padding:17px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);font:400 24px/1.3 Georgia,serif}
+    .modular-formula{margin:0;padding:19px 0;color:rgba(255,255,255,.55);border-bottom:1px solid rgba(255,255,255,.14);font:17px/1.65 Georgia,serif}.modular-formula strong{color:#6fd1d3;font-weight:400}
+    .modular-control{padding-top:17px}.modular-control label{display:grid;grid-template-columns:1fr auto;gap:9px;color:rgba(255,255,255,.42);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.modular-control output{color:#fff;font:400 15px Georgia,serif;letter-spacing:0;text-transform:none}.modular-control input{grid-column:1/-1;width:100%;accent-color:#6fd1d3}
+    .modular-explanation{margin:17px 0 0;color:rgba(255,255,255,.48);font-size:11px;line-height:1.62}
+    .methods{display:grid;grid-template-columns:210px repeat(4,1fr);border-block:1px solid var(--line);border-top-color:var(--navy)}
+    .methods>.section-label{padding-top:26px}.methods>div{min-height:190px;padding:26px 20px;border-left:1px solid var(--line)}
+    .methods span{color:var(--teal-dark);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.methods strong{display:block;margin-top:42px;color:var(--deep);font:400 17px/1.42 Georgia,serif}.methods small{display:block;margin-top:9px;color:var(--muted);font-size:11px;line-height:1.55}
+    .methods-note{grid-column:2/-1;margin:0;padding:23px 0 27px 20px;color:var(--muted);border-top:1px solid var(--line);font-size:13px;line-height:1.7}
+    .outcome{margin-top:72px;padding:52px 68px 56px;color:#fff;background:var(--teal-dark)}.outcome .section-label{color:rgba(255,255,255,.7)}.outcome>p:last-child{max-width:930px;margin:0;font:clamp(23px,2.8vw,34px)/1.38 Georgia,serif}.pagination{margin-top:56px}
+    @media(max-width:1000px){.three-views{grid-template-columns:1fr 1fr}.view:nth-child(2){border-right:0}.view:last-child{grid-column:1/-1;padding-left:0;border-top:1px solid rgba(255,255,255,.16)}.view:last-child .code-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.methods{grid-template-columns:170px repeat(2,1fr)}.methods>.section-label{grid-row:1/3}.methods-note{grid-column:2/-1}}
+    @media(max-width:900px){.qit-story{padding-inline:26px}.reconstruction-lab{width:calc(100% + 52px);margin-left:-26px;padding-inline:26px}.modular-lab{gap:32px;padding:32px}.distinction-grid article{padding-right:20px}.distinction-grid article+article{padding-left:20px}}
+    @media(max-width:620px){.qit-story{padding:54px 18px 70px}.qit-hero h1{font-size:41px}.qit-hero>p:last-child{font-size:20px}.reconstruction-lab{width:calc(100% + 36px);margin:42px 0 0 -18px;padding:30px 18px 36px}.lab-heading{grid-template-columns:1fr;gap:18px}.lab-heading h2{font-size:34px}.state-control label{grid-template-columns:1fr auto}.state-control label span{grid-column:1/-1}.three-views{grid-template-columns:1fr}.view,.view+.view,.view:last-child{grid-column:auto;padding:26px 0;border-right:0;border-top:1px solid rgba(255,255,255,.16)}.view:first-child{border-top:0}.view-heading{min-height:0}.view:last-child .code-layout{display:block}.distinction{padding:60px 0}.distinction-heading,.modular-heading{display:block}.distinction-heading h2,.modular-heading h2{font-size:33px}.distinction-grid{grid-template-columns:1fr}.distinction-grid article,.distinction-grid article+article{min-height:0;padding:26px 0;border-right:0;border-top:1px solid var(--line)}.distinction-grid article:first-child{border-top:0}.distinction-grid strong{margin-top:20px}.modular-lab{grid-template-columns:1fr;padding:28px 18px}.methods{grid-template-columns:1fr}.methods>.section-label{grid-row:auto;padding:25px 0 7px}.methods>div{min-height:0;padding:20px 0;border-left:0;border-top:1px solid var(--line)}.methods strong{margin-top:12px}.methods-note{grid-column:auto;padding:22px 0}.outcome{margin:54px -18px 0;padding:40px 18px 44px}}
+  </style>
+</head>
+<body data-root="../..">
+  <div id="site-header"></div>
+  <main>
+    <article class="qit-story">
+      <header class="qit-hero">
+        <p class="kicker">Scientific direction 05 / 05</p>
+        <h1>QIT of Complexity and Error Correction</h1>
+        <p>Can the shortest transformations between quantum states identify the circuits that reconstruct spacetime—and reveal how that reconstruction is protected against errors?</p>
+      </header>
+
+      <section class="reconstruction-lab" aria-labelledby="reconstruction-title">
+        <div class="lab-heading">
+          <div><p class="lab-eyebrow">Interactive reconstruction laboratory</p><h2 id="reconstruction-title">One logical state, three descriptions</h2></div>
+          <p>Choose a target state. The page follows the same transformation through state-space geometry, a quantum circuit, and a simple error-correcting encoding. Every equation in the demonstration is exact for the displayed toy model.</p>
+        </div>
+        <div class="state-control">
+          <label><span>Target state |ψ(θ)⟩ = cos(θ/2)|0⟩ + sin(θ/2)|1⟩</span><input id="theta-range" type="range" min="0" max="180" step="1" value="74" aria-label="Target-state angle"><output id="theta-output">θ = 74°</output></label>
+        </div>
+
+        <div class="three-views">
+          <section class="view">
+            <div class="view-heading"><span>01 · Quantum-state geometry</span><h3>Find the shortest state-space path</h3></div>
+            <svg class="geometry-svg" viewBox="0 0 300 270" role="img" aria-label="Pure-state great circle and Bures geodesic">
+              <circle class="state-circle" cx="150" cy="137" r="92"/><line class="state-axis" x1="150" y1="30" x2="150" y2="244"/><line class="state-axis" x1="43" y1="137" x2="257" y2="137"/>
+              <path id="geodesic-path" class="geodesic"/><circle class="reference-point" cx="150" cy="45" r="5"/><circle id="target-point" class="target-point" r="7"/>
+              <text class="state-label" x="164" y="49">|0⟩ reference</text><text id="target-label" class="target-label">|ψ(θ)⟩</text>
+            </svg>
+            <div class="geometry-readout"><div><span>Fidelity F</span><strong id="fidelity-value"></strong></div><div><span>Bures angle</span><strong id="bures-value"></strong></div></div>
+            <p class="view-note">This is the pure-state limit of Bures geometry. The geodesic length is D<sub>A</sub> = arccos√F = θ/2.</p>
+          </section>
+
+          <section class="view">
+            <div class="view-heading"><span>02 · Circuit realization</span><h3>Reach the same target with different circuits</h3></div>
+            <div class="circuit-switch"><button class="is-active" data-circuit="direct">Direct route</button><button data-circuit="detour">Redundant route</button></div>
+            <div class="circuit-wire"><div id="gate-row" class="gate-row"></div></div>
+            <div class="circuit-cost"><span>Displayed gate cost</span><strong id="gate-cost">1 gate</strong></div>
+            <p id="circuit-note" class="view-note">A single R<sub>y</sub>(θ) rotation follows the displayed geodesic within this restricted gate family.</p>
+          </section>
+
+          <section class="view">
+            <div class="view-heading"><span>03 · Protected encoding</span><h3>Distribute the logical state and correct one X error</h3></div>
+            <div class="code-layout">
+              <div id="codewords" class="codewords"></div>
+              <div>
+                <div class="error-buttons" aria-label="Apply a bit-flip error"><button class="is-active" data-error="0">No error</button><button data-error="1">X₁</button><button data-error="2">X₂</button><button data-error="3">X₃</button></div>
+                <div class="syndrome"><div><span>Z₁Z₂ syndrome</span><strong id="s12">+1</strong></div><div><span>Z₂Z₃ syndrome</span><strong id="s23">+1</strong></div></div>
+                <button id="correct-button" class="correct-button" disabled>Correct the detected error</button>
+                <p id="recovered" class="recovered">The encoded state is already in the code subspace.</p>
+              </div>
+            </div>
+            <p class="view-note">This three-qubit repetition code corrects one bit flip only. It illustrates protected encoding; it is not presented as a holographic code.</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="distinction">
+        <div class="distinction-heading"><p class="section-label">The research question</p><h2>These three notions are connected—but they are not identical.</h2></div>
+        <div class="distinction-grid">
+          <article><span>Bures geodesic</span><strong>The shortest path in the geometry of states</strong><p>It is defined by the quantum-information metric and does not depend on an arbitrarily chosen circuit diagram.</p></article>
+          <article><span>Circuit complexity</span><strong>The least costly allowed sequence of gates</strong><p>Its answer depends on the gate set and cost function. HoloQUBITS will investigate when Bures geodesics admit natural optimal circuit realizations.</p></article>
+          <article><span>Quantum error correction</span><strong>Logical information distributed across physical degrees of freedom</strong><p>The project asks how circuits that reconstruct the holographic bulk can also suggest improved error-correcting architectures.</p></article>
+        </div>
+      </section>
+
+      <section class="modular-section">
+        <div class="modular-heading">
+          <p class="section-label">Modular flow</p>
+          <div><h2>A second geometric transformation acts on observables.</h2><p>For a reduced state ρ<sub>A</sub>, modular flow is generated by K<sub>A</sub> = −logρ<sub>A</sub>. The exact two-level example below shows that the state stays fixed while an operator rotates in operator space.</p></div>
+        </div>
+        <div class="modular-lab">
+          <div class="operator-plane" aria-label="Operator rotating under modular flow"><span class="axis-label axis-x">σ<sub>x</sub></span><span class="axis-label axis-y">σ<sub>y</sub></span><div id="operator-arrow" class="operator-arrow"></div><div class="operator-origin"></div></div>
+          <div class="modular-reading">
+            <h3>ρ<sub>A</sub> = diag(0.72, 0.28), &nbsp; O(0) = σ<sub>x</sub></h3>
+            <p class="modular-formula">O(s) = ρ<sub>A</sub><sup>is</sup> O(0) ρ<sub>A</sub><sup>−is</sup><br><strong id="phase-formula">phase = 0.000 rad</strong></p>
+            <div class="modular-control"><label><span>Modular parameter s</span><output id="modular-output">s = 0.00</output><input id="modular-range" type="range" min="-4" max="4" step=".02" value="0" aria-label="Modular-flow parameter"></label></div>
+            <p class="modular-explanation">The off-diagonal components acquire the phase s log[0.72/0.28]. HoloQUBITS will use Bures geodesics and the Uhlmann phase to investigate the geometric dual of modular flow and its role in bulk reconstruction.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="methods">
+        <p class="section-label">What HoloQUBITS will construct</p>
+        <div><span>State geometry</span><strong>Bures geodesics in conformal field theories</strong><small>Express shortest transformations explicitly as quantum operations.</small></div>
+        <div><span>Complexity</span><strong>Quantum circuits realizing those geodesics</strong><small>Make the relation between circuit cost and holographic volumes or actions more precise.</small></div>
+        <div><span>Reconstruction</span><strong>Uhlmann phase and modular flow</strong><small>Clarify how a bulk subregion is encoded in a particular boundary subregion.</small></div>
+        <div><span>Error correction</span><strong>Circuit principles for new QEC designs</strong><small>Use holographic reconstruction to understand robust storage and recovery of quantum information.</small></div>
+        <p class="methods-note">The aim is not to assume that geometry, circuit complexity and error correction are interchangeable. It is to construct the mathematical and operational dictionary relating them.</p>
+      </section>
+
+      <section class="outcome"><p class="section-label">Expected scientific contribution</p><p>A precise route from quantum-state geometry to explicit circuits, modular-flow reconstruction and quantum error-correcting structures capable of encoding semiclassical spacetime.</p></section>
+
+      <nav class="topic-pagination pagination"><a href="../quantum-dynamics-information/index.html">← <span>Quantum Dynamics and Information</span></a></nav>
+    </article>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../../assets/site.js"></script>
+  <script>
+    (()=>{
+      const thetaRange=document.querySelector('#theta-range'),thetaOutput=document.querySelector('#theta-output'),target=document.querySelector('#target-point'),targetLabel=document.querySelector('#target-label'),path=document.querySelector('#geodesic-path');
+      const gateRow=document.querySelector('#gate-row'),gateCost=document.querySelector('#gate-cost'),circuitNote=document.querySelector('#circuit-note');
+      const errorButtons=[...document.querySelectorAll('[data-error]')],circuitButtons=[...document.querySelectorAll('[data-circuit]')];
+      let circuit='direct',error=0,corrected=false;
+
+      function polar(theta){const r=92,cx=150,cy=137;return{x:cx+r*Math.sin(theta),y:cy-r*Math.cos(theta)}}
+      function arc(theta){const start=polar(0),end=polar(theta),large=theta>Math.PI?1:0;return`M${start.x} ${start.y} A92 92 0 ${large} 1 ${end.x} ${end.y}`}
+      function bits(base,flip){const a=base.split('');if(flip)a[flip-1]=a[flip-1]==='0'?'1':'0';return a.map((b,i)=>`<span class="${flip===i+1?'flipped':''}">${b}</span>`).join('')}
+
+      function drawState(){
+        const degrees=Number(thetaRange.value),theta=degrees*Math.PI/180,p=polar(theta),fidelity=Math.cos(theta/2)**2,alpha=Math.cos(theta/2),beta=Math.sin(theta/2);
+        thetaOutput.textContent=`θ = ${degrees}°`;path.setAttribute('d',arc(theta));target.setAttribute('cx',p.x);target.setAttribute('cy',p.y);targetLabel.setAttribute('x',Math.min(235,p.x+11));targetLabel.setAttribute('y',Math.max(26,p.y-9));
+        document.querySelector('#fidelity-value').textContent=fidelity.toFixed(3);document.querySelector('#bures-value').textContent=`${(theta/2).toFixed(3)} rad`;
+        const activeError=corrected?0:error;
+        document.querySelector('#codewords').innerHTML=`<b>${alpha.toFixed(2)}</b> |${bits('000',activeError)}⟩<br>+ <b>${beta.toFixed(2)}</b> |${bits('111',activeError)}⟩`;
+      }
+
+      function drawCircuit(){
+        const degrees=Number(thetaRange.value);
+        if(circuit==='direct'){
+          gateRow.innerHTML=`<span class="gate">R<sub>y</sub>(${degrees}°)</span>`;gateCost.textContent='1 gate';circuitNote.innerHTML='A single R<sub>y</sub>(θ) rotation follows the displayed geodesic within this restricted gate family.';
+        }else{
+          gateRow.innerHTML=`<span class="gate">R<sub>y</sub>(${(degrees/2).toFixed(1)}°)</span><span class="gate">R<sub>z</sub>(90°)</span><span class="gate">R<sub>z</sub>(−90°)</span><span class="gate">R<sub>y</sub>(${(degrees/2).toFixed(1)}°)</span>`;gateCost.textContent='4 gates';circuitNote.innerHTML='The two R<sub>z</sub> gates cancel and the two R<sub>y</sub> rotations combine. The final state is identical, but this route is deliberately redundant.';
+        }
+      }
+
+      function drawError(){
+        const syndrome={0:['+1','+1'],1:['−1','+1'],2:['−1','−1'],3:['+1','−1']}[corrected?0:error];
+        document.querySelector('#s12').textContent=syndrome[0];document.querySelector('#s23').textContent=syndrome[1];
+        const button=document.querySelector('#correct-button');button.disabled=error===0||corrected;
+        document.querySelector('#recovered').innerHTML=error===0?'The encoded state is already in the code subspace.':corrected?'<strong>Recovered fidelity = 1.000.</strong> The syndrome identified the flipped qubit and the correction returned the exact encoded state.':'The state has left the code subspace, but the syndrome identifies a unique correctable bit flip.';
+        errorButtons.forEach(b=>b.classList.toggle('is-active',Number(b.dataset.error)===error));drawState();
+      }
+
+      function drawModular(){const s=Number(document.querySelector('#modular-range').value),omega=Math.log(.72/.28),phase=s*omega;document.querySelector('#operator-arrow').style.setProperty('--phase',`${-phase*180/Math.PI}deg`);document.querySelector('#modular-output').textContent=`s = ${s.toFixed(2)}`;document.querySelector('#phase-formula').textContent=`phase = s log(0.72/0.28) = ${phase.toFixed(3)} rad`}
+
+      thetaRange.addEventListener('input',()=>{drawState();drawCircuit()});
+      circuitButtons.forEach(b=>b.addEventListener('click',()=>{circuit=b.dataset.circuit;circuitButtons.forEach(x=>x.classList.toggle('is-active',x===b));drawCircuit()}));
+      errorButtons.forEach(b=>b.addEventListener('click',()=>{error=Number(b.dataset.error);corrected=false;drawError()}));
+      document.querySelector('#correct-button').addEventListener('click',()=>{corrected=true;drawError()});
+      document.querySelector('#modular-range').addEventListener('input',drawModular);
+      drawState();drawCircuit();drawError();drawModular();
+    })();
+  </script>
+</body>
+</html>
