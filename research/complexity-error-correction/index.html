@@ -57,32 +57,47 @@
     .recovered{margin:12px 0 0;color:rgba(255,255,255,.48);font-size:10px;line-height:1.5}.recovered strong{color:#6fd1d3;font-weight:400}
     .distinction{padding:80px 0 70px}
     .distinction-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
-    .distinction-heading h2,.modular-heading h2{max-width:840px;margin:0;color:var(--deep);font:400 clamp(34px,4vw,49px)/1.08 Georgia,serif;letter-spacing:-.025em}
+    .distinction-heading h2{max-width:840px;margin:0;color:var(--deep);font:400 clamp(34px,4vw,49px)/1.08 Georgia,serif;letter-spacing:-.025em}
     .distinction-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:43px;border-block:1px solid var(--line);border-top-color:var(--navy)}
     .distinction-grid article{min-height:215px;padding:28px 30px 30px 0;border-right:1px solid var(--line)}.distinction-grid article+article{padding-left:30px}.distinction-grid article:last-child{border-right:0}
     .distinction-grid span{color:var(--teal-dark);font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.distinction-grid strong{display:block;margin-top:41px;color:var(--deep);font:400 22px/1.35 Georgia,serif}.distinction-grid p{margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.68}
-    .modular-section{padding:70px 0 76px;border-top:1px solid var(--line)}
-    .modular-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
-    .modular-heading>div>p{max-width:760px;margin:19px 0 0;color:var(--muted);font-size:14px;line-height:1.7}
-    .modular-lab{display:grid;grid-template-columns:.95fr 1.05fr;gap:55px;align-items:center;margin-top:42px;padding:38px 42px;color:rgba(255,255,255,.68);background:var(--deep)}
-    .operator-plane{position:relative;aspect-ratio:1;max-width:340px;margin:auto;border:1px solid rgba(255,255,255,.13);border-radius:50%}
-    .operator-plane::before,.operator-plane::after{content:'';position:absolute;background:rgba(255,255,255,.13)}.operator-plane::before{left:50%;top:8%;bottom:8%;width:1px}.operator-plane::after{top:50%;left:8%;right:8%;height:1px}
-    .axis-label{position:absolute;color:rgba(255,255,255,.35);font:11px Georgia,serif}.axis-x{right:8%;top:52%}.axis-y{left:52%;top:7%}
-    .operator-arrow{position:absolute;z-index:1;left:50%;top:50%;width:36%;height:2px;background:#6fd1d3;transform-origin:left center;transform:rotate(var(--phase,0deg));transition:transform .18s}.operator-arrow::after{content:'';position:absolute;right:-1px;top:-5px;border-left:10px solid #6fd1d3;border-block:6px solid transparent}
-    .operator-origin{position:absolute;z-index:2;left:calc(50% - 5px);top:calc(50% - 5px);width:10px;height:10px;background:#fff;border-radius:50%}
-    .modular-reading{border-top:1px solid rgba(255,255,255,.22)}
-    .modular-reading h3{margin:0;padding:17px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);font:400 24px/1.3 Georgia,serif}
-    .modular-formula{margin:0;padding:19px 0;color:rgba(255,255,255,.55);border-bottom:1px solid rgba(255,255,255,.14);font:17px/1.65 Georgia,serif}.modular-formula strong{color:#6fd1d3;font-weight:400}
-    .modular-control{padding-top:17px}.modular-control label{display:grid;grid-template-columns:1fr auto;gap:9px;color:rgba(255,255,255,.42);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.modular-control output{color:#fff;font:400 15px Georgia,serif;letter-spacing:0;text-transform:none}.modular-control input{grid-column:1/-1;width:100%;accent-color:#6fd1d3}
-    .modular-explanation{margin:17px 0 0;color:rgba(255,255,255,.48);font-size:11px;line-height:1.62}
+    .recovery-section{padding:70px 0 76px;border-top:1px solid var(--line)}
+    .recovery-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
+    .recovery-heading h2{max-width:840px;margin:0;color:var(--deep);font:400 clamp(34px,4vw,49px)/1.08 Georgia,serif;letter-spacing:-.025em}
+    .recovery-heading>div>p{max-width:780px;margin:19px 0 0;color:var(--muted);font-size:14px;line-height:1.7}
+    .recovery-lab{display:grid;grid-template-columns:1.05fr .95fr;gap:54px;align-items:center;margin-top:42px;padding:38px 42px;color:rgba(255,255,255,.68);background:var(--deep)}
+    .boundary-visual svg{display:block;width:100%;height:auto}
+    .boundary-ring{fill:none;stroke:rgba(255,255,255,.17);stroke-width:2}
+    .code-link{stroke:rgba(255,255,255,.12);stroke-width:1.5;transition:.2s}
+    .code-link.is-selected{stroke:#6fd1d3;stroke-width:2.5}
+    .physical-node circle{fill:var(--deep);stroke:rgba(255,255,255,.45);stroke-width:1.5;transition:.2s}
+    .physical-node text{fill:rgba(255,255,255,.58);font:13px Georgia,serif;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+    .physical-node{cursor:pointer}.physical-node:hover circle,.physical-node:focus circle,.physical-node.is-selected circle{fill:#6fd1d3;stroke:#fff}.physical-node.is-selected text{fill:var(--deep)}
+    .logical-node{fill:rgba(111,209,211,.08);stroke:rgba(111,209,211,.55);stroke-width:2;transition:.2s}.logical-node.can-reconstruct{fill:#6fd1d3;stroke:#fff}
+    .logical-label{fill:#fff;font:18px Georgia,serif;text-anchor:middle}.logical-sub{fill:rgba(255,255,255,.46);font:9px Arial,sans-serif;text-anchor:middle;letter-spacing:.08em;text-transform:uppercase}
+    .boundary-label{fill:rgba(255,255,255,.38);font:9px Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+    .region-presets{display:grid;grid-template-columns:repeat(4,1fr);margin-top:16px;border:1px solid rgba(255,255,255,.18)}
+    .region-presets button{padding:10px 5px;color:rgba(255,255,255,.54);background:transparent;border:0;border-right:1px solid rgba(255,255,255,.15);font:10px Arial,sans-serif;cursor:pointer}.region-presets button:last-child{border-right:0}
+    .region-presets button:hover,.region-presets button:focus-visible,.region-presets button.is-active{color:var(--deep);background:#6fd1d3;outline:0}
+    .region-help{margin:11px 0 0;color:rgba(255,255,255,.38);font-size:9px;line-height:1.45}
+    .recovery-reading{border-top:1px solid rgba(255,255,255,.22)}
+    .recovery-reading h3{margin:0;padding:17px 0;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);font:400 24px/1.3 Georgia,serif}
+    .region-summary{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,.14)}
+    .region-summary div{padding:15px 10px 15px 0}.region-summary div+div{padding-left:11px;border-left:1px solid rgba(255,255,255,.13)}
+    .region-summary span{display:block;color:rgba(255,255,255,.37);font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.region-summary strong{display:block;margin-top:7px;color:#fff;font:19px Georgia,serif}
+    .reconstruction-status{margin:0;padding:18px 0 10px;color:#fff;font:23px/1.32 Georgia,serif}.reconstruction-status.success{color:#6fd1d3}.reconstruction-status.failure{color:#f0a36a}
+    .reconstruction-equation{margin:0;padding:0 0 17px;color:rgba(255,255,255,.56);border-bottom:1px solid rgba(255,255,255,.14);font:17px/1.55 Georgia,serif}.reconstruction-equation strong{color:#fff;font-weight:400}
+    .recovery-explanation{margin:17px 0 0;color:rgba(255,255,255,.5);font-size:11px;line-height:1.62}
+    .recovery-facts{margin:17px 0 0;padding:0;list-style:none;border-top:1px solid rgba(255,255,255,.13)}.recovery-facts li{padding:12px 0;color:rgba(255,255,255,.45);border-bottom:1px solid rgba(255,255,255,.1);font-size:10px;line-height:1.5}.recovery-facts strong{color:#fff;font-weight:400}
+    .model-note{margin:14px 0 0;color:rgba(255,255,255,.36);font-size:9px;line-height:1.5}
     .methods{display:grid;grid-template-columns:210px repeat(4,1fr);border-block:1px solid var(--line);border-top-color:var(--navy)}
     .methods>.section-label{padding-top:26px}.methods>div{min-height:190px;padding:26px 20px;border-left:1px solid var(--line)}
     .methods span{color:var(--teal-dark);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.methods strong{display:block;margin-top:42px;color:var(--deep);font:400 17px/1.42 Georgia,serif}.methods small{display:block;margin-top:9px;color:var(--muted);font-size:11px;line-height:1.55}
     .methods-note{grid-column:2/-1;margin:0;padding:23px 0 27px 20px;color:var(--muted);border-top:1px solid var(--line);font-size:13px;line-height:1.7}
     .outcome{margin-top:72px;padding:52px 68px 56px;color:#fff;background:var(--teal-dark)}.outcome .section-label{color:rgba(255,255,255,.7)}.outcome>p:last-child{max-width:930px;margin:0;font:clamp(23px,2.8vw,34px)/1.38 Georgia,serif}.pagination{margin-top:56px}
     @media(max-width:1000px){.three-views{grid-template-columns:1fr 1fr}.view:nth-child(2){border-right:0}.view:last-child{grid-column:1/-1;padding-left:0;border-top:1px solid rgba(255,255,255,.16)}.view:last-child .code-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}.methods{grid-template-columns:170px repeat(2,1fr)}.methods>.section-label{grid-row:1/3}.methods-note{grid-column:2/-1}}
-    @media(max-width:900px){.qit-story{padding-inline:26px}.reconstruction-lab{width:calc(100% + 52px);margin-left:-26px;padding-inline:26px}.modular-lab{gap:32px;padding:32px}.distinction-grid article{padding-right:20px}.distinction-grid article+article{padding-left:20px}}
-    @media(max-width:620px){.qit-story{padding:54px 18px 70px}.qit-hero h1{font-size:41px}.qit-hero>p:last-child{font-size:20px}.reconstruction-lab{width:calc(100% + 36px);margin:42px 0 0 -18px;padding:30px 18px 36px}.lab-heading{grid-template-columns:1fr;gap:18px}.lab-heading h2{font-size:34px}.state-control label{grid-template-columns:1fr auto}.state-control label span{grid-column:1/-1}.three-views{grid-template-columns:1fr}.view,.view+.view,.view:last-child{grid-column:auto;padding:26px 0;border-right:0;border-top:1px solid rgba(255,255,255,.16)}.view:first-child{border-top:0}.view-heading{min-height:0}.view:last-child .code-layout{display:block}.distinction{padding:60px 0}.distinction-heading,.modular-heading{display:block}.distinction-heading h2,.modular-heading h2{font-size:33px}.distinction-grid{grid-template-columns:1fr}.distinction-grid article,.distinction-grid article+article{min-height:0;padding:26px 0;border-right:0;border-top:1px solid var(--line)}.distinction-grid article:first-child{border-top:0}.distinction-grid strong{margin-top:20px}.modular-lab{grid-template-columns:1fr;padding:28px 18px}.methods{grid-template-columns:1fr}.methods>.section-label{grid-row:auto;padding:25px 0 7px}.methods>div{min-height:0;padding:20px 0;border-left:0;border-top:1px solid var(--line)}.methods strong{margin-top:12px}.methods-note{grid-column:auto;padding:22px 0}.outcome{margin:54px -18px 0;padding:40px 18px 44px}}
+    @media(max-width:900px){.qit-story{padding-inline:26px}.reconstruction-lab{width:calc(100% + 52px);margin-left:-26px;padding-inline:26px}.recovery-lab{gap:32px;padding:32px}.distinction-grid article{padding-right:20px}.distinction-grid article+article{padding-left:20px}}
+    @media(max-width:620px){.qit-story{padding:54px 18px 70px}.qit-hero h1{font-size:41px}.qit-hero>p:last-child{font-size:20px}.reconstruction-lab{width:calc(100% + 36px);margin:42px 0 0 -18px;padding:30px 18px 36px}.lab-heading{grid-template-columns:1fr;gap:18px}.lab-heading h2{font-size:34px}.state-control label{grid-template-columns:1fr auto}.state-control label span{grid-column:1/-1}.three-views{grid-template-columns:1fr}.view,.view+.view,.view:last-child{grid-column:auto;padding:26px 0;border-right:0;border-top:1px solid rgba(255,255,255,.16)}.view:first-child{border-top:0}.view-heading{min-height:0}.view:last-child .code-layout{display:block}.distinction{padding:60px 0}.distinction-heading,.recovery-heading{display:block}.distinction-heading h2,.recovery-heading h2{font-size:33px}.distinction-grid{grid-template-columns:1fr}.distinction-grid article,.distinction-grid article+article{min-height:0;padding:26px 0;border-right:0;border-top:1px solid var(--line)}.distinction-grid article:first-child{border-top:0}.distinction-grid strong{margin-top:20px}.recovery-lab{grid-template-columns:1fr;padding:28px 18px}.region-presets{grid-template-columns:1fr 1fr}.region-presets button:nth-child(2){border-right:0}.region-presets button:nth-child(-n+2){border-bottom:1px solid rgba(255,255,255,.15)}.methods{grid-template-columns:1fr}.methods>.section-label{grid-row:auto;padding:25px 0 7px}.methods>div{min-height:0;padding:20px 0;border-left:0;border-top:1px solid var(--line)}.methods strong{margin-top:12px}.methods-note{grid-column:auto;padding:22px 0}.outcome{margin:54px -18px 0;padding:40px 18px 44px}}
   </style>
 </head>
 <body data-root="../..">
@@ -149,18 +164,41 @@
         </div>
       </section>
 
-      <section class="modular-section">
-        <div class="modular-heading">
-          <p class="section-label">Modular flow</p>
-          <div><h2>A second geometric transformation acts on observables.</h2><p>For a reduced state ρ<sub>A</sub>, modular flow is generated by K<sub>A</sub> = −logρ<sub>A</sub>. The exact two-level example below shows that the state stays fixed while an operator rotates in operator space.</p></div>
+      <section class="recovery-section">
+        <div class="recovery-heading">
+          <p class="section-label">Bulk reconstruction</p>
+          <div><h2>The same logical information can be recovered from different boundary regions.</h2><p>The visual uses the exact access structure of the five-qubit perfect code: one logical qubit is encoded in five physical qubits, and any three of them can reconstruct it. This is the error-correcting idea behind holographic subregion reconstruction—not a literal model of spacetime.</p></div>
         </div>
-        <div class="modular-lab">
-          <div class="operator-plane" aria-label="Operator rotating under modular flow"><span class="axis-label axis-x">σ<sub>x</sub></span><span class="axis-label axis-y">σ<sub>y</sub></span><div id="operator-arrow" class="operator-arrow"></div><div class="operator-origin"></div></div>
-          <div class="modular-reading">
-            <h3>ρ<sub>A</sub> = diag(0.72, 0.28), &nbsp; O(0) = σ<sub>x</sub></h3>
-            <p class="modular-formula">O(s) = ρ<sub>A</sub><sup>is</sup> O(0) ρ<sub>A</sub><sup>−is</sup><br><strong id="phase-formula">phase = 0.000 rad</strong></p>
-            <div class="modular-control"><label><span>Modular parameter s</span><output id="modular-output">s = 0.00</output><input id="modular-range" type="range" min="-4" max="4" step=".02" value="0" aria-label="Modular-flow parameter"></label></div>
-            <p class="modular-explanation">The off-diagonal components acquire the phase s log[0.72/0.28]. HoloQUBITS will use Bures geodesics and the Uhlmann phase to investigate the geometric dual of modular flow and its role in bulk reconstruction.</p>
+        <div class="recovery-lab">
+          <div class="boundary-visual">
+            <svg viewBox="0 0 520 430" role="img" aria-label="Logical bulk operator encoded redundantly in five boundary qubits">
+              <circle class="boundary-ring" cx="260" cy="214" r="166"/>
+              <text class="boundary-label" x="195" y="24">Physical boundary qubits</text>
+              <line class="code-link" data-link="1" x1="260" y1="214" x2="260" y2="48"/>
+              <line class="code-link" data-link="2" x1="260" y1="214" x2="418" y2="163"/>
+              <line class="code-link" data-link="3" x1="260" y1="214" x2="358" y2="348"/>
+              <line class="code-link" data-link="4" x1="260" y1="214" x2="162" y2="348"/>
+              <line class="code-link" data-link="5" x1="260" y1="214" x2="102" y2="163"/>
+              <g class="physical-node" data-qubit="1" tabindex="0" role="button" aria-label="Boundary qubit 1"><circle cx="260" cy="48" r="25"/><text x="260" y="48">q₁</text></g>
+              <g class="physical-node" data-qubit="2" tabindex="0" role="button" aria-label="Boundary qubit 2"><circle cx="418" cy="163" r="25"/><text x="418" y="163">q₂</text></g>
+              <g class="physical-node" data-qubit="3" tabindex="0" role="button" aria-label="Boundary qubit 3"><circle cx="358" cy="348" r="25"/><text x="358" y="348">q₃</text></g>
+              <g class="physical-node" data-qubit="4" tabindex="0" role="button" aria-label="Boundary qubit 4"><circle cx="162" cy="348" r="25"/><text x="162" y="348">q₄</text></g>
+              <g class="physical-node" data-qubit="5" tabindex="0" role="button" aria-label="Boundary qubit 5"><circle cx="102" cy="163" r="25"/><text x="102" y="163">q₅</text></g>
+              <circle id="logical-node" class="logical-node" cx="260" cy="214" r="57"/>
+              <text class="logical-label" x="260" y="210">O<tspan baseline-shift="sub" font-size="12">L</tspan></text>
+              <text class="logical-sub" x="260" y="235">logical bulk operator</text>
+            </svg>
+            <div class="region-presets"><button class="is-active" data-region="1,2,3">Region A</button><button data-region="3,4,5">Region B</button><button data-region="1,2">Too small</button><button data-region="1,2,3,4,5">Full boundary</button></div>
+            <p class="region-help">Choose a preset or select the boundary qubits directly.</p>
+          </div>
+          <div class="recovery-reading" aria-live="polite">
+            <h3 id="region-title">Region A = {q₁, q₂, q₃}</h3>
+            <div class="region-summary"><div><span>Available qubits</span><strong id="region-size">3 of 5</strong></div><div><span>Erased complement</span><strong id="erased-size">2 qubits</strong></div></div>
+            <p id="reconstruction-status" class="reconstruction-status success">Logical reconstruction is possible</p>
+            <p id="reconstruction-equation" class="reconstruction-equation"><strong>V O<sub>L</sub> = O<sub>A</sub> V</strong><br>The logical action can be represented by an operator supported entirely in region A.</p>
+            <p id="recovery-explanation" class="recovery-explanation">The two missing physical qubits may be erased without destroying the encoded logical qubit. The information was never stored at one boundary site.</p>
+            <ul class="recovery-facts"><li><strong>Region A and Region B both work:</strong> two different boundary supports reconstruct the same logical operator.</li><li><strong>This is redundancy, not duplication:</strong> the no-cloning theorem is not violated because the reconstructions agree only on the code subspace.</li><li><strong>HoloQUBITS question:</strong> determine how modular flow and Bures/Uhlmann geometry organize the analogous reconstruction in holography.</li></ul>
+            <p class="model-note">Toy model: [[5,1,3]] perfect quantum code. It corrects two known erasures or one arbitrary unknown single-qubit error; it is not itself a holographic code.</p>
           </div>
         </div>
       </section>
@@ -186,7 +224,8 @@
       const thetaRange=document.querySelector('#theta-range'),thetaOutput=document.querySelector('#theta-output'),target=document.querySelector('#target-point'),targetLabel=document.querySelector('#target-label'),path=document.querySelector('#geodesic-path');
       const gateRow=document.querySelector('#gate-row'),gateCost=document.querySelector('#gate-cost'),circuitNote=document.querySelector('#circuit-note');
       const errorButtons=[...document.querySelectorAll('[data-error]')],circuitButtons=[...document.querySelectorAll('[data-circuit]')];
-      let circuit='direct',error=0,corrected=false;
+      const physicalNodes=[...document.querySelectorAll('[data-qubit]')],regionButtons=[...document.querySelectorAll('[data-region]')];
+      let circuit='direct',error=0,corrected=false,region=new Set([1,2,3]);
 
       function polar(theta){const r=92,cx=150,cy=137;return{x:cx+r*Math.sin(theta),y:cy-r*Math.cos(theta)}}
       function arc(theta){const start=polar(0),end=polar(theta),large=theta>Math.PI?1:0;return`M${start.x} ${start.y} A92 92 0 ${large} 1 ${end.x} ${end.y}`}
@@ -217,14 +256,28 @@
         errorButtons.forEach(b=>b.classList.toggle('is-active',Number(b.dataset.error)===error));drawState();
       }
 
-      function drawModular(){const s=Number(document.querySelector('#modular-range').value),omega=Math.log(.72/.28),phase=s*omega;document.querySelector('#operator-arrow').style.setProperty('--phase',`${-phase*180/Math.PI}deg`);document.querySelector('#modular-output').textContent=`s = ${s.toFixed(2)}`;document.querySelector('#phase-formula').textContent=`phase = s log(0.72/0.28) = ${phase.toFixed(3)} rad`}
+      function sameRegion(values){const sorted=[...region].sort((a,b)=>a-b);return values.length===sorted.length&&values.every((v,i)=>v===sorted[i])}
+      function regionName(){if(sameRegion([1,2,3]))return['Region A','A'];if(sameRegion([3,4,5]))return['Region B','B'];if(sameRegion([1,2]))return['Small region','S'];if(sameRegion([1,2,3,4,5]))return['Full boundary','∂'];return['Selected region','R']}
+      function drawRegion(){
+        const chosen=[...region].sort((a,b)=>a-b),can=chosen.length>=3,name=regionName(),erased=5-chosen.length,listing=chosen.length?`{${chosen.map(q=>`q${'₁₂₃₄₅'[q-1]}`).join(', ')}}`:'∅';
+        physicalNodes.forEach(node=>{const q=Number(node.dataset.qubit),on=region.has(q);node.classList.toggle('is-selected',on);node.setAttribute('aria-pressed',on);document.querySelector(`[data-link="${q}"]`).classList.toggle('is-selected',on)});
+        regionButtons.forEach(button=>{const values=button.dataset.region.split(',').map(Number);button.classList.toggle('is-active',sameRegion(values))});
+        document.querySelector('#logical-node').classList.toggle('can-reconstruct',can);
+        document.querySelector('#region-title').textContent=`${name[0]} = ${listing}`;
+        document.querySelector('#region-size').textContent=`${chosen.length} of 5`;
+        document.querySelector('#erased-size').textContent=`${erased} qubit${erased===1?'':'s'}`;
+        const status=document.querySelector('#reconstruction-status');status.textContent=can?'Logical reconstruction is possible':'This region is insufficient';status.className=`reconstruction-status ${can?'success':'failure'}`;
+        document.querySelector('#reconstruction-equation').innerHTML=can?`<strong>V O<sub>L</sub> = O<sub>${name[1]}</sub> V</strong><br>The logical action has a representative supported entirely in this boundary region.`:`<strong>No guaranteed O<sub>${name[1]}</sub> exists</strong><br>Losing ${erased} physical qubits exceeds the two-erasure capability of this code.`;
+        document.querySelector('#recovery-explanation').textContent=can?`The ${erased} missing physical qubit${erased===1?' may':'s may'} be erased without destroying the encoded logical qubit. The information was never stored at one boundary site.`:'The selected subsystem contains too little of the encoded state. Its complement is too large to be treated as a correctable erasure.';
+      }
 
       thetaRange.addEventListener('input',()=>{drawState();drawCircuit()});
       circuitButtons.forEach(b=>b.addEventListener('click',()=>{circuit=b.dataset.circuit;circuitButtons.forEach(x=>x.classList.toggle('is-active',x===b));drawCircuit()}));
       errorButtons.forEach(b=>b.addEventListener('click',()=>{error=Number(b.dataset.error);corrected=false;drawError()}));
       document.querySelector('#correct-button').addEventListener('click',()=>{corrected=true;drawError()});
-      document.querySelector('#modular-range').addEventListener('input',drawModular);
-      drawState();drawCircuit();drawError();drawModular();
+      regionButtons.forEach(button=>button.addEventListener('click',()=>{region=new Set(button.dataset.region.split(',').map(Number));drawRegion()}));
+      physicalNodes.forEach(node=>{const toggle=()=>{const q=Number(node.dataset.qubit);region.has(q)?region.delete(q):region.add(q);drawRegion()};node.addEventListener('click',toggle);node.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();toggle()}})});
+      drawState();drawCircuit();drawError();drawRegion();
     })();
   </script>
 </body>
