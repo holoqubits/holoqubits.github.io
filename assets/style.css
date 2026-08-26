@@ -394,3 +394,110 @@ body[data-root="../.."] main .section-label {
     font-size: 20px !important;
   }
 }
+
+/*
+   Unified research-page geometry.
+   All five pages now use the same vertical rhythm and the same panel width.
+*/
+body[data-root="../.."] {
+  --research-top-space: 72px;
+  --title-text-space: 28px;
+  --text-panel-space: 56px;
+  --research-panel-extra: 96px;
+  --research-panel-offset: -48px;
+}
+
+body[data-root="../.."] main :is(
+  .geometry-story,
+  .ext-story,
+  .matter-story,
+  .dynamics-page,
+  .qit-story
+) {
+  padding-top: var(--research-top-space) !important;
+}
+
+body[data-root="../.."] main :is(
+  .geometry-hero,
+  .ext-hero,
+  .matter-hero,
+  .dynamics-hero,
+  .qit-hero
+) {
+  padding-bottom: 0 !important;
+}
+
+body[data-root="../.."] main h1 + p {
+  margin-top: var(--title-text-space) !important;
+  margin-bottom: 0 !important;
+}
+
+body[data-root="../.."] main h2 + p {
+  margin-top: 18px !important;
+}
+
+body[data-root="../.."] main h3 + p {
+  margin-top: 10px !important;
+}
+
+body[data-root="../.."] main :is(
+  .boundary-atlas,
+  .ext-lab,
+  .matter-lab,
+  .benchmark,
+  .reconstruction-lab
+) {
+  width: calc(100% + var(--research-panel-extra)) !important;
+  max-width: none !important;
+  margin-top: var(--text-panel-space) !important;
+  margin-right: 0 !important;
+  margin-left: var(--research-panel-offset) !important;
+  padding-top: 40px !important;
+  padding-right: 48px !important;
+  padding-bottom: 44px !important;
+  padding-left: 48px !important;
+}
+
+@media (max-width: 900px) {
+  body[data-root="../.."] {
+    --research-top-space: 56px;
+    --title-text-space: 24px;
+    --text-panel-space: 44px;
+    --research-panel-extra: 20px;
+    --research-panel-offset: -10px;
+  }
+
+  body[data-root="../.."] main :is(
+    .boundary-atlas,
+    .ext-lab,
+    .matter-lab,
+    .benchmark,
+    .reconstruction-lab
+  ) {
+    padding: 36px 26px 40px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  body[data-root="../.."] {
+    --research-top-space: 48px;
+    --title-text-space: 20px;
+    --text-panel-space: 38px;
+    --research-panel-extra: 12px;
+    --research-panel-offset: -6px;
+  }
+
+  body[data-root="../.."] main :is(
+    .boundary-atlas,
+    .ext-lab,
+    .matter-lab,
+    .benchmark,
+    .reconstruction-lab
+  ) {
+    padding: 28px 18px 34px !important;
+  }
+
+  body[data-root="../.."] main h2 + p {
+    margin-top: 14px !important;
+  }
+}
