@@ -6,114 +6,45 @@
   <title>Quantum Dynamics and Information | HoloQUBITS</title>
   <link rel="stylesheet" href="../../assets/style.css">
   <style>
-    .dynamics-story{max-width:1168px;margin:auto;padding:72px 0 92px}
-    .dynamics-hero h1{max-width:980px;margin:0;color:var(--deep);font:400 clamp(43px,5.4vw,66px)/1.03 Georgia,serif;letter-spacing:-.035em}
-    .dynamics-hero>p:last-child{max-width:930px;margin:28px 0 0;color:var(--teal-dark);font:22px/1.5 Georgia,serif}
-    .unitary-lab{width:calc(100% + 96px);margin:56px 0 0 -48px;padding:42px 48px 48px;color:rgba(255,255,255,.7);background:var(--deep)}
-    .lab-heading{display:grid;grid-template-columns:1.05fr .95fr;gap:72px;align-items:end}
-    .lab-heading h2{max-width:590px;margin:0;color:#fff;font:400 clamp(35px,4.1vw,51px)/1.04 Georgia,serif;letter-spacing:-.03em}
-    .lab-heading>p{margin:0;font-size:14px;line-height:1.7}
-    .lab-eyebrow{margin:0 0 11px;color:#6fd1d3;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
-    .experiment-definition{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:10px 17px;align-items:center;margin-top:31px;padding:15px 0;border-block:1px solid rgba(255,255,255,.2);font-size:11px}
-    .experiment-definition span{color:rgba(255,255,255,.42);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .experiment-definition strong{color:#fff;font:400 15px Georgia,serif}
-    .experiment-definition b{color:#6fd1d3;font-weight:400}
-    .lab-body{display:grid;grid-template-columns:minmax(500px,1.18fr) minmax(320px,.82fr);gap:54px;align-items:start;padding-top:34px}
-    .simulation-panel{min-width:0}
-    .qubit-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:24px 18px 21px;border:1px solid rgba(255,255,255,.15);background:radial-gradient(circle at 12% 50%,rgba(111,209,211,.11),transparent 46%)}
-    .qubit{position:relative;min-width:0;text-align:center}
-    .qubit::after{content:'';position:absolute;top:25px;left:calc(50% + 24px);width:calc(100% - 36px);border-top:1px solid rgba(255,255,255,.16)}
-    .qubit:last-child::after{display:none}
-    .qubit-orb{position:relative;z-index:1;width:51px;height:51px;margin:auto;display:grid;place-items:center;color:#fff;background:var(--deep);border:1px solid rgba(255,255,255,.45);border-radius:50%;font:15px Georgia,serif;overflow:hidden}
-    .qubit-orb::before{content:'';position:absolute;inset:auto 0 0;height:var(--entropy,0%);background:#6fd1d3;transition:height .28s}
-    .qubit-orb b{position:relative;z-index:1;font-weight:400}
-    .qubit:first-child .qubit-orb{border:2px solid #f0a36a}
-    .qubit-name{display:block;margin-top:10px;color:rgba(255,255,255,.46);font-size:9px;text-transform:uppercase}
-    .qubit-entropy{display:block;margin-top:4px;color:#fff;font:12px Georgia,serif}
-    .matrix-wrap{display:grid;grid-template-columns:22px 1fr;grid-template-rows:auto 1fr;gap:8px;margin-top:20px;padding:17px 18px 19px;border:1px solid rgba(255,255,255,.15)}
-    .matrix-title{grid-column:1/-1;display:flex;justify-content:space-between;gap:18px;margin-bottom:4px;color:rgba(255,255,255,.48);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .matrix-title span:last-child{font-weight:400;letter-spacing:0;text-transform:none}
-    .matrix-y{display:grid;grid-template-rows:repeat(6,1fr);align-items:center;color:rgba(255,255,255,.35);font-size:9px;text-align:center}
-    .matrix{aspect-ratio:1;display:grid;grid-template-columns:repeat(6,1fr);gap:3px;max-width:360px}
-    .matrix-cell{position:relative;min-width:0;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07)}
-    .matrix-cell.diagonal{background:rgba(255,255,255,.1)}
-    .matrix-cell::after{content:'';position:absolute;inset:0;background:#6fd1d3;opacity:var(--strength,0);transition:opacity .28s}
-    .matrix-cell span{position:absolute;z-index:1;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.52);font-size:8px}
-    .matrix-x{grid-column:2;display:grid;grid-template-columns:repeat(6,1fr);max-width:360px;margin-top:-2px;color:rgba(255,255,255,.35);font-size:9px;text-align:center}
-    .circuit-control{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18)}
-    .circuit-control label{display:grid;grid-template-columns:1fr auto;gap:8px 18px;color:rgba(255,255,255,.48);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .circuit-control output{color:#fff;font:400 15px Georgia,serif;letter-spacing:0;text-transform:none}
-    .circuit-control input{grid-column:1/-1;width:100%;accent-color:#6fd1d3}
-    .depth-track{display:grid;grid-template-columns:repeat(14,1fr);gap:3px;margin-top:9px}
-    .depth-track i{height:3px;background:rgba(255,255,255,.11);transition:.2s}
-    .depth-track i.is-past{background:#6fd1d3}
-    .simulation-buttons{display:flex;gap:9px;margin-top:17px}
-    .simulation-buttons button{flex:1;padding:11px 13px;color:rgba(255,255,255,.7);background:transparent;border:1px solid rgba(255,255,255,.25);font:11px Arial,sans-serif;cursor:pointer}
-    .simulation-buttons button:hover,.simulation-buttons button:focus-visible{color:var(--deep);background:#6fd1d3;border-color:#6fd1d3;outline:0}
-    .readings{border-top:1px solid rgba(255,255,255,.25)}
-    .state-number{margin:0;padding:16px 0 7px;color:#6fd1d3;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
-    .state-title{margin:0;padding:0 0 16px;color:#fff;border-bottom:1px solid rgba(255,255,255,.14);font:25px/1.3 Georgia,serif}
-    .state-copy{min-height:103px;margin:0;padding:17px 0;color:rgba(255,255,255,.6);font-size:13px;line-height:1.67}
-    .reading-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(255,255,255,.13)}
-    .reading-grid>div{min-height:96px;padding:15px 14px 13px 0;border-bottom:1px solid rgba(255,255,255,.13)}
-    .reading-grid>div:nth-child(odd){border-right:1px solid rgba(255,255,255,.13)}
-    .reading-grid>div:nth-child(even){padding-left:14px}
-    .reading-grid span{display:block;color:rgba(255,255,255,.38);font-size:8px;font-weight:700;line-height:1.4;letter-spacing:.07em;text-transform:uppercase}
-    .reading-grid strong{display:block;margin-top:8px;color:#fff;font:22px Georgia,serif}
-    .reading-grid strong.teal{color:#6fd1d3}
-    .reading-grid small{display:block;margin-top:5px;color:rgba(255,255,255,.37);font-size:9px;line-height:1.45}
-    .lab-note{margin:16px 0 0;color:rgba(255,255,255,.42);font-size:10px;line-height:1.55}
-    .meaning{padding:82px 0 72px}
-    .meaning-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
-    .meaning-heading h2,.diagnostic-heading h2{max-width:840px;margin:0;color:var(--deep);font:400 clamp(34px,4vw,49px)/1.08 Georgia,serif;letter-spacing:-.025em}
-    .meaning-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:44px;border-block:1px solid var(--line);border-top-color:var(--navy)}
-    .meaning-grid article{min-height:222px;padding:29px 31px 31px 0;border-right:1px solid var(--line)}
-    .meaning-grid article+article{padding-left:31px}
-    .meaning-grid article:last-child{border-right:0}
-    .meaning-grid span{color:var(--teal-dark);font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
-    .meaning-grid strong{display:block;margin-top:42px;color:var(--deep);font:400 23px/1.34 Georgia,serif}
-    .meaning-grid p{margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.68}
-    .diagnostic{padding:70px 0 76px;border-top:1px solid var(--line)}
-    .diagnostic-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
-    .diagnostic-heading>div>p{max-width:760px;margin:19px 0 0;color:var(--muted);font-size:14px;line-height:1.7}
-    .length-lab{display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center;margin-top:42px;padding:38px 42px;color:rgba(255,255,255,.68);background:var(--deep)}
-    .boundary-scale{padding:10px 0}
-    .scale-heading{display:flex;justify-content:space-between;gap:20px;margin-bottom:30px;color:rgba(255,255,255,.43);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .length-axis{position:relative;height:84px;border-top:1px solid rgba(255,255,255,.4)}
-    .length-axis::before,.length-axis::after{position:absolute;top:12px;color:rgba(255,255,255,.4);font:12px Georgia,serif}
-    .length-axis::before{content:'0';left:0}.length-axis::after{content:'πR';right:0}
-    .threshold{position:absolute;top:-8px;width:1px;height:38px;background:#fff}
-    .threshold::before{content:'';position:absolute;top:0;left:-4px;width:9px;height:9px;background:var(--deep);border:2px solid currentColor;border-radius:50%}
-    .threshold span{position:absolute;top:47px;white-space:nowrap;font:15px Georgia,serif}
-    .threshold.mi{left:68%;color:#6fd1d3}.threshold.mi span{right:10px;color:#6fd1d3}.threshold.al{left:75%;color:#f0a36a}.threshold.al span{left:10px;color:#f0a36a}
-    .precision-gap{position:absolute;top:-3px;left:68%;width:7%;height:4px;background:linear-gradient(90deg,#6fd1d3,#f0a36a)}
-    .magnifier{margin-top:25px;padding:20px 22px;border:1px solid rgba(255,255,255,.17)}
-    .magnifier span{color:rgba(255,255,255,.4);font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .magnifier strong{display:block;margin-top:12px;color:#fff;font:24px Georgia,serif}
-    .magnifier p{margin:8px 0 0;color:rgba(255,255,255,.48);font-size:11px;line-height:1.55}
-    .diagnostic-copy{border-top:1px solid rgba(255,255,255,.22)}
-    .diagnostic-copy article{padding:17px 0;border-bottom:1px solid rgba(255,255,255,.13)}
-    .diagnostic-copy span{color:#6fd1d3;font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .diagnostic-copy strong{display:block;margin-top:7px;color:#fff;font:18px/1.38 Georgia,serif}
-    .diagnostic-copy p{margin:7px 0 0;color:rgba(255,255,255,.48);font-size:11px;line-height:1.55}
-    .no-data{margin:15px 0 0;color:rgba(255,255,255,.38);font-size:9px;line-height:1.5}
-    .methods{display:grid;grid-template-columns:210px repeat(3,1fr);border-block:1px solid var(--line);border-top-color:var(--navy)}
-    .methods>.section-label{padding-top:26px}
-    .methods>div{min-height:182px;padding:26px 22px;border-left:1px solid var(--line)}
-    .methods span{color:var(--teal-dark);font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-    .methods strong{display:block;margin-top:42px;color:var(--deep);font:400 18px/1.42 Georgia,serif}
-    .methods small{display:block;margin-top:9px;color:var(--muted);font-size:11px;line-height:1.55}
-    .methods-note{grid-column:2/-1;margin:0;padding:23px 0 27px 22px;color:var(--muted);border-top:1px solid var(--line);font-size:13px;line-height:1.7}
-    .outcome{margin-top:72px;padding:52px 68px 56px;color:#fff;background:var(--teal-dark)}
-    .outcome .section-label{color:rgba(255,255,255,.7)}
-    .outcome>p:last-child{max-width:930px;margin:0;font:clamp(23px,2.8vw,34px)/1.38 Georgia,serif}
-    .pagination{margin-top:56px}
-    @media(max-width:900px){
-      .dynamics-story{padding-inline:26px}.unitary-lab{width:calc(100% + 52px);margin-left:-26px;padding-inline:26px}.lab-body{grid-template-columns:1fr}.simulation-panel{max-width:720px;margin:auto;width:100%}.meaning-grid article{padding-right:20px}.meaning-grid article+article{padding-left:20px}.length-lab{gap:32px;padding:32px}.methods{grid-template-columns:170px repeat(3,1fr)}
-    }
-    @media(max-width:620px){
-      .dynamics-story{padding:54px 18px 70px}.dynamics-hero h1{font-size:41px}.dynamics-hero>p:last-child{font-size:20px}.unitary-lab{width:calc(100% + 36px);margin:42px 0 0 -18px;padding:30px 18px 36px}.lab-heading{grid-template-columns:1fr;gap:18px}.lab-heading h2{font-size:34px}.experiment-definition{grid-template-columns:auto 1fr}.qubit-strip{gap:4px;padding-inline:7px}.qubit-orb{width:40px;height:40px}.qubit::after{top:20px;left:calc(50% + 19px);width:calc(100% - 27px)}.qubit-name{font-size:8px}.qubit-entropy{font-size:10px}.matrix-wrap{padding-inline:10px}.simulation-buttons{flex-direction:column}.reading-grid{grid-template-columns:1fr}.reading-grid>div:nth-child(odd){border-right:0}.reading-grid>div:nth-child(even){padding-left:0}.meaning{padding:60px 0}.meaning-heading,.diagnostic-heading{display:block}.meaning-heading h2,.diagnostic-heading h2{font-size:33px}.meaning-grid{grid-template-columns:1fr}.meaning-grid article,.meaning-grid article+article{min-height:0;padding:26px 0;border-right:0;border-top:1px solid var(--line)}.meaning-grid article:first-child{border-top:0}.meaning-grid strong{margin-top:20px}.length-lab{grid-template-columns:1fr;padding:28px 18px}.threshold.mi span{right:-5px;top:45px}.threshold.al span{left:4px;top:64px}.methods{grid-template-columns:1fr}.methods>.section-label{padding:25px 0 7px}.methods>div{min-height:0;padding:20px 0;border-left:0;border-top:1px solid var(--line)}.methods strong{margin-top:12px}.methods-note{grid-column:auto;padding:22px 0}.outcome{margin:54px -18px 0;padding:40px 18px 44px}
-    }
+    .dynamics-story{max-width:1168px;margin:auto;padding:66px 0 88px}
+    .dynamics-hero h1{max-width:920px;margin:0;color:var(--deep);font:400 clamp(38px,4.6vw,54px)/1.08 Georgia,serif;letter-spacing:-.025em}
+    .dynamics-hero>p:last-child{max-width:900px;margin:24px 0 0;color:var(--teal-dark);font:19px/1.55 Georgia,serif}
+    .quench-lab{width:calc(100% + 96px);margin:46px 0 0 -48px;padding:36px 48px 42px;color:rgba(255,255,255,.82);background:var(--deep)}
+    .lab-heading{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:end}
+    .lab-heading h2{max-width:560px;margin:0;color:#fff;font:400 clamp(30px,3.3vw,40px)/1.12 Georgia,serif;letter-spacing:-.02em}
+    .lab-heading>p{margin:0;font-size:16px;line-height:1.7}
+    .lab-eyebrow{margin:0 0 10px;color:#6fd1d3;font-size:12px;font-weight:700;letter-spacing:.11em;text-transform:uppercase}
+    .time-control{margin-top:27px;padding:16px 0 18px;border-block:1px solid rgba(255,255,255,.22)}
+    .time-control label{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;color:rgba(255,255,255,.82);font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .time-control input{width:100%;accent-color:#6fd1d3}
+    .time-control output{min-width:185px;color:#fff;font:400 18px Georgia,serif;letter-spacing:0;text-align:right;text-transform:none}
+    .evolution-grid{display:grid;grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr);align-items:stretch;margin-top:27px;border-bottom:1px solid rgba(255,255,255,.2)}
+    .evolution-panel{min-width:0;padding:0 0 28px}.panel-heading{min-height:57px}
+    .panel-heading span{color:#6fd1d3;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .panel-heading h3{margin:7px 0 0;color:#fff;font:400 22px/1.3 Georgia,serif}
+    .dual-arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#6fd1d3;text-align:center}
+    .dual-arrow span{font-size:12px;font-weight:700;letter-spacing:.06em;line-height:1.45;text-transform:uppercase}.dual-arrow::after{content:'↔';font:32px Georgia,serif}
+    .boundary-svg,.bulk-svg{display:block;width:100%;height:auto;margin:7px auto 0}.boundary-line{stroke:rgba(255,255,255,.46);stroke-width:2}.spread-line{stroke:#6fd1d3;stroke-width:7;stroke-linecap:round;transition:.25s}
+    .boundary-node circle{fill:var(--deep);stroke:rgba(255,255,255,.55);stroke-width:2;transition:.25s}.boundary-node text{fill:rgba(255,255,255,.72);font:13px Arial,sans-serif;text-anchor:middle}
+    .boundary-node.is-reached circle{fill:#6fd1d3;stroke:#fff}.boundary-node.is-source circle{fill:#f0a36a;stroke:#fff}.boundary-node.is-reached text,.boundary-node.is-source text{fill:#fff}.source-pulse{fill:none;stroke:#f0a36a;stroke-width:2;opacity:.7}
+    .bulk-boundary{fill:rgba(111,209,211,.025);stroke:rgba(255,255,255,.6);stroke-width:2}.bulk-radial{stroke:rgba(255,255,255,.12);stroke-width:1}.shell{fill:none;stroke:#f0a36a;stroke-width:4;stroke-dasharray:8 7;transition:.25s}.horizon{fill:rgba(111,209,211,.15);stroke:#6fd1d3;stroke-width:3;transition:.25s}
+    .bulk-label{fill:rgba(255,255,255,.8);font:14px Georgia,serif;text-anchor:middle}.bulk-small{fill:rgba(255,255,255,.62);font:12px Arial,sans-serif;text-anchor:middle}
+    .bulk-legend{display:flex;justify-content:center;gap:24px;margin-top:-4px;color:rgba(255,255,255,.78);font-size:14px}.bulk-legend span{display:flex;align-items:center;gap:8px}.bulk-legend i{display:block;width:24px;border-top:3px dashed #f0a36a}.bulk-legend span:last-child i{width:13px;height:13px;background:rgba(111,209,211,.25);border:2px solid #6fd1d3;border-radius:50%}
+    .stage-reading{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;margin-top:17px;padding-top:16px;border-top:1px solid rgba(255,255,255,.16)}
+    .stage-reading span{color:#6fd1d3;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}.stage-reading p{margin:0;color:rgba(255,255,255,.78);font-size:15px;line-height:1.6}
+    .diagnostic-intro{display:grid;grid-template-columns:200px minmax(0,1fr);gap:34px;padding:32px 0 25px}.diagnostic-intro h3{margin:0;color:#fff;font:400 24px/1.3 Georgia,serif}.diagnostic-intro p{margin:0;color:rgba(255,255,255,.76);font-size:15px;line-height:1.65}
+    .diagnostic-grid{display:grid;grid-template-columns:1fr 1fr;border-block:1px solid rgba(255,255,255,.2)}.diagnostic-card{min-width:0;padding:26px 30px 28px 0}.diagnostic-card+.diagnostic-card{padding-left:30px;padding-right:0;border-left:1px solid rgba(255,255,255,.18)}
+    .diagnostic-card>span{color:#6fd1d3;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}.diagnostic-card h4{margin:7px 0 8px;color:#fff;font:400 22px/1.35 Georgia,serif}.diagnostic-card>p{margin:0;color:rgba(255,255,255,.76);font-size:15px;line-height:1.62}
+    .topology-svg{display:block;width:100%;height:auto;margin:18px 0 12px}.topology-boundary{stroke:rgba(255,255,255,.46);stroke-width:2}.interval-a{stroke:#6fd1d3;stroke-width:7;stroke-linecap:round}.interval-b{stroke:#f0a36a;stroke-width:7;stroke-linecap:round}.surface-primary{fill:none;stroke:#6fd1d3;stroke-width:3}.surface-secondary{fill:none;stroke:rgba(255,255,255,.42);stroke-width:2;stroke-dasharray:6 5}.topology-label{fill:rgba(255,255,255,.82);font:13px Arial,sans-serif;text-anchor:middle}.horizon-symbol{fill:rgba(111,209,211,.18);stroke:#6fd1d3;stroke-width:3}
+    .transition-equation{margin:15px 0 0;padding-top:14px;color:#fff;border-top:1px solid rgba(255,255,255,.16);font:19px/1.5 Georgia,serif}.comparison-question{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;padding:25px 0 0}.comparison-question strong{color:#6fd1d3;font:400 25px Georgia,serif;white-space:nowrap}.comparison-question p{margin:0;color:rgba(255,255,255,.78);font-size:15px;line-height:1.62}.model-note{margin:22px 0 0;color:rgba(255,255,255,.58);font-size:13px;line-height:1.55}
+    .meaning{padding:62px 0 58px}.meaning-heading{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}.meaning-heading h2{max-width:840px;margin:0;color:var(--deep);font:400 clamp(28px,3.2vw,38px)/1.15 Georgia,serif;letter-spacing:-.015em}
+    .meaning-grid{display:grid;grid-template-columns:repeat(3,1fr);margin-top:34px;border-block:1px solid var(--line);border-top-color:var(--navy)}.meaning-grid article{min-height:205px;padding:27px 28px 28px 0;border-right:1px solid var(--line)}.meaning-grid article+article{padding-left:28px}.meaning-grid article:last-child{border-right:0}
+    .meaning-grid span{color:var(--teal-dark);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.meaning-grid strong{display:block;margin-top:30px;color:var(--deep);font:400 21px/1.38 Georgia,serif}.meaning-grid p{margin:11px 0 0;color:var(--muted);font-size:15px;line-height:1.66}
+    .methods{display:grid;grid-template-columns:210px repeat(3,1fr);border-block:1px solid var(--line);border-top-color:var(--navy)}.methods>.section-label{padding-top:26px}.methods>div{min-height:182px;padding:26px 22px;border-left:1px solid var(--line)}.methods span{color:var(--teal-dark);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.methods strong{display:block;margin-top:34px;color:var(--deep);font:400 19px/1.42 Georgia,serif}.methods small{display:block;margin-top:9px;color:var(--muted);font-size:14px;line-height:1.55}.methods-note{grid-column:2/-1;margin:0;padding:23px 0 27px 22px;color:var(--muted);border-top:1px solid var(--line);font-size:15px;line-height:1.7}
+    .outcome{margin-top:60px;padding:44px 56px 48px;color:#fff;background:var(--teal-dark)}.outcome .section-label{color:rgba(255,255,255,.76)}.outcome>p:last-child{max-width:930px;margin:0;font:clamp(21px,2.3vw,28px)/1.45 Georgia,serif}.pagination{margin-top:50px}
+    @media(max-width:900px){.dynamics-story{padding-inline:26px}.quench-lab{width:calc(100% + 52px);margin-left:-26px;padding-inline:26px}.meaning-grid article{padding-right:20px}.meaning-grid article+article{padding-left:20px}.methods{grid-template-columns:170px repeat(3,1fr)}}
+    @media(max-width:780px){.lab-heading{grid-template-columns:1fr;gap:16px}.time-control label{grid-template-columns:1fr auto}.time-control label span{grid-column:1/-1}.evolution-grid{grid-template-columns:1fr}.dual-arrow{padding:7px 0;border-block:1px solid rgba(255,255,255,.16)}.dual-arrow::after{content:'↕'}.stage-reading,.diagnostic-intro{grid-template-columns:1fr;gap:8px}.diagnostic-grid{grid-template-columns:1fr}.diagnostic-card,.diagnostic-card+.diagnostic-card{padding:24px 0;border-left:0}.diagnostic-card+.diagnostic-card{border-top:1px solid rgba(255,255,255,.18)}.comparison-question{grid-template-columns:1fr;gap:8px}.meaning-heading{display:block}.meaning-grid{grid-template-columns:1fr}.meaning-grid article,.meaning-grid article+article{min-height:0;padding:24px 0;border-right:0;border-top:1px solid var(--line)}.meaning-grid article:first-child{border-top:0}.meaning-grid strong{margin-top:15px}.methods{grid-template-columns:1fr}.methods>.section-label{padding:25px 0 7px}.methods>div{min-height:0;padding:20px 0;border-left:0;border-top:1px solid var(--line)}.methods strong{margin-top:12px}.methods-note{grid-column:auto;padding:22px 0}}
+    @media(max-width:620px){.dynamics-story{padding:48px 18px 66px}.dynamics-hero h1{font-size:34px}.dynamics-hero>p:last-child{font-size:18px}.quench-lab{width:calc(100% + 36px);margin:36px 0 0 -18px;padding:27px 18px 32px}.lab-heading h2{font-size:28px}.time-control output{min-width:0;font-size:16px}.panel-heading h3{font-size:21px}.diagnostic-intro h3{font-size:21px}.diagnostic-card h4{font-size:20px}.meaning-heading h2{font-size:28px}.outcome{margin:48px -18px 0;padding:34px 18px 38px}}
   </style>
 </head>
 <body data-root="../..">
@@ -123,172 +54,81 @@
       <header class="dynamics-hero">
         <p class="kicker">Scientific direction 04 / 05</p>
         <h1>Quantum Dynamics and Information</h1>
-        <p>How can an isolated quantum system develop an effective arrow of time when its microscopic evolution remains unitary and reversible?</p>
+        <p>How does a reversible quantum evolution produce local thermal behaviour, and how is that process encoded by a dynamical black-hole geometry?</p>
       </header>
 
-      <section class="unitary-lab" aria-labelledby="unitary-title">
+      <section class="quench-lab" aria-labelledby="quench-title">
         <div class="lab-heading">
-          <div>
-            <p class="lab-eyebrow">Exact six-qubit demonstration</p>
-            <h2 id="unitary-title">The information disappears locally—not globally</h2>
-          </div>
-          <p>Two pure states initially differ only on qubit 1. Both undergo exactly the same finite unitary circuit. The page calculates their reduced states at every circuit depth; the displayed numbers are not illustrative data.</p>
+          <div><p class="lab-eyebrow">Interactive physical picture</p><h2 id="quench-title">A quench, seen from both sides of holography</h2></div>
+          <p>A local disturbance spreads through the quantum system. In the gravitational description, the injected energy collapses and forms a black hole. These are two descriptions of the same nonequilibrium process.</p>
         </div>
+        <div class="time-control"><label><span>Boundary time after the quench</span><input id="quench-time" type="range" min="0" max="100" value="42" aria-label="Boundary time after the quench"><output id="time-output">During collapse</output></label></div>
 
-        <div class="experiment-definition">
-          <span>Reference state</span><strong>|ψ<sub>0</sub>⟩ = |000000⟩</strong>
-          <span>Marked state</span><strong>|ψ<sub>1</sub>⟩ = |00000<b>1</b>⟩</strong>
+        <div class="evolution-grid">
+          <section class="evolution-panel">
+            <div class="panel-heading"><span>Boundary description</span><h3>Information spreads into nonlocal correlations</h3></div>
+            <svg class="boundary-svg" viewBox="0 0 520 270" role="img" aria-label="Schematic spreading of a local perturbation across boundary degrees of freedom">
+              <title>Boundary information spreading after a local quench</title><line class="boundary-line" x1="45" y1="145" x2="475" y2="145"/><line id="spread-line" class="spread-line" x1="260" y1="145" x2="260" y2="145"/><circle id="source-pulse" class="source-pulse" cx="260" cy="145" r="24"/><g id="boundary-nodes"></g><text class="bulk-small" x="260" y="225">local disturbance → increasingly nonlocal information</text>
+            </svg>
+          </section>
+          <div class="dual-arrow" aria-hidden="true"><span>dual<br>descriptions</span></div>
+          <section class="evolution-panel">
+            <div class="panel-heading"><span>Bulk description</span><h3>Injected energy collapses into a black hole</h3></div>
+            <svg class="bulk-svg" viewBox="0 0 520 270" role="img" aria-label="Schematic radial slice of a collapsing shell and forming horizon">
+              <title>Bulk collapse dual to the boundary quench</title><circle class="bulk-boundary" cx="260" cy="137" r="112"/><line class="bulk-radial" x1="148" y1="137" x2="372" y2="137"/><line class="bulk-radial" x1="260" y1="25" x2="260" y2="249"/><circle id="bulk-shell" class="shell" cx="260" cy="137" r="83"/><circle id="bulk-horizon" class="horizon" cx="260" cy="137" r="18"/>
+            </svg>
+            <div class="bulk-legend"><span><i></i>infalling shell</span><span><i></i>forming horizon</span></div>
+          </section>
         </div>
+        <div class="stage-reading"><span id="stage-name">During collapse</span><p id="stage-copy">The perturbation is no longer local on the boundary. In the bulk, the shell is falling inward and a horizon is developing. The precise relation requires real-time holographic evolution.</p></div>
 
-        <div class="lab-body">
-          <div class="simulation-panel">
-            <div id="qubit-strip" class="qubit-strip" aria-label="Entropy of each qubit"></div>
-            <div class="matrix-wrap">
-              <div class="matrix-title"><span>Connected correlations |⟨Z<sub>i</sub>Z<sub>j</sub>⟩ − ⟨Z<sub>i</sub>⟩⟨Z<sub>j</sub>⟩|</span><span>darker = stronger</span></div>
-              <div id="matrix-y" class="matrix-y"></div>
-              <div id="correlation-matrix" class="matrix" aria-label="Connected Z correlation matrix"></div>
-              <div id="matrix-x" class="matrix-x"></div>
-            </div>
-            <div class="circuit-control">
-              <label><span>Unitary circuit depth</span><output id="depth-output">Initial state</output><input id="depth-range" type="range" min="0" max="14" step="1" value="0" aria-label="Unitary circuit depth"></label>
-              <div id="depth-track" class="depth-track" aria-hidden="true"></div>
-              <div class="simulation-buttons">
-                <button id="evolve-button">Evolve forward</button>
-                <button id="reverse-button">Apply the inverse circuit</button>
-                <button id="reset-button">Reset</button>
-              </div>
-            </div>
-          </div>
-
-          <aside class="readings" aria-live="polite">
-            <p id="state-number" class="state-number">t = 0 · Localized information</p>
-            <p id="state-title" class="state-title">Qubit 1 remembers everything</p>
-            <p id="state-copy" class="state-copy">A measurement on the first qubit perfectly distinguishes the two initial states. There are no correlations and every qubit is locally pure.</p>
-            <div class="reading-grid">
-              <div><span>Global distinguishability</span><strong class="teal">1.000</strong><small>Preserved exactly by unitary evolution</small></div>
-              <div><span>Global purity</span><strong>1.000</strong><small>The complete state remains pure</small></div>
-              <div><span>Memory accessible on qubit 1</span><strong id="local-memory">1.000</strong><small>Trace distance of the two reduced states</small></div>
-              <div><span>Entropy of qubit 1</span><strong id="local-entropy">0.000 bit</strong><small>Entanglement with the remaining qubits</small></div>
-            </div>
-            <p class="lab-note">This finite circuit demonstrates information spreading and reversibility. It is not, by itself, a test of the eigenstate thermalization hypothesis.</p>
-          </aside>
+        <div class="diagnostic-intro"><h3>What HoloQUBITS will measure</h3><p>The project compares two independent changes in HRT topology. Each defines a boundary length scale at the same time <em>t</em>; their possible separation is the precision observable.</p></div>
+        <div class="diagnostic-grid">
+          <article class="diagnostic-card">
+            <span>Mutual-information transition</span><h4>L<sub>MI</sub>(t)</h4><p>For two separated regions A and B, the preferred HRT pairing changes between disconnected and connected configurations.</p>
+            <svg class="topology-svg" viewBox="0 0 480 190" role="img" aria-label="Connected and disconnected HRT pairings for two boundary intervals"><title>HRT topology change defining the mutual-information scale</title><line class="topology-boundary" x1="35" y1="142" x2="445" y2="142"/><line class="interval-a" x1="70" y1="142" x2="175" y2="142"/><line class="interval-b" x1="305" y1="142" x2="410" y2="142"/><path class="surface-secondary" d="M70 137 Q122 55 175 137 M305 137 Q358 55 410 137"/><path class="surface-primary" d="M70 137 Q240 9 410 137 M175 137 Q240 72 305 137"/><text class="topology-label" x="123" y="172">A</text><text class="topology-label" x="357" y="172">B</text><text class="topology-label" x="240" y="25">two competing pairings</text></svg>
+            <p class="transition-equation">At the transition: I(A:B) = 0.</p>
+          </article>
+          <article class="diagnostic-card">
+            <span>Araki–Lieb transition</span><h4>L<sub>AL</sub>(t)</h4><p>For a sufficiently large region A, its HRT surface changes to the surface of the complement plus the black-hole horizon.</p>
+            <svg class="topology-svg" viewBox="0 0 480 190" role="img" aria-label="Connected HRT surface competing with complement plus horizon"><title>HRT topology change defining the Araki–Lieb scale</title><line class="topology-boundary" x1="35" y1="142" x2="445" y2="142"/><line class="interval-a" x1="70" y1="142" x2="410" y2="142"/><path class="surface-secondary" d="M70 137 Q240 15 410 137"/><path class="surface-primary" d="M70 137 Q240 110 410 137"/><circle class="horizon-symbol" cx="240" cy="48" r="19"/><text class="topology-label" x="240" y="172">large region A</text><text class="topology-label" x="240" y="53">horizon</text></svg>
+            <p class="transition-equation">At saturation: S(A) = S(Ā) + S<sub>BH</sub>.</p>
+          </article>
         </div>
+        <div class="comparison-question"><strong>ΔL(t) = L<sub>AL</sub>(t) − L<sub>MI</sub>(t)</strong><p>Do these two independently defined scales coincide during black-hole formation? If not, how does their difference evolve? This is the quantity that requires high numerical precision.</p></div>
+        <p class="model-note">The time-controlled boundary and bulk pictures are schematic and show the physical dictionary, not numerical data. The HRT topologies and the definitions of the two transition scales are the actual objects to be calculated.</p>
       </section>
 
       <section class="meaning">
-        <div class="meaning-heading">
-          <p class="section-label">What the experiment establishes</p>
-          <h2>Thermal-looking local behaviour is compatible with exact microscopic reversibility.</h2>
-        </div>
+        <div class="meaning-heading"><p class="section-label">The scientific problem</p><h2>Unitary evolution is exact; thermal behaviour is what restricted observables see.</h2></div>
         <div class="meaning-grid">
-          <article><span>Local loss of memory</span><strong>Simple observables forget the initial perturbation</strong><p>The reduced states become harder to distinguish even though the complete states remain perfectly distinguishable.</p></article>
-          <article><span>Information spreading</span><strong>The missing information resides in correlations</strong><p>It is no longer attached to a particular qubit. Recovering it requires increasingly nonlocal measurements.</p></article>
-          <article><span>Reversibility</span><strong>The inverse circuit reconstructs the initial state</strong><p>Applying the gates in reverse restores local memory. The apparent arrow of time is therefore an emergent, observational statement.</p></article>
-        </div>
-      </section>
-
-      <section class="diagnostic">
-        <div class="diagnostic-heading">
-          <p class="section-label">The HoloQUBITS question</p>
-          <div><h2>How can this mechanism be tested beyond equilibrium?</h2><p>The proposal studies quenches holographically and asks whether ETH-type descriptions continue to hold during black-hole formation. One planned diagnostic compares two independently defined critical length scales.</p></div>
-        </div>
-        <div class="length-lab">
-          <div class="boundary-scale">
-            <div class="scale-heading"><span>Boundary interval size L after a quench</span><span>fixed time t</span></div>
-            <div class="length-axis">
-              <div class="precision-gap"></div>
-              <div class="threshold mi"><span>L<sub>MI</sub>(t)</span></div>
-              <div class="threshold al"><span>L<sub>AL</sub>(t)</span></div>
-            </div>
-            <div class="magnifier"><span>Quantity requiring high numerical precision</span><strong>ΔL(t) = L<sub>AL</sub>(t) − L<sub>MI</sub>(t)</strong><p>The proposal expects these two scales to be very close. Resolving their difference is part of the research problem.</p></div>
-          </div>
-          <div class="diagnostic-copy">
-            <article><span>Mutual information threshold</span><strong>L<sub>MI</sub>(t)</strong><p>The interval scale at which the mutual information of separated regions vanishes.</p></article>
-            <article><span>Araki–Lieb threshold</span><strong>L<sub>AL</sub>(t)</strong><p>The interval scale at which the Araki–Lieb inequality becomes saturated.</p></article>
-            <article><span>Beyond-equilibrium test</span><strong>Track both scales during the quench</strong><p>Their time dependence provides a precise holographic probe of information dynamics and effective typicality.</p></article>
-            <p class="no-data">The positions above explain the comparison only; they are not presented as a numerical result.</p>
-          </div>
+          <article><span>Boundary dynamics</span><strong>Local information becomes nonlocal</strong><p>The full state evolves reversibly, while simple observables progressively lose access to the details of the initial disturbance.</p></article>
+          <article><span>Bulk dynamics</span><strong>Thermalization is encoded geometrically</strong><p>Holography translates the nonequilibrium evolution into gravitational collapse and the development of a black-hole region.</p></article>
+          <article><span>Precision test</span><strong>Two topology changes may not coincide</strong><p>Comparing L<sub>MI</sub>(t) and L<sub>AL</sub>(t) tests how different information-theoretic signatures organize during the same quench.</p></article>
         </div>
       </section>
 
       <section class="methods">
         <p class="section-label">Methods brought together</p>
-        <div><span>Quantum information</span><strong>Entanglement, mutual information and typicality</strong><small>Identify what local and nonlocal observables retain about the evolving state.</small></div>
-        <div><span>Real-time geometry</span><strong>Holographic quenches and black-hole formation</strong><small>Translate nonequilibrium quantum evolution into a dynamical gravitational problem.</small></div>
-        <div><span>Precision</span><strong>Numerical relativity and high-accuracy reconstruction</strong><small>Resolve nearby information-theoretic length scales that standard precision may not separate.</small></div>
-        <p class="methods-note">The project moves from the stationary black-hole results already obtained by the team to a genuinely time-dependent formulation of ETH, thermalization and information spreading.</p>
+        <div><span>Quantum information</span><strong>Entanglement, mutual information and typicality</strong><small>Determine which observables retain information about the evolving state.</small></div>
+        <div><span>Real-time holography</span><strong>Quenches and dynamical black-hole formation</strong><small>Construct the gravitational description of far-from-equilibrium evolution.</small></div>
+        <div><span>Numerical precision</span><strong>Resolve neighbouring HRT transition scales</strong><small>Measure a potentially small difference between independently defined observables.</small></div>
+        <p class="methods-note">The goal is a genuinely time-dependent formulation of information spreading and effective typicality, extending the team’s stationary black-hole results.</p>
       </section>
-
-      <section class="outcome">
-        <p class="section-label">Expected scientific contribution</p>
-        <p>A formulation of quantum typicality and information spreading beyond equilibrium, together with holographic observables that connect unitary many-body evolution to dynamical black-hole formation.</p>
-      </section>
-
-      <nav class="topic-pagination pagination">
-        <a href="../correlated-matter-anomalous-transport/index.html">← <span>Strongly Correlated Quantum Matter and Anomalous Transport</span></a>
-        <a href="../complexity-error-correction/index.html"><span>Complexity and Quantum Error Correction</span> →</a>
-      </nav>
+      <section class="outcome"><p class="section-label">Expected scientific contribution</p><p>A precise holographic description of information spreading beyond equilibrium, connecting unitary quantum dynamics, HRT topology changes and dynamical black-hole formation.</p></section>
+      <nav class="topic-pagination pagination"><a href="../correlated-matter-anomalous-transport/index.html">← <span>Strongly Correlated Quantum Matter and Anomalous Transport</span></a><a href="../complexity-error-correction/index.html"><span>Complexity and Quantum Error Correction</span> →</a></nav>
     </article>
   </main>
   <div id="site-footer"></div>
   <script src="../../assets/site.js"></script>
   <script>
     (()=>{
-      const N=6,SIZE=1<<N,MAX_DEPTH=14;
-      const range=document.querySelector('#depth-range');
-      const strip=document.querySelector('#qubit-strip');
-      const matrix=document.querySelector('#correlation-matrix');
-      const matrixX=document.querySelector('#matrix-x');
-      const matrixY=document.querySelector('#matrix-y');
-      const track=document.querySelector('#depth-track');
-      let timer=null;
-
-      function initial(marked){const re=new Float64Array(SIZE),im=new Float64Array(SIZE);re[marked?1:0]=1;return{re,im}}
-      function applyRY(st,q,theta){const c=Math.cos(theta/2),s=Math.sin(theta/2),mask=1<<q;for(let i=0;i<SIZE;i++)if(!(i&mask)){const j=i|mask,ar=st.re[i],ai=st.im[i],br=st.re[j],bi=st.im[j];st.re[i]=c*ar-s*br;st.im[i]=c*ai-s*bi;st.re[j]=s*ar+c*br;st.im[j]=s*ai+c*bi}}
-      function applyRZ(st,q,theta){const c=Math.cos(theta/2),s=Math.sin(theta/2),mask=1<<q;for(let i=0;i<SIZE;i++){const sign=(i&mask)?1:-1,ar=st.re[i],ai=st.im[i];st.re[i]=c*ar-sign*s*ai;st.im[i]=sign*s*ar+c*ai}}
-      function applyCZ(st,a,b){const ma=1<<a,mb=1<<b;for(let i=0;i<SIZE;i++)if((i&ma)&&(i&mb)){st.re[i]*=-1;st.im[i]*=-1}}
-      function applyLayer(st,layer){for(let q=0;q<N;q++){applyRY(st,q,.67+.11*q+.07*(layer%3));applyRZ(st,q,.31+.09*((q+layer)%5))}for(let q=layer%2;q<N-1;q+=2)applyCZ(st,q,q+1)}
-      function evolve(marked,depth){const st=initial(marked);for(let layer=0;layer<depth;layer++)applyLayer(st,layer);return st}
-
-      function rhoOne(st,q){let a=0,d=0,cr=0,ci=0;const mask=1<<q;for(let i=0;i<SIZE;i++)if(!(i&mask)){const j=i|mask,ar=st.re[i],ai=st.im[i],br=st.re[j],bi=st.im[j];a+=ar*ar+ai*ai;d+=br*br+bi*bi;cr+=ar*br+ai*bi;ci+=ai*br-ar*bi}return{a,d,cr,ci}}
-      function entropy(st,q){const r=rhoOne(st,q),length=Math.sqrt((r.a-r.d)**2+4*(r.cr*r.cr+r.ci*r.ci)),p=(1+Math.min(1,length))/2;let value=0;[p,1-p].forEach(x=>{if(x>1e-12)value-=x*Math.log2(x)});return value}
-      function localDistance(a,b,q){const ra=rhoOne(a,q),rb=rhoOne(b,q),diagonal=ra.a-rb.a,cr=ra.cr-rb.cr,ci=ra.ci-rb.ci;return Math.sqrt(diagonal*diagonal+cr*cr+ci*ci)}
-      function zExpectation(st,q){let total=0,mask=1<<q;for(let i=0;i<SIZE;i++){const probability=st.re[i]*st.re[i]+st.im[i]*st.im[i];total+=probability*((i&mask)?-1:1)}return total}
-      function connectedZZ(st,a,b){let zz=0,ma=1<<a,mb=1<<b;for(let i=0;i<SIZE;i++){const probability=st.re[i]*st.re[i]+st.im[i]*st.im[i];zz+=probability*((i&ma)?-1:1)*((i&mb)?-1:1)}return Math.abs(zz-zExpectation(st,a)*zExpectation(st,b))}
-
-      function buildStatic(){
-        strip.innerHTML=Array.from({length:N},(_,q)=>`<div class="qubit"><div class="qubit-orb"><b>${q+1}</b></div><span class="qubit-name">Qubit ${q+1}</span><span class="qubit-entropy">S = 0.000</span></div>`).join('');
-        matrixX.innerHTML=matrixY.innerHTML=Array.from({length:N},(_,q)=>`<span>${q+1}</span>`).join('');
-        matrix.innerHTML=Array.from({length:N*N},(_,k)=>{const i=Math.floor(k/N),j=k%N;return `<div class="matrix-cell ${i===j?'diagonal':''}" data-i="${i}" data-j="${j}"><span>${i===j?'—':''}</span></div>`}).join('');
-        track.innerHTML=Array.from({length:MAX_DEPTH},()=>'<i></i>').join('');
-      }
-
-      function stop(){if(timer){clearInterval(timer);timer=null}}
-      function animate(direction){stop();timer=setInterval(()=>{let depth=Number(range.value)+direction;if(depth<0||depth>MAX_DEPTH){stop();return}range.value=depth;draw();if(depth===0||depth===MAX_DEPTH)stop()},240)}
-
-      function interpretation(depth,memory){
-        if(depth===0)return['t = 0 · Localized information','Qubit 1 remembers everything','A measurement on the first qubit perfectly distinguishes the two initial states. There are no correlations and every qubit is locally pure.'];
-        if(depth<4)return[`t = ${depth} · Early spreading`,'Local memory begins to leak into correlations','The complete states remain perfectly distinguishable, but qubit 1 alone no longer contains all the information that originally separated them.'];
-        if(depth<9)return[`t = ${depth} · Many-body spreading`,'No single qubit carries the complete message',`Only ${Math.round(memory*100)}% of the original distinguishability remains accessible from qubit 1. The rest requires measurements involving other degrees of freedom.`];
-        return[`t = ${depth} · Scrambled toy state`,'The information is global',`Qubit 1 retains only ${Math.round(memory*100)}% of the original distinguishability, while global distinguishability remains exactly one. Applying the inverse circuit reconstructs the initial local record.`];
-      }
-
-      function draw(){
-        const depth=Number(range.value),marked=evolve(true,depth),reference=evolve(false,depth),entropies=Array.from({length:N},(_,q)=>entropy(marked,q)),memory=localDistance(marked,reference,0);
-        [...strip.children].forEach((node,q)=>{node.querySelector('.qubit-orb').style.setProperty('--entropy',`${100*entropies[q]}%`);node.querySelector('.qubit-entropy').textContent=`S = ${entropies[q].toFixed(3)}`});
-        [...matrix.children].forEach(cell=>{const i=Number(cell.dataset.i),j=Number(cell.dataset.j),value=i===j?0:connectedZZ(marked,i,j);cell.style.setProperty('--strength',Math.min(.95,value*2.4).toFixed(3));if(i!==j)cell.title=`Qubits ${i+1} and ${j+1}: ${value.toFixed(3)}`});
-        [...track.children].forEach((tick,i)=>tick.classList.toggle('is-past',i<depth));
-        document.querySelector('#depth-output').textContent=depth===0?'Initial state':`After ${depth} unitary layer${depth===1?'':'s'}`;
-        document.querySelector('#local-memory').textContent=memory.toFixed(3);
-        document.querySelector('#local-entropy').textContent=`${entropies[0].toFixed(3)} bit${Math.abs(entropies[0]-1)<1e-6?'':'s'}`;
-        const words=interpretation(depth,memory);document.querySelector('#state-number').textContent=words[0];document.querySelector('#state-title').textContent=words[1];document.querySelector('#state-copy').textContent=words[2];
-      }
-
-      range.addEventListener('input',()=>{stop();draw()});
-      document.querySelector('#evolve-button').addEventListener('click',()=>animate(1));
-      document.querySelector('#reverse-button').addEventListener('click',()=>animate(-1));
-      document.querySelector('#reset-button').addEventListener('click',()=>{stop();range.value=0;draw()});
-      buildStatic();draw();
+      const root=document.querySelector('.quench-lab'),range=root.querySelector('#quench-time'),nodes=root.querySelector('#boundary-nodes');
+      const positions=Array.from({length:11},(_,i)=>({i,x:60+i*40,distance:Math.abs(i-5)}));
+      nodes.innerHTML=positions.map(({i,x,distance})=>`<g class="boundary-node ${i===5?'is-source':''}" data-distance="${distance}"><circle cx="${x}" cy="145" r="13"/></g>`).join('');
+      function stageAt(value){if(value<22)return{title:'Immediately after the quench',copy:'The disturbance is still localized on the boundary. In the bulk, the injected shell has only begun to move inward; no macroscopic horizon is shown.'};if(value<70)return{title:'During collapse',copy:'The perturbation is no longer local on the boundary. In the bulk, the shell is falling inward and a horizon is developing. The precise relation requires real-time holographic evolution.'};return{title:'Late-time regime',copy:'Simple boundary observables approach thermal behaviour while the complete quantum evolution remains unitary. The bulk geometry approaches a black-hole state.'}}
+      function draw(){const value=Number(range.value),p=value/100,front=200*p,reach=5*p,stage=stageAt(value);root.querySelector('#spread-line').setAttribute('x1',260-front);root.querySelector('#spread-line').setAttribute('x2',260+front);root.querySelectorAll('.boundary-node').forEach(node=>node.classList.toggle('is-reached',Number(node.dataset.distance)<=reach));root.querySelector('#source-pulse').setAttribute('r',24+18*p);root.querySelector('#source-pulse').style.opacity=(.75-.45*p).toFixed(2);const shell=root.querySelector('#bulk-shell'),horizon=root.querySelector('#bulk-horizon');shell.setAttribute('r',(104-64*p).toFixed(1));shell.style.opacity=value>86?0.2:1;const hp=Math.max(0,(p-.2)/.8);horizon.setAttribute('r',(6+45*hp).toFixed(1));horizon.style.opacity=hp.toFixed(2);root.querySelector('#time-output').textContent=stage.title;root.querySelector('#stage-name').textContent=stage.title;root.querySelector('#stage-copy').textContent=stage.copy}
+      range.addEventListener('input',draw);draw();
     })();
   </script>
 </body>
