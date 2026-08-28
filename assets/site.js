@@ -16,6 +16,7 @@ document.querySelector("#site-header").innerHTML = `
     <nav aria-label="Main navigation">
       <a href="${siteRoot}/index.html">Home</a>
       <a href="${siteRoot}/synergy/index.html">Synergy</a>
+      <a href="${siteRoot}/index.html#activities">Activities</a>
       <details class="research-menu">
         <summary>Research</summary>
         <div>${researchLinks.map(([folder, title]) => `<a href="${siteRoot}/research/${folder}/index.html">${title}</a>`).join("")}</div>
